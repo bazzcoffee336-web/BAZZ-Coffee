@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bazz | Basics, built right</title>
+<meta name="description" content="Bazz makes heavy cotton tees and everyday essentials that keep their shape, wash after wash.">
+<meta name="theme-color" content="#E7E5E0">
+<!-- DEPLOY STEP: patch og:url and og:image with the live absolute URL -->
+<meta property="og:title" content="Bazz | Basics, built right">
+<meta property="og:description" content="Clothes that keep their shape.">
+<meta property="og:url" content="https://example.com/">
+<meta property="og:image" content="https://example.com/assets/hero.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231F1F22'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-weight='900' font-size='36' fill='%23E7E5E0' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Manrope:wght@400;600&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#E7E5E0; --panel:#F1EFEA; --ink:#1F1F22; --text-secondary:#55534E;
+  --oat:#D8CFC0; --line:#8C877E; --accent:#2E3A6B; --accent-hover:#222C55; --accent-muted:rgba(46,58,107,.18);
+  --ease-out:cubic-bezier(.22,1,.36,1); --ease-soft:cubic-bezier(.45,.05,.25,1);
+  --display:'Syne',system-ui,sans-serif; --body:'Manrope',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  --tshadow:0 1px 2px rgba(20,18,15,.35),0 3px 14px rgba(20,18,15,.25);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{overflow-x:hidden;overflow-x:clip;scroll-behavior:smooth}
+body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased;animation:pagein .9s var(--ease-out) both}
+@keyframes pagein{from{opacity:0}to{opacity:1}}
+img{display:block;max-width:100%}
+a{color:inherit}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--canvas);padding:10px 14px;border-radius:8px;z-index:100}
+.skip:focus{left:12px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* fixed environment layer: slow fiber grain */
+.env{position:fixed;inset:-20%;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(140,135,126,.16) 1px,transparent 1.4px),radial-gradient(rgba(216,207,192,.35) 1px,transparent 1.6px);
+  background-size:7px 7px,13px 13px;animation:drift 90s linear infinite;animation-delay:-20s}
+@keyframes drift{to{transform:translate(-7%,-5%)}}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(16px,4vw,48px);transition:background .5s var(--ease-soft),backdrop-filter .5s}
+nav.solid{background:rgba(231,229,224,.82);backdrop-filter:blur(12px)}
+.logo{font:700 26px/1 var(--display);letter-spacing:-.02em;text-decoration:none}
+nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;align-items:baseline}
+nav ul a{text-decoration:none;font:400 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);opacity:.8;transition:opacity .3s}
+nav ul a:hover{opacity:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--accent);color:#F1EFEA;border:0;border-radius:999px;padding:14px 26px;font:600 15px/1 var(--body);text-decoration:none;cursor:pointer;text-shadow:none;transition:background .35s var(--ease-soft),transform .35s var(--ease-out)}
+.btn:hover{background:var(--accent-hover);transform:translateY(-2px)}
+.btn .arr{transition:transform .35s var(--ease-out)}
+.btn:hover .arr{transform:translateX(4px)}
+nav .btn{padding:11px 20px;font-size:14px}
+@media (max-width:720px){nav ul li:not(:last-child){display:none}}
+
+/* stitch signature */
+.stitch{position:absolute;left:clamp(10px,2.4vw,34px);top:100vh;width:14px;pointer-events:none;z-index:2}
+.stitch path{fill:none;stroke:var(--line);stroke-width:1.4;stroke-dasharray:6 7;stroke-linecap:round}
+.stitch .needle{fill:var(--accent)}
+@media (max-width:720px){.stitch{display:none}}
+
+/* hero */
+.hero{position:relative;height:440vh}
+.stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#cfccc5}
+.stage .img{position:absolute;inset:0;background:url('assets/hero.jpg') center/cover no-repeat;transform:scale(var(--z,1.14)) translateY(var(--y,0px));will-change:transform}
+.scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(30,28,25,.42) 0%,rgba(30,28,25,.18) 38%,rgba(30,28,25,0) 60%)}
+.band{position:absolute;left:clamp(24px,7vw,110px);top:50%;transform:translateY(-50%);color:#F4F2EE;text-shadow:var(--tshadow);opacity:0;pointer-events:none}
+.band.on{pointer-events:auto}
+.band::before{content:"";position:absolute;inset:-30% -25%;z-index:-1;background:radial-gradient(ellipse 60% 55% at 40% 50%,rgba(25,23,20,.38),rgba(25,23,20,0) 72%);opacity:calc(.3 + .7*var(--k,1))}
+.kick{font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin:0 0 18px}
+.h{font:700 clamp(40px,6.4vw,92px)/.98 var(--display);letter-spacing:-.03em;margin:0;max-width:11ch}
+.h2{font:600 clamp(26px,3.2vw,44px)/1.1 var(--display);letter-spacing:-.02em;margin:14px 0 0;max-width:16ch}
+.sub{font:400 18px/1.55 var(--body);max-width:36ch;margin:22px 0 28px}
+.w{display:inline-block;white-space:pre}
+.c{display:inline-block}
+/* entrances driven by --k */
+.b1 .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*2.8,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*-26px))}
+.b2 .c{--kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*var(--jy,0px)))}
+.b3 .half{display:inline-block;--kc:clamp(0,var(--k,0)*1.6,1);opacity:var(--kc);transform:translateX(calc((1 - var(--kc))*var(--jx,0px)))}
+.b4 .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*22px))}
+.b4 .sub{opacity:clamp(0,(var(--k,0) - .55)*4,1)}
+.b4 .row{opacity:clamp(0,(var(--k,0) - .72)*5,1);transform:translateY(calc((1 - clamp(0,(var(--k,0) - .72)*5,1))*12px))}
+.cue{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font:400 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#F4F2EE;opacity:var(--cue,1);text-shadow:var(--tshadow);display:flex;flex-direction:column;align-items:center;gap:10px}
+.cue i{width:1px;height:34px;background:currentColor;transform-origin:top;animation:cue 2.4s var(--ease-soft) infinite;animation-delay:-.6s}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+@media (max-height:560px){.cue{display:none}}
+
+/* static hero (5 gates) */
+@media (max-width: 720px), (orientation: portrait) and (max-width: 1024px), (orientation: portrait) and (pointer: coarse), (orientation: landscape) and (pointer: coarse) and (max-height: 560px), (prefers-reduced-motion: reduce){
+  .hero{height:auto}
+  .stage{position:relative;height:auto;min-height:100svh;display:flex;align-items:flex-end}
+  .stage .img{transform:none;background-position:68% center}
+  .scrim{background:linear-gradient(0deg,rgba(30,28,25,.72) 0%,rgba(30,28,25,.35) 45%,rgba(30,28,25,.05) 75%)}
+  .band{display:none}
+  .band.b4{display:block;position:relative;left:auto;top:auto;transform:none;opacity:1;padding:120px 24px 56px;--k:1}
+  .cue{display:none}
+}
+
+/* sections */
+main section{position:relative;padding:clamp(90px,12vw,170px) clamp(24px,7vw,110px)}
+.label{font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary);margin:0 0 22px;display:flex;gap:14px;align-items:baseline}
+.label::after{content:"";flex:0 0 60px;height:1px;background:var(--line);transform-origin:left;transform:scaleX(0);transition:transform 1.2s var(--ease-out) .2s}
+.in .label::after{transform:scaleX(1)}
+h2{font:700 clamp(34px,4.6vw,66px)/1.02 var(--display);letter-spacing:-.03em;margin:0 0 22px;max-width:14ch}
+.lede{max-width:46ch;color:var(--text-secondary);font-size:19px;margin:0}
+.reveal > *{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
+.reveal.in > *{opacity:1;transform:none}
+.reveal.in > *:nth-child(2){transition-delay:.1s}.reveal.in > *:nth-child(3){transition-delay:.2s}.reveal.in > *:nth-child(4){transition-delay:.3s}
+
+/* fabric: split with wash test */
+.fabric{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(40px,6vw,100px);align-items:center}
+.stats{display:flex;gap:34px;margin:36px 0 0;padding:0;list-style:none;flex-wrap:wrap;align-items:baseline}
+.stats b{display:block;font:700 30px/1 var(--display);letter-spacing:-.02em}
+.stats span{font:400 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
+.wash{background:var(--panel);border-radius:28px;padding:34px;position:relative;box-shadow:0 30px 60px -40px rgba(31,31,34,.35)}
+.wash .shirts{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:end;height:220px}
+.wash figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px;font:400 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--text-secondary)}
+.wash svg{width:100%;max-width:170px;height:auto;overflow:visible}
+.wash .cheap{transform-origin:50% 100%;transform:scale(calc(1 - var(--p,0)*.22),calc(1 - var(--p,0)*.3)) skewX(calc(var(--p,0)*-6deg))}
+.wash .cheap path{fill:#CFC9BE;stroke:#A39D92;stroke-width:1.5}
+.wash .ours path{fill:var(--oat);stroke:var(--line);stroke-width:1.5}
+.count{display:flex;justify-content:space-between;align-items:baseline;margin:28px 0 18px;border-top:1px solid #CFCAC1;padding-top:20px}
+.count b{font:700 44px/1 var(--display);letter-spacing:-.03em}
+.count span{font:400 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary)}
+.hold{position:relative;width:100%;border:1.5px solid var(--accent);background:transparent;color:var(--accent);border-radius:999px;padding:16px;font:600 15px/1 var(--body);cursor:pointer;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none}
+.hold::before{content:"";position:absolute;inset:0;background:var(--accent-muted);transform-origin:left;transform:scaleX(var(--p,0))}
+.hold span{position:relative}
+.done-msg{margin:16px 0 0;font:600 16px/1.4 var(--body);min-height:1.4em;opacity:0;transform:translateY(8px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
+.wash.reveal .done-msg{opacity:0;transform:translateY(8px)}
+.wash.reveal.done .done-msg{opacity:1;transform:none}
+
+/* collection: offset cards */
+.shop-head{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;margin-bottom:56px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,34px)}
+.card{background:var(--panel);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+.card:nth-child(2){margin-top:60px}
+.card .ph{aspect-ratio:4/5;overflow:hidden;background:var(--oat)}
+.card .ph img{width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 1.2s var(--ease-out)}
+.card:hover .ph img{transform:scale(1.09)}
+.card .body{padding:24px 24px 26px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.card h3{font:600 22px/1.15 var(--display);margin:0;letter-spacing:-.01em}
+.card .price{font:400 15px/1 var(--mono)}
+.card p{margin:0 0 18px;color:var(--text-secondary)}
+.card .btn{margin-top:auto;align-self:flex-start;padding:11px 22px;font-size:14px}
+.cards.reveal > *{transition-duration:1s}
+.cards.reveal.in > *:nth-child(2){transition-delay:.12s}.cards.reveal.in > *:nth-child(3){transition-delay:.24s}
+
+/* fit: dark band with steps */
+.fit{background:var(--ink);color:#ECEAE5}
+.fit .label{color:#B7B2A8}.fit .label::after{background:#6F6B64}
+.fit .lede{color:#B7B2A8}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:64px 0 0;padding:0;list-style:none;counter-reset:s}
+.steps li{position:relative;padding:34px 30px 0 0;counter-increment:s}
+.steps li::before{content:"0" counter(s);display:block;font:400 12px/1 var(--mono);letter-spacing:.14em;color:#B7B2A8;margin-bottom:18px}
+.steps li::after{content:"";position:absolute;left:0;right:30px;top:0;height:1px;background:repeating-linear-gradient(90deg,#8C877E 0 6px,transparent 6px 13px);transform-origin:left;transform:scaleX(0);transition:transform 1.4s var(--ease-out)}
+.steps.in li::after{transform:scaleX(1)}
+.steps.in li:nth-child(2)::after{transition-delay:.2s}.steps.in li:nth-child(3)::after{transition-delay:.4s}
+.steps h3{font:600 24px/1.2 var(--display);margin:0 0 10px;letter-spacing:-.01em;max-width:16ch}
+.steps p{margin:0;color:#B7B2A8;max-width:30ch}
+.fit .glow{position:absolute;right:8%;top:20%;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(46,58,107,.45),rgba(46,58,107,0) 70%);pointer-events:none;animation:pulse 9s var(--ease-soft) infinite alternate;animation-delay:-3s}
+@keyframes pulse{to{transform:scale(1.18);opacity:.6}}
+
+/* faq */
+.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(40px,6vw,100px);align-items:start}
+details{border-top:1px solid #CFCAC1;padding:22px 0}
+details:last-child{border-bottom:1px solid #CFCAC1}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:baseline;gap:20px;font:600 21px/1.3 var(--display)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:400 22px/1 var(--mono);color:var(--accent);transition:transform .4s var(--ease-out)}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin:14px 0 0;color:var(--text-secondary);max-width:52ch;animation:fade .5s var(--ease-out)}
+@keyframes fade{from{opacity:0;transform:translateY(-6px)}}
+
+/* cta */
+.cta{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);align-items:center;background:var(--panel);margin:0 clamp(16px,3vw,40px) clamp(16px,3vw,40px);border-radius:32px}
+.cta .ph{border-radius:22px;overflow:hidden;aspect-ratio:4/3}
+.cta .ph img{width:100%;height:100%;object-fit:cover}
+form{display:flex;gap:10px;margin-top:30px;flex-wrap:wrap}
+form label{flex-basis:100%;font:400 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary)}
+input[type=email]{flex:1 1 220px;min-height:50px;border:1.5px solid #A9A398;background:var(--canvas);border-radius:999px;padding:0 22px;font:400 16px var(--body);color:var(--ink)}
+input[type=email]:focus{outline:none;border-color:var(--accent)}
+.ok{margin:18px 0 0;font-weight:600;opacity:0;transition:opacity .6s var(--ease-out)}
+form.sent + .ok{opacity:1}
+footer{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:20px;padding:40px clamp(24px,7vw,110px) 50px;font:400 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
+footer .logo{font-size:22px;text-transform:none;letter-spacing:-.02em;color:var(--ink)}
+footer ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+footer a{text-decoration:none}
+
+@media (max-width:900px){
+  .fabric,.faq,.cta{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+  .card:nth-child(2){margin-top:0}
+  .steps{grid-template-columns:1fr;gap:40px}
+}
+@media (pointer:coarse){.btn,.hold{min-height:44px}}
+
+/* paused / reduced motion */
+body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;transition-delay:0s!important}
+  .reveal > *{opacity:1;transform:none}
+  .label::after,.steps li::after{transform:scaleX(1)}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="env" aria-hidden="true"></div>
+
+<nav id="nav">
+  <a class="logo" href="#top" aria-label="Bazz home">Bazz</a>
+  <ul>
+    <li><a href="#fabric">Fabric</a></li>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#fit">Fit</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a class="btn" href="#shop">Shop now</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <div class="stage" id="stage">
+    <div class="img" aria-hidden="true"></div>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <div class="band b1" data-a="0" data-b="0.25">
+      <p class="kick">Bazz / Everyday basics</p>
+      <h1 class="h split" data-fx="drift">Bazz.</h1>
+      <p class="h2 split" data-fx="drift">Clothes that keep their shape.</p>
+    </div>
+    <div class="band b2" data-a="0.27" data-b="0.53">
+      <p class="h split" data-fx="weave">Wash it. Wear it. It stays.</p>
+    </div>
+    <div class="band b3" data-a="0.555" data-b="0.785">
+      <p class="h"><span class="half" style="--jx:-40px">Cut to</span> <span class="half" style="--jx:40px">fit you.</span></p>
+      <p class="h2">Not a guess on a size chart.</p>
+    </div>
+    <div class="band b4" data-a="0.80" data-b="1">
+      <p class="h split" data-fx="rise">Basics, built right.</p>
+      <p class="sub">Heavy cotton tees and everyday essentials that look the same on wash thirty as on day one.</p>
+      <div class="row"><a class="btn" href="#shop">Shop the collection <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+    </div>
+
+    <div class="cue" aria-hidden="true">Scroll<i></i></div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1" style="position:relative">
+  <svg class="stitch" id="stitch" aria-hidden="true" preserveAspectRatio="none"><path id="stitchPath"/><circle class="needle" id="needle" r="3.5"/></svg>
+
+  <section id="fabric">
+    <div class="fabric">
+      <div class="reveal">
+        <p class="label">01 / Fabric</p>
+        <h2>It's the cotton.</h2>
+        <p class="lede">Most tees shrink because the fabric was never set. Ours is heavy cotton, washed before it's cut, so the size on the tag is the size you keep.</p>
+        <ul class="stats">
+          <li><b>240 gsm</b><span>Cotton weight</span></li>
+          <li><b>Pre-shrunk</b><span>Before cutting</span></li>
+          <li><b>Flat</b><span>Collar that stays</span></li>
+        </ul>
+      </div>
+      <div class="wash reveal" id="wash">
+        <div class="shirts">
+          <figure>
+            <svg viewBox="0 0 160 150" class="cheap" aria-hidden="true"><path d="M50 8 L30 14 L4 38 L22 62 L36 52 L36 146 L124 146 L124 52 L138 62 L156 38 L130 14 L110 8 C104 22 56 22 50 8Z"/></svg>
+            <figcaption>Typical tee</figcaption>
+          </figure>
+          <figure>
+            <svg viewBox="0 0 160 150" class="ours" aria-hidden="true"><path d="M50 8 L30 14 L4 38 L22 62 L36 52 L36 146 L124 146 L124 52 L138 62 L156 38 L130 14 L110 8 C104 22 56 22 50 8Z"/></svg>
+            <figcaption>Bazz tee</figcaption>
+          </figure>
+        </div>
+        <div class="count"><span>Washes</span><b id="washN" aria-live="polite">0</b></div>
+        <button class="hold" id="hold" type="button"><span>Hold to wash it 30 times</span></button>
+        <p class="done-msg">30 washes. Same shirt.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="shop">
+    <div class="shop-head reveal">
+      <div>
+        <p class="label">02 / Shop</p>
+        <h2>Three shirts. No filler.</h2>
+      </div>
+      <p class="lede">Pick the weight you like. They all keep their shape.</p>
+    </div>
+    <div class="cards reveal">
+      <article class="card">
+        <div class="ph"><img src="assets/tee-float.jpg" alt="Oat cotton Everyday Tee" loading="lazy" width="900" height="660"></div>
+        <div class="body"><div class="top"><h3>The Everyday Tee</h3><span class="price">50,000 IQD</span></div><p>Mid weight. Clean neck. Your new default.</p><a class="btn" href="#list">Shop <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/tee-stack.jpg" alt="Folded Heavy Tee on a stone block" loading="lazy" width="900" height="660"></div>
+        <div class="body"><div class="top"><h3>The Heavy Tee</h3><span class="price">63,000 IQD</span></div><p>Thick, structured, holds its drape.</p><a class="btn" href="#list">Shop <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/tee-detail.jpg" alt="Close up of brushed cotton fabric" loading="lazy" width="900" height="668"></div>
+        <div class="body"><div class="top"><h3>The Crew</h3><span class="price">102,000 IQD</span></div><p>Brushed cotton sweatshirt that keeps its cuffs.</p><a class="btn" href="#list">Shop <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="fit" class="fit">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="reveal">
+      <p class="label">03 / Fit</p>
+      <h2>Fit you can count on.</h2>
+      <p class="lede">No guessing, no returns pile. Three steps.</p>
+    </div>
+    <ol class="steps reveal" id="steps">
+      <li><h3>Pick your usual size.</h3><p>Our sizes run true. If you wear a medium, start there.</p></li>
+      <li><h3>Check one number.</h3><p>Chest width, measured flat. It's on every product page.</p></li>
+      <li><h3>Not right? Swap it.</h3><p>Free size swap within 30 days. No forms.</p></li>
+    </ol>
+  </section>
+
+  <section id="faq">
+    <div class="faq">
+      <div class="reveal">
+        <p class="label">04 / Questions</p>
+        <h2>Straight answers.</h2>
+      </div>
+      <div class="reveal">
+        <details><summary>Will it shrink?</summary><p>A little cotton always moves, but ours is washed before it's cut. Expect it to stay within a few millimeters.</p></details>
+        <details><summary>Is it worth the price?</summary><p>One tee that lasts years costs less than three that warp by summer.</p></details>
+        <details><summary>What if it doesn't fit?</summary><p>Swap it for a different size within 30 days. Free.</p></details>
+        <details><summary>How should I wash it?</summary><p>Cold, inside out, hang dry if you can. It'll forgive you if you don't.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="list" class="cta">
+    <div class="reveal">
+      <p class="label">05 / The list</p>
+      <h2>Find your shirt.</h2>
+      <p class="lede">Join the list for new drops and restocks.</p>
+      <form id="form" novalidate>
+        <label for="email">Your email</label>
+        <input id="email" type="email" required placeholder="you@email.com" autocomplete="email">
+        <button class="btn" type="submit">Join the list</button>
+      </form>
+      <p class="ok" role="status">You're on the list. We'll write when something new lands.</p>
+    </div>
+    <div class="ph reveal"><img src="assets/tee-stack.jpg" alt="" loading="lazy" width="900" height="660"></div>
+  </section>
+</main>
+
+<footer>
+  <span class="logo">Bazz</span>
+  <ul><li><a href="#shop">Shop</a></li><li><a href="#fit">Fit</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <span>&copy; 2026 Bazz</span>
+</footer>
+
+<script>
+(() => {
+  const GATES = [
+    '(max-width: 720px)',
+    '(orientation: portrait) and (max-width: 1024px)',
+    '(orientation: portrait) and (pointer: coarse)',
+    '(orientation: landscape) and (pointer: coarse) and (max-height: 560px)',
+    '(prefers-reduced-motion: reduce)'
+  ];
+  const RM = matchMedia('(prefers-reduced-motion: reduce)');
+  const hero = document.querySelector('.hero');
+  const stage = document.getElementById('stage');
+  const img = stage.querySelector('.img');
+  const cue = stage.querySelector('.cue');
+  const nav = document.getElementById('nav');
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  const ss = (p, a, b) => { const t = clamp((p - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+
+  // seeded split
+  function rng(seed){ let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
+  document.querySelectorAll('.split').forEach((el, i) => {
+    const text = el.textContent, fx = el.dataset.fx, r = rng(17 + i * 31);
+    el.textContent = '';
+    const sr = document.createElement('span'); sr.className = 'sr'; sr.textContent = text; el.appendChild(sr);
+    const vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true'); el.appendChild(vis);
+    const words = text.split(' ');
+    let ci = 0; const total = text.replace(/ /g, '').length;
+    words.forEach((w, wi) => {
+      const ws = document.createElement('span'); ws.className = 'w';
+      ws.style.setProperty('--th', ((wi / Math.max(1, words.length)) * 0.5 + r() * 0.05).toFixed(3));
+      if (fx === 'weave') {
+        [...w].forEach(ch => {
+          const c = document.createElement('span'); c.className = 'c'; c.textContent = ch;
+          c.style.setProperty('--th', ((ci / total) * 0.55 + r() * 0.05).toFixed(3));
+          c.style.setProperty('--jy', (ci % 2 ? 1 : -1) * (14 + r() * 14) + 'px');
+          ci++; ws.appendChild(c);
+        });
+      } else ws.textContent = w;
+      vis.appendChild(ws);
+      if (wi < words.length - 1) vis.appendChild(document.createTextNode(' '));
+    });
+  });
+
+  // hero drive: lerped progress, rests when converged
+  const bands = [...document.querySelectorAll('.band')].map((el, i, all) => ({
+    el, a: +el.dataset.a, b: +el.dataset.b, first: i === 0, last: i === all.length - 1, op: -1, k: -1
+  }));
+  let target = 0, shown = 0, rafId = null, last = 0, scrubOn = false, onScreen = true, loadK = 0, loadStart = 0;
+  const heroProgress = () => {
+    const r = hero.getBoundingClientRect(); const range = hero.offsetHeight - innerHeight;
+    return range > 0 ? clamp(-r.top / range, 0, 1) : 0;
+  };
+  let lastZ = '', lastCue = '';
+  function render(p) {
+    const z = (1.14 - p * 0.12).toFixed(4) + '|' + (p * -30).toFixed(1);
+    if (z !== lastZ) { lastZ = z; const [zz, yy] = z.split('|'); img.style.setProperty('--z', zz); img.style.setProperty('--y', yy + 'px'); }
+    const cv = (1 - clamp(p / 0.06, 0, 1)).toFixed(2);
+    if (cv !== lastCue) { lastCue = cv; cue.style.setProperty('--cue', cv); }
+    bands.forEach(bd => {
+      const f = Math.min(0.03, (bd.b - bd.a) / 3);
+      const op = (bd.first ? 1 : ss(p, bd.a, bd.a + f)) * (bd.last ? 1 : 1 - ss(p, bd.b - f, bd.b));
+      let k = clamp((p - bd.a) / Math.min(0.08, (bd.b - bd.a) * 0.45), 0, 1);
+      if (bd.first) k = Math.max(k, loadK);
+      if (Math.abs(op - bd.op) > 0.004) { bd.op = op; bd.el.style.opacity = op.toFixed(3); bd.el.classList.toggle('on', op > 0.5); }
+      if (Math.abs(k - bd.k) > 0.008 || (k === 1 && bd.k !== 1)) { bd.k = k; bd.el.style.setProperty('--k', k.toFixed(3)); }
+    });
+  }
+  function tick(now) {
+    const dt = Math.min(100, now - (last || now)); last = now;
+    if (loadK < 1) { if (!loadStart) loadStart = now; const t = clamp((now - loadStart) / 1400, 0, 1); loadK = 1 - Math.pow(1 - t, 3); }
+    shown += (target - shown) * (1 - Math.pow(1 - 0.14, dt / 16.667));
+    const done = Math.abs(target - shown) < 0.0005 && loadK >= 1;
+    if (Math.abs(target - shown) < 0.0005) shown = target;
+    render(shown);
+    if (done || !onScreen || !scrubOn) { rafId = null; last = 0; } else rafId = requestAnimationFrame(tick);
+  }
+  function onScroll() { target = heroProgress(); if (rafId === null && onScreen && scrubOn) rafId = requestAnimationFrame(tick); }
+  new IntersectionObserver(es => { onScreen = es[0].isIntersecting; if (onScreen) onScroll(); }).observe(hero);
+
+  function enableScrub() {
+    if (scrubOn) return; scrubOn = true;
+    bands.forEach(b => { b.op = -1; b.k = -1; b.el.style.removeProperty('opacity'); });
+    addEventListener('scroll', onScroll, { passive: true });
+    target = shown = heroProgress(); onScroll();
+    // VIDEO SLOT: when the scrub video exists, start the gated Blob fetch here.
+  }
+  function disableScrub() {
+    if (!scrubOn) return; scrubOn = false;
+    removeEventListener('scroll', onScroll);
+    if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    bands.forEach(b => { b.el.style.removeProperty('opacity'); b.el.style.removeProperty('--k'); });
+    img.style.removeProperty('--z'); img.style.removeProperty('--y');
+  }
+  function applyHeroMode() { GATES.some(q => matchMedia(q).matches) ? disableScrub() : enableScrub(); }
+  const MQLS = GATES.map(q => matchMedia(q));
+  MQLS.forEach(m => m.addEventListener('change', applyHeroMode));
+  applyHeroMode();
+
+  // nav
+  let navSolid = null;
+  const navCheck = () => { const s = scrollY > innerHeight * 0.5; if (s !== navSolid) { navSolid = s; nav.classList.toggle('solid', s); } };
+  addEventListener('scroll', navCheck, { passive: true }); navCheck();
+
+  // reveals
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.18 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // stitch signature: draws down the page with scroll
+  const main = document.getElementById('main');
+  const svg = document.getElementById('stitch'), path = document.getElementById('stitchPath'), needle = document.getElementById('needle');
+  let sLen = 0, sH = 0, lastS = -1;
+  function buildStitch() {
+    sH = main.offsetHeight - 40; svg.setAttribute('height', sH); svg.setAttribute('viewBox', `0 0 14 ${sH}`);
+    svg.style.top = '20px';
+    let d = 'M7 0'; for (let y = 0; y < sH; y += 240) d += ` Q ${y / 240 % 2 ? 1 : 13} ${y + 120} 7 ${Math.min(sH, y + 240)}`;
+    path.setAttribute('d', d); sLen = path.getTotalLength(); lastS = -1; drawStitch();
+  }
+  function drawStitch() {
+    const r = main.getBoundingClientRect();
+    const f = RM.matches ? 1 : clamp((innerHeight * 0.7 - r.top) / sH, 0, 1);
+    if (Math.abs(f - lastS) < 0.002) return; lastS = f;
+    const L = sLen * f;
+    path.style.strokeDasharray = `6 7`;
+    path.setAttribute('clip-path', '');
+    path.style.clipPath = `inset(0 0 ${Math.max(0, (1 - f) * 100)}% 0)`;
+    const pt = path.getPointAtLength(Math.max(0.01, L)); needle.setAttribute('cx', pt.x); needle.setAttribute('cy', pt.y);
+  }
+  let stRaf = null;
+  addEventListener('scroll', () => { if (!stRaf) stRaf = requestAnimationFrame(() => { stRaf = null; drawStitch(); }); }, { passive: true });
+  addEventListener('resize', buildStitch);
+  document.fonts && document.fonts.ready.then(buildStitch);
+  addEventListener('load', buildStitch); buildStitch();
+
+  // wash test: press and hold
+  const wash = document.getElementById('wash'), hold = document.getElementById('hold'), n = document.getElementById('washN');
+  let p = 0, holding = false, wRaf = null, wLast = 0, lastN = -1;
+  function setWash(v) {
+    p = v; wash.style.setProperty('--p', v.toFixed(3)); hold.style.setProperty('--p', v.toFixed(3));
+    const c = Math.round(v * 30); if (c !== lastN) { lastN = c; n.textContent = c; }
+  }
+  function wTick(now) {
+    const dt = Math.min(100, now - (wLast || now)); wLast = now;
+    if (holding) setWash(Math.min(1, p + dt / 2600)); else setWash(Math.max(0, p - (dt / 900) * Math.max(.15, p)));
+    if (p >= 1) { holding = false; wash.classList.add('done'); hold.disabled = true; hold.querySelector('span').textContent = 'Washed 30 times'; wRaf = null; return; }
+    if (holding || p > 0) wRaf = requestAnimationFrame(wTick); else { wRaf = null; wLast = 0; }
+  }
+  const start = e => { if (hold.disabled) return; e.preventDefault(); holding = true; if (!wRaf) { wLast = 0; wRaf = requestAnimationFrame(wTick); } };
+  const stop = () => { holding = false; };
+  hold.addEventListener('pointerdown', start);
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(t => hold.addEventListener(t, stop));
+  hold.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) start(e); });
+  hold.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') stop(); });
+
+  function pinToFinalStates() { setWash(1); wash.classList.add('done'); hold.disabled = true; hold.querySelector('span').textContent = 'Washed 30 times'; lastS = -1; drawStitch(); }
+  if (RM.matches) pinToFinalStates();
+  RM.addEventListener('change', e => { if (e.matches) pinToFinalStates(); else { lastS = -1; drawStitch(); applyHeroMode(); } });
+
+  // form: JS-only success for now
+  const form = document.getElementById('form'), email = document.getElementById('email');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!email.checkValidity() || !email.value) { email.focus(); email.setAttribute('aria-invalid', 'true'); return; }
+    email.removeAttribute('aria-invalid'); form.classList.add('sent'); form.querySelector('button').textContent = 'Joined';
+  });
+
+  // pause animations on hidden tab
+  document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
+})();
+</script>
+</body>
+</html>
