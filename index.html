@@ -196,6 +196,22 @@ footer a{text-decoration:none}
 }
 @media (pointer:coarse){.btn,.hold{min-height:44px}}
 
+
+/* candles */
+.candles{background:linear-gradient(180deg,var(--canvas),#DED8CE)}
+.candles .banner{border-radius:28px;overflow:hidden;margin:0 0 56px;aspect-ratio:16/7;background:var(--oat)}
+.candles .banner img{width:100%;height:100%;object-fit:cover;transform:scale(1.03);transition:transform 1.6s var(--ease-out)}
+.candles .banner:hover img{transform:scale(1.06)}
+.cgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.cgrid .card:nth-child(2){margin-top:0}
+.cgrid .card .ph{aspect-ratio:4/5}
+.cgrid .card h3{font-size:19px}
+.cgrid .card .notes{font:400 11px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);margin:0}
+.cgrid .card .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:baseline;border:1px solid rgba(31,31,34,.2)}
+.cgrid.reveal.in > *:nth-child(4){transition-delay:.36s}.cgrid.reveal.in > *:nth-child(5){transition-delay:.48s}
+@media (max-width:1100px){.cgrid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:720px){.cgrid{grid-template-columns:1fr 1fr}.candles .banner{aspect-ratio:4/3}}
+
 /* paused / reduced motion */
 body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
 @media (prefers-reduced-motion: reduce){
@@ -214,6 +230,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
   <ul>
     <li><a href="#fabric">Fabric</a></li>
     <li><a href="#shop">Shop</a></li>
+    <li><a href="#candles">Candles</a></li>
     <li><a href="#fit">Fit</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a class="btn" href="#shop">Shop now</a></li>
@@ -291,15 +308,48 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
     <div class="cards reveal">
       <article class="card">
         <div class="ph"><img src="assets/tee-float.jpg" alt="Oat cotton Everyday Tee" loading="lazy" width="900" height="660"></div>
-        <div class="body"><div class="top"><h3>The Everyday Tee</h3><span class="price">50,000 IQD</span></div><p>Mid weight. Clean neck. Your new default.</p><a class="btn" href="#list">Shop <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3>The Everyday Tee</h3><span class="price">$38</span></div><p>Mid weight. Clean neck. Your new default.</p><a class="btn" href="https://2hjxdw-zj.myshopify.com/products/the-everyday-tee">Buy <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
       <article class="card">
         <div class="ph"><img src="assets/tee-stack.jpg" alt="Folded Heavy Tee on a stone block" loading="lazy" width="900" height="660"></div>
-        <div class="body"><div class="top"><h3>The Heavy Tee</h3><span class="price">63,000 IQD</span></div><p>Thick, structured, holds its drape.</p><a class="btn" href="#list">Shop <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3>The Heavy Tee</h3><span class="price">$48</span></div><p>Thick, structured, holds its drape.</p><a class="btn" href="https://2hjxdw-zj.myshopify.com/products/the-heavy-tee">Buy <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
       <article class="card">
         <div class="ph"><img src="assets/tee-detail.jpg" alt="Close up of brushed cotton fabric" loading="lazy" width="900" height="668"></div>
-        <div class="body"><div class="top"><h3>The Crew</h3><span class="price">102,000 IQD</span></div><p>Brushed cotton sweatshirt that keeps its cuffs.</p><a class="btn" href="#list">Shop <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3>The Crew</h3><span class="price">$78</span></div><p>Brushed cotton sweatshirt that keeps its cuffs.</p><a class="btn" href="https://2hjxdw-zj.myshopify.com/products/the-crew">Buy <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="candles" class="candles">
+    <div class="shop-head reveal">
+      <div>
+        <p class="label">03 / Candles</p>
+        <h2>Slow Hours.</h2>
+      </div>
+      <p class="lede">Five soy candles for the quiet part of the day. Same calm as the clothes, in a jar.</p>
+    </div>
+    <div class="banner reveal"><img src="assets/candles-hero.jpg" alt="Five Bazz Slow Hours candles on a stone block in warm window light" loading="lazy" width="1920" height="1072"></div>
+    <div class="cards cgrid reveal">
+      <article class="card">
+        <div class="ph"><img src="assets/candle-1.jpg" alt="Bazz First Light soy candle in an amber jar" loading="lazy" width="800" height="1000"></div>
+        <div class="body"><div class="top"><h3><span class="dot" style="background:#E9E1D2" aria-hidden="true"></span>First Light</h3><span class="price">$28</span></div><p class="notes">Vanilla · Warm milk · Tonka</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/candle-2.jpg" alt="Bazz Slow Sunday soy candle in an amber jar" loading="lazy" width="800" height="1000"></div>
+        <div class="body"><div class="top"><h3><span class="dot" style="background:#C9D1C0" aria-hidden="true"></span>Slow Sunday</h3><span class="price">$28</span></div><p class="notes">Fig · Cedar · Linen</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/candle-3.jpg" alt="Bazz Sea Salt Morning soy candle in an amber jar" loading="lazy" width="800" height="1000"></div>
+        <div class="body"><div class="top"><h3><span class="dot" style="background:#CCD6DD" aria-hidden="true"></span>Sea Salt Morning</h3><span class="price">$28</span></div><p class="notes">Sea salt · White musk</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/candle-4.jpg" alt="Bazz Lavender Night soy candle in an amber jar" loading="lazy" width="800" height="1000"></div>
+        <div class="body"><div class="top"><h3><span class="dot" style="background:#D7CEDD" aria-hidden="true"></span>Lavender Night</h3><span class="price">$28</span></div><p class="notes">Lavender · Chamomile</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/candle-5.jpg" alt="Bazz Amber Hour soy candle in an amber jar" loading="lazy" width="800" height="1000"></div>
+        <div class="body"><div class="top"><h3><span class="dot" style="background:#2A2726" aria-hidden="true"></span>Amber Hour</h3><span class="price">$32</span></div><p class="notes">Amber · Oud · Smoke</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
     </div>
   </section>
@@ -307,7 +357,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
   <section id="fit" class="fit">
     <div class="glow" aria-hidden="true"></div>
     <div class="reveal">
-      <p class="label">03 / Fit</p>
+      <p class="label">04 / Fit</p>
       <h2>Fit you can count on.</h2>
       <p class="lede">No guessing, no returns pile. Three steps.</p>
     </div>
@@ -321,7 +371,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
   <section id="faq">
     <div class="faq">
       <div class="reveal">
-        <p class="label">04 / Questions</p>
+        <p class="label">05 / Questions</p>
         <h2>Straight answers.</h2>
       </div>
       <div class="reveal">
@@ -335,7 +385,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 
   <section id="list" class="cta">
     <div class="reveal">
-      <p class="label">05 / The list</p>
+      <p class="label">06 / The list</p>
       <h2>Find your shirt.</h2>
       <p class="lede">Join the list for new drops and restocks.</p>
       <form id="form" novalidate>
