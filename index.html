@@ -42,9 +42,9 @@
         <span><b>28</b>Designed pages</span>
       </div>
     </div>
-    <div class="stage3d" id="stage" aria-label="3D view of the AI for Beginners ebook on a lit stage" role="img">
+    <div class="stage3d" id="stage" aria-label="3D ebook in a glass case. Press to open the glass, then drag to turn the book." role="button">
       <div class="fallback"><img src="assets/cover.jpg" alt="AI for Beginners ebook cover"></div>
-      <span class="hint" aria-hidden="true">Move your mouse to look around</span>
+      <span class="hint" aria-hidden="true">Click the glass to open it</span>
     </div>
   </header>
 
@@ -104,7 +104,7 @@
 
 <script type="module">
   import { mountBook } from './assets/book3d.js';
-  mountBook(document.getElementById('stage'), { interactive: false });
+  mountBook(document.getElementById('stage'), {});
 </script>
 <script src="assets/site.js"></script>
 </body>

@@ -105,20 +105,56 @@ export function mountBook(el, opts = {}) {
   const dust = new THREE.Points(pg, new THREE.PointsMaterial({ color: 0xE8D7B0, size: .025, transparent: true, opacity: .7, depthWrite: false }));
   scene.add(dust);
 
-  // interaction
-  let targetY = -0.45, targetX = 0, rotY = -0.45, rotX = 0, dragging = false, lastX = 0, lastY = 0, userTurned = 0;
-  const onMove = (x, y) => {
-    if (dragging && opts.interactive) {
-      targetY += (x - lastX) * 0.01; targetX = Math.max(-.4, Math.min(.4, targetX + (y - lastY) * 0.005));
-      lastX = x; lastY = y; userTurned = performance.now();
-    }
-  };
-  if (opts.interactive) {
-    el.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; el.setPointerCapture(e.pointerId); });
-    el.addEventListener('pointermove', e => onMove(e.clientX, e.clientY));
-    ['pointerup', 'pointercancel'].forEach(t => el.addEventListener(t, () => dragging = false));
-    el.style.cursor = 'grab';
+  // glass display case
+  const GW = W + 0.7, GH = H + 0.75, GD = D + 1.1;
+  const glass = new THREE.Group();
+  const glassMat = new THREE.MeshPhysicalMaterial({ color: 0xdfe8ff, transparent: true, opacity: .16, roughness: .04, metalness: 0,
+    clearcoat: 1, clearcoatRoughness: .05, side: THREE.DoubleSide, depthWrite: false });
+  const box = new THREE.Mesh(new THREE.BoxGeometry(GW, GH, GD), glassMat);
+  const edgeMat = new THREE.LineBasicMaterial({ color: 0xF6F2EA, transparent: true, opacity: .55 });
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(GW, GH, GD)), edgeMat);
+  const capMat = new THREE.MeshStandardMaterial({ color: 0xC9B48F, metalness: .9, roughness: .25, transparent: true, opacity: 1 });
+  const cap = new THREE.Mesh(new THREE.BoxGeometry(GW + 0.08, 0.06, GD + 0.08), capMat); cap.position.y = GH / 2 + 0.03;
+  // diagonal highlight streaks on the front glass
+  const streakMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .1, depthWrite: false });
+  const s1 = new THREE.Mesh(new THREE.PlaneGeometry(0.25, GH * 1.1), streakMat); s1.position.set(-GW * 0.22, 0, GD / 2 + 0.002); s1.rotation.z = -0.35;
+  const s2 = new THREE.Mesh(new THREE.PlaneGeometry(0.08, GH * 1.1), streakMat); s2.position.set(-GW * 0.05, 0, GD / 2 + 0.002); s2.rotation.z = -0.35;
+  glass.add(box, edges, cap, s1, s2);
+  glass.position.y = GH / 2 + 0.07; scene.add(glass);
+  // gold base plate under the case
+  const plate = new THREE.Mesh(new THREE.BoxGeometry(GW + 0.12, 0.05, GD + 0.12), capMat.clone());
+  plate.position.y = 0.09; scene.add(plate);
+
+  // interaction: click the glass to lift it, then drag the book
+  let opened = false, openT = 0;
+  let targetY = -0.45, targetX = 0, rotY = -0.45, rotX = 0, dragging = false, lastX = 0, lastY = 0, userTurned = 0, downX = 0, downY = 0;
+  const hint = el.querySelector('.hint');
+  const setHint = txt => { if (hint) hint.textContent = txt; };
+  setHint(matchMedia('(pointer: coarse)').matches ? 'Tap the glass to open it' : 'Click the glass to open it');
+  el.style.cursor = 'pointer';
+  el.setAttribute('tabindex', '0');
+  function openCase() {
+    if (opened) return; opened = true; openT = performance.now(); el.style.cursor = 'grab';
+    setHint(matchMedia('(pointer: coarse)').matches ? 'Drag to turn the book' : 'Drag to turn the book');
+    el.classList.add('opened');
   }
+  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCase(); } });
+  el.addEventListener('pointerdown', e => {
+    downX = e.clientX; downY = e.clientY;
+    if (!opened) return;
+    dragging = true; lastX = e.clientX; lastY = e.clientY; el.setPointerCapture(e.pointerId); el.style.cursor = 'grabbing';
+  });
+  el.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    targetY += (e.clientX - lastX) * 0.01; targetX = Math.max(-.45, Math.min(.45, targetX + (e.clientY - lastY) * 0.005));
+    lastX = e.clientX; lastY = e.clientY; userTurned = performance.now();
+  });
+  el.addEventListener('pointerup', e => {
+    if (!opened && Math.hypot(e.clientX - downX, e.clientY - downY) < 8) openCase();
+    dragging = false; if (opened) el.style.cursor = 'grab';
+  });
+  el.addEventListener('pointercancel', () => { dragging = false; });
+  if (opened || opts.startOpen) openCase();
   addEventListener('pointermove', e => {
     if (dragging) return;
     const r = el.getBoundingClientRect();
@@ -129,7 +165,7 @@ export function mountBook(el, opts = {}) {
   function resize() {
     const w = el.clientWidth, h = el.clientHeight;
     renderer.setSize(w, h, false); camera.aspect = w / h;
-    camera.position.z = w / h < 0.8 ? 13 : 9.5;
+    camera.position.z = w / h < 0.8 ? 14 : 10.5;
     camera.updateProjectionMatrix();
   }
   new ResizeObserver(resize).observe(el); resize();
@@ -150,10 +186,17 @@ export function mountBook(el, opts = {}) {
     const px = camera.userData.px || 0, py = camera.userData.py || 0;
     camera.position.x += (px * 1.2 - camera.position.x) * .05;
     camera.position.y += (1.6 - py * .6 - camera.position.y) * .05;
-    camera.lookAt(0, H / 2 - .1, 0);
+    camera.lookAt(0, H / 2 + .1, 0);
     if (!reduce) { dust.rotation.y = t * 0.03; dust.position.y = Math.sin(t * .3) * .1; }
+    if (opened && glass.visible) {
+      const p = Math.min(1, (now - openT) / 1400), e = 1 - Math.pow(1 - p, 3);
+      glass.position.y = GH / 2 + 0.07 + e * 6;
+      glass.rotation.y = e * 0.25;
+      glassMat.opacity = .16 * (1 - e); edgeMat.opacity = .55 * (1 - e); capMat.opacity = 1 - e; streakMat.opacity = .1 * (1 - e);
+      if (p >= 1) glass.visible = false;
+    }
     renderer.render(scene, camera);
-    if (!reduce || dragging) requestAnimationFrame(loop);
+    if (!reduce || dragging || (opened && glass.visible)) requestAnimationFrame(loop);
     else setTimeout(() => requestAnimationFrame(loop), 200);
   }
   requestAnimationFrame(loop);
