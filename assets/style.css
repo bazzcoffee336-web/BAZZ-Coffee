@@ -134,3 +134,5 @@ footer ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
 .book-card span{display:block;color:#55534E;font-size:15px;margin-bottom:14px}
 .book-card em{font-style:normal;font-weight:700;color:var(--indigo)}
 @media (max-width:900px){.shelf{grid-template-columns:1fr}}
+
+.brand img{width:34px;height:34px;border-radius:50%;box-shadow:0 0 0 1.5px var(--gold)}
