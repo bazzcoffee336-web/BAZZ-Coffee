@@ -124,3 +124,13 @@ footer ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
 .hint{background:rgba(12,15,26,.6);border:1px solid rgba(201,180,143,.35);padding:8px 14px;border-radius:99px;pointer-events:none;white-space:nowrap;transition:opacity .4s}
 .stage3d{touch-action:pan-y}
 .stage3d.opened{touch-action:none}
+
+/* collection shelf */
+.shelf{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;margin-top:40px}
+.book-card{display:flex;gap:26px;align-items:center;background:#fff;border-radius:22px;padding:24px;text-decoration:none;color:var(--ink);box-shadow:0 24px 60px -36px rgba(31,36,51,.5);transition:transform .5s var(--ease)}
+.book-card:hover{transform:translateY(-6px)}
+.book-card img{width:130px;height:auto;flex:none;border-radius:6px;box-shadow:8px 14px 30px -10px rgba(0,0,0,.5)}
+.book-card b{display:block;font:400 26px/1.1 var(--serif);color:var(--navy);margin-bottom:8px}
+.book-card span{display:block;color:#55534E;font-size:15px;margin-bottom:14px}
+.book-card em{font-style:normal;font-weight:700;color:var(--indigo)}
+@media (max-width:900px){.shelf{grid-template-columns:1fr}}
