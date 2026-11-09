@@ -182,7 +182,8 @@ form label{flex-basis:100%;font:400 12px/1 var(--mono);letter-spacing:.1em;text-
 input[type=email]{flex:1 1 220px;min-height:50px;border:1.5px solid #A9A398;background:var(--canvas);border-radius:999px;padding:0 22px;font:400 16px var(--body);color:var(--ink)}
 input[type=email]:focus{outline:none;border-color:var(--accent)}
 .ok{margin:18px 0 0;font-weight:600;opacity:0;transition:opacity .6s var(--ease-out)}
-form.sent + .ok{opacity:1}
+.reveal .ok{opacity:0}
+.reveal form.sent + .ok{opacity:1}
 footer{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:20px;padding:40px clamp(24px,7vw,110px) 50px;font:400 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
 footer .logo{font-size:22px;text-transform:none;letter-spacing:-.02em;color:var(--ink)}
 footer ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
@@ -211,6 +212,20 @@ footer a{text-decoration:none}
 .cgrid.reveal.in > *:nth-child(4){transition-delay:.36s}.cgrid.reveal.in > *:nth-child(5){transition-delay:.48s}
 @media (max-width:1100px){.cgrid{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:720px){.cgrid{grid-template-columns:1fr 1fr}.candles .banner{aspect-ratio:4/3}}
+
+
+/* cro additions */
+.hero-cta{margin-top:30px}
+.assure{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:34px clamp(24px,7vw,110px);border-bottom:1px solid #D2CDC4;background:var(--panel)}
+.assure div{display:flex;flex-direction:column;gap:4px}
+.assure b{font:600 17px/1.2 var(--display)}
+.assure span{font-size:14px;color:var(--text-secondary)}
+.pick{display:inline-block;vertical-align:middle;margin-left:6px;font:400 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:#F1EFEA;padding:5px 8px;border-radius:99px}
+.bundle{flex-basis:100%;margin:0;font:600 15px/1.3 var(--body);color:var(--accent)}
+.policies{display:grid;grid-template-columns:repeat(4,1fr);gap:0 30px;padding:40px clamp(24px,7vw,110px) 10px}
+.policies summary{font-size:17px}
+.policies p{font-size:15px}
+@media (max-width:900px){.assure,.policies{grid-template-columns:1fr}.assure{gap:16px}}
 
 /* paused / reduced motion */
 body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
@@ -246,6 +261,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
       <p class="kick">Bazz / Everyday basics</p>
       <h1 class="h split" data-fx="drift">Bazz.</h1>
       <p class="h2 split" data-fx="drift">Clothes that keep their shape.</p>
+      <div class="row hero-cta"><a class="btn" href="#shop">Shop tees &amp; candles <span class="arr" aria-hidden="true">&rarr;</span></a></div>
     </div>
     <div class="band b2" data-a="0.27" data-b="0.53">
       <p class="h split" data-fx="weave">Wash it. Wear it. It stays.</p>
@@ -263,6 +279,12 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
     <div class="cue" aria-hidden="true">Scroll<i></i></div>
   </div>
 </header>
+
+<div class="assure" aria-label="Shipping and returns">
+  <div><b>Ships from the USA</b><span>Made to order, delivered in 3 to 7 business days</span></div>
+  <div><b>Free size swap</b><span>Wrong fit? Swap it within 30 days</span></div>
+  <div><b>Sizes that run true</b><span>Chest width listed for every size</span></div>
+</div>
 
 <main id="main" tabindex="-1" style="position:relative">
   <svg class="stitch" id="stitch" aria-hidden="true" preserveAspectRatio="none"><path id="stitchPath"/><circle class="needle" id="needle" r="3.5"/></svg>
@@ -308,15 +330,15 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
     <div class="cards reveal">
       <article class="card">
         <div class="ph"><img src="assets/tee-float.jpg" alt="Oat cotton Everyday Tee" loading="lazy" width="900" height="660"></div>
-        <div class="body"><div class="top"><h3>The Everyday Tee</h3><span class="price">$38</span></div><p>Mid weight. Clean neck. Your new default.</p><a class="btn" href="https://2hjxdw-zj.myshopify.com/products/the-everyday-tee">Buy <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3>The Everyday Tee</h3><span class="price">$38</span></div><p>Mid weight. Clean neck. Your new default.</p><a class="btn" href="#list" data-product="The Everyday Tee">Notify me, $38 <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
       <article class="card">
         <div class="ph"><img src="assets/tee-stack.jpg" alt="Folded Heavy Tee on a stone block" loading="lazy" width="900" height="660"></div>
-        <div class="body"><div class="top"><h3>The Heavy Tee</h3><span class="price">$48</span></div><p>Thick, structured, holds its drape.</p><a class="btn" href="https://2hjxdw-zj.myshopify.com/products/the-heavy-tee">Buy <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3>The Heavy Tee <span class="pick">Our pick</span></h3><span class="price">$48</span></div><p>Thick, structured, holds its drape.</p><a class="btn" href="#list" data-product="The Heavy Tee">Notify me, $48 <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
       <article class="card">
         <div class="ph"><img src="assets/tee-detail.jpg" alt="Close up of brushed cotton fabric" loading="lazy" width="900" height="668"></div>
-        <div class="body"><div class="top"><h3>The Crew</h3><span class="price">$78</span></div><p>Brushed cotton sweatshirt that keeps its cuffs.</p><a class="btn" href="https://2hjxdw-zj.myshopify.com/products/the-crew">Buy <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3>The Crew</h3><span class="price">$78</span></div><p>Brushed cotton sweatshirt that keeps its cuffs.</p><a class="btn" href="#list" data-product="The Crew">Notify me, $78 <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
     </div>
   </section>
@@ -328,28 +350,29 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
         <h2>Slow Hours.</h2>
       </div>
       <p class="lede">Five soy candles for the quiet part of the day. Same calm as the clothes, in a jar.</p>
+      <p class="bundle">Pick any 3 for $75. Save $9.</p>
     </div>
     <div class="banner reveal"><img src="assets/candles-hero.jpg" alt="Five Bazz Slow Hours candles on a stone block in warm window light" loading="lazy" width="1920" height="1072"></div>
     <div class="cards cgrid reveal">
       <article class="card">
         <div class="ph"><img src="assets/candle-1.jpg" alt="Bazz First Light soy candle in an amber jar" loading="lazy" width="800" height="1000"></div>
-        <div class="body"><div class="top"><h3><span class="dot" style="background:#E9E1D2" aria-hidden="true"></span>First Light</h3><span class="price">$28</span></div><p class="notes">Vanilla · Warm milk · Tonka</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3><span class="dot" style="background:#E9E1D2" aria-hidden="true"></span>First Light</h3><span class="price">$28</span></div><p class="notes">Vanilla · Warm milk · Tonka</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me, $28 <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
       <article class="card">
         <div class="ph"><img src="assets/candle-2.jpg" alt="Bazz Slow Sunday soy candle in an amber jar" loading="lazy" width="800" height="1000"></div>
-        <div class="body"><div class="top"><h3><span class="dot" style="background:#C9D1C0" aria-hidden="true"></span>Slow Sunday</h3><span class="price">$28</span></div><p class="notes">Fig · Cedar · Linen</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3><span class="dot" style="background:#C9D1C0" aria-hidden="true"></span>Slow Sunday</h3><span class="price">$28</span></div><p class="notes">Fig · Cedar · Linen</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me, $28 <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
       <article class="card">
         <div class="ph"><img src="assets/candle-3.jpg" alt="Bazz Sea Salt Morning soy candle in an amber jar" loading="lazy" width="800" height="1000"></div>
-        <div class="body"><div class="top"><h3><span class="dot" style="background:#CCD6DD" aria-hidden="true"></span>Sea Salt Morning</h3><span class="price">$28</span></div><p class="notes">Sea salt · White musk</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3><span class="dot" style="background:#CCD6DD" aria-hidden="true"></span>Sea Salt Morning</h3><span class="price">$28</span></div><p class="notes">Sea salt · White musk</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me, $28 <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
       <article class="card">
         <div class="ph"><img src="assets/candle-4.jpg" alt="Bazz Lavender Night soy candle in an amber jar" loading="lazy" width="800" height="1000"></div>
-        <div class="body"><div class="top"><h3><span class="dot" style="background:#D7CEDD" aria-hidden="true"></span>Lavender Night</h3><span class="price">$28</span></div><p class="notes">Lavender · Chamomile</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3><span class="dot" style="background:#D7CEDD" aria-hidden="true"></span>Lavender Night</h3><span class="price">$28</span></div><p class="notes">Lavender · Chamomile</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me, $28 <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
       <article class="card">
         <div class="ph"><img src="assets/candle-5.jpg" alt="Bazz Amber Hour soy candle in an amber jar" loading="lazy" width="800" height="1000"></div>
-        <div class="body"><div class="top"><h3><span class="dot" style="background:#2A2726" aria-hidden="true"></span>Amber Hour</h3><span class="price">$32</span></div><p class="notes">Amber · Oud · Smoke</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+        <div class="body"><div class="top"><h3><span class="dot" style="background:#2A2726" aria-hidden="true"></span>Amber Hour</h3><span class="price">$32</span></div><p class="notes">Amber · Oud · Smoke</p><p>9 oz soy wax. About 50 hours of slow burn.</p><a class="btn" href="#list">Notify me, $32 <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       </article>
     </div>
   </section>
@@ -386,8 +409,8 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
   <section id="list" class="cta">
     <div class="reveal">
       <p class="label">06 / The list</p>
-      <h2>Find your shirt.</h2>
-      <p class="lede">Join the list for new drops and restocks.</p>
+      <h2>Ordering opens soon.</h2>
+      <p class="lede">Leave your email and you will be the first to know when tees and candles go on sale. One email, no spam.</p>
       <form id="form" novalidate>
         <label for="email">Your email</label>
         <input id="email" type="email" required placeholder="you@email.com" autocomplete="email">
@@ -399,9 +422,16 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
   </section>
 </main>
 
+<section id="policies" class="policies" aria-label="Store policies">
+  <details><summary>Shipping</summary><p>Every order is made to order and ships from the USA. Production takes 2 to 5 business days, then delivery takes 3 to 7 business days. You get a tracking link by email.</p></details>
+  <details><summary>Returns and size swaps</summary><p>Wrong size? Swap it free within 30 days of delivery. Items that arrive damaged or misprinted are replaced at no cost. Send a photo to our email below.</p></details>
+  <details><summary>Privacy</summary><p>We use your email only to send order updates and, if you joined the list, news about Bazz. We never sell your data. Ask us anytime to delete it.</p></details>
+  <details><summary>Contact</summary><p>Questions about an order or a size? Email <a href="mailto:bazzcoffee336@gmail.com">bazzcoffee336@gmail.com</a>. We reply within one business day.</p></details>
+</section>
+
 <footer>
   <span class="logo">Bazz</span>
-  <ul><li><a href="#shop">Shop</a></li><li><a href="#fit">Fit</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <ul><li><a href="#shop">Shop</a></li><li><a href="#candles">Candles</a></li><li><a href="#faq">FAQ</a></li><li><a href="#policies">Shipping &amp; returns</a></li><li><a href="mailto:bazzcoffee336@gmail.com">Contact</a></li></ul>
   <span>&copy; 2026 Bazz</span>
 </footer>
 
@@ -567,8 +597,22 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
   form.addEventListener('submit', e => {
     e.preventDefault();
     if (!email.checkValidity() || !email.value) { email.focus(); email.setAttribute('aria-invalid', 'true'); return; }
-    email.removeAttribute('aria-invalid'); form.classList.add('sent'); form.querySelector('button').textContent = 'Joined';
+    email.removeAttribute('aria-invalid');
+    const btn = form.querySelector('button'); btn.disabled = true; btn.textContent = 'Joining...';
+    let wanted = '';
+    try { wanted = sessionStorage.getItem('bazz-wanted') || ''; } catch (_) {}
+    fetch('https://formsubmit.co/ajax/bazzcoffee336@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email: email.value, interested_in: wanted || 'general list', _subject: 'New Bazz signup', _template: 'table', _captcha: 'false' })
+    }).then(r => { if (!r.ok) throw new Error(); form.classList.add('sent'); btn.textContent = 'Joined'; })
+      .catch(() => { btn.disabled = false; btn.textContent = 'Try again'; });
   });
+  // remember which product a visitor tapped "Notify me" on
+  document.querySelectorAll('a.btn[href="#list"]').forEach(a => a.addEventListener('click', () => {
+    const card = a.closest('.card'); const t = card && card.querySelector('h3');
+    if (t) { try { sessionStorage.setItem('bazz-wanted', t.textContent.replace('Our pick', '').trim()); } catch (_) {} }
+  }));
 
   // pause animations on hidden tab
   document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
