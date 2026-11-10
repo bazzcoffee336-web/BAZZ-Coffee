@@ -273,3 +273,5 @@ body.aura-go::after{transition-duration:.45s;background:radial-gradient(ellipse 
 @keyframes flick{0%{opacity:0}20%{opacity:1}35%{opacity:.2}50%{opacity:1}65%{opacity:.5}80%,100%{opacity:1}}
 .niche:hover .lamp::after{opacity:1}
 @media (prefers-reduced-motion:reduce){.js-lights .lit .lamp{animation:none}}
+
+#stage::before,#stage::after{display:none}
