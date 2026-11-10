@@ -28,7 +28,7 @@
   <header class="hero">
     <div class="stage3d" id="stage" aria-label="3D ebook in a glass case. Press to open the glass, then drag to turn the book." role="button">
       <div class="fallback"><img src="assets/cover-career.jpg" alt="Hired in 30 Days ebook cover"></div>
-      <span class="hint" aria-hidden="true">Click the glass to open it</span>
+      <span class="hint" aria-hidden="true">Click the book to open it</span>
     </div>
     <div>
       <p class="kick">Ebook &middot; PDF &middot; 24 pages</p>
@@ -125,7 +125,7 @@
 
 <script type="module">
   import { mountBook } from './assets/book3d.js';
-  mountBook(document.getElementById('stage'), { cover: 'assets/cover-career.jpg', title: 'Hired in 30 Days', back1: 'Land a better job', back2: 'without applying everywhere' });
+  mountBook(document.getElementById('stage'), { color: '#C8A24A', cover: 'assets/cover-career.jpg', title: 'Hired in 30 Days', back1: 'Land a better job', back2: 'without applying everywhere' });
 </script>
 <script src="assets/site.js"></script>
 </body>
