@@ -162,7 +162,7 @@ export function mountBook(el, opts = {}) {
     if (opened) return; opened = true; openT = performance.now(); el.style.cursor = 'grab';
     setHint(matchMedia('(pointer: coarse)').matches ? 'Drag to turn the book' : 'Drag to turn the book');
     el.classList.add('opened');
-    if (opts.color) { document.documentElement.style.setProperty('--aura', opts.color); document.body.classList.add('aura-on'); }
+
   }
   el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCase(); } });
   el.addEventListener('pointerdown', e => {
@@ -180,7 +180,13 @@ export function mountBook(el, opts = {}) {
     dragging = false; if (opened) el.style.cursor = 'grab';
   });
   el.addEventListener('pointercancel', () => { dragging = false; });
-  if (opened || opts.startOpen) openCase();
+  // no glass, stand or spotlight: just the book, ready to turn
+  scene.remove(glass, base, beamMesh, pool, spot);
+  openCase(); glass.visible = false; base.visible = false; beamUni.uI.value = 1;
+  key.intensity = 140; if (hemi) hemi.intensity = .45;
+  const aura = () => { if (opts.color) { document.documentElement.style.setProperty('--aura', opts.color); document.body.classList.add('aura-on'); } };
+  el.addEventListener('pointerdown', aura, { once: true });
+  el.addEventListener('keydown', aura, { once: true });
   addEventListener('pointermove', e => {
     if (dragging) return;
     const r = el.getBoundingClientRect();
