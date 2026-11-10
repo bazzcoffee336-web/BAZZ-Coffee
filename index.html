@@ -42,23 +42,9 @@
         <span><b>220</b>Prompts, scripts and checklists</span>
       </div>
     </div>
-    <div class="stage3d shelf" id="shelf" aria-label="The five BAZZ ebooks on a lit stage. Click a book to open its page." role="img">
-      <div class="fallback shelf-fallback">
-        <img src="assets/cover.jpg" alt=""><img src="assets/cover-money.jpg" alt=""><img src="assets/cover-calm.jpg" alt=""><img src="assets/cover-career.jpg" alt=""><img src="assets/cover-fit.jpg" alt="">
-      </div>
-      <span class="hint" aria-hidden="true">Click a book to open it</span>
-    </div>
-  </header>
-
-  <section id="about" class="light about">
-    <div class="about-grid">
-      <div class="about-mark reveal"><img src="assets/logo.png" alt="The BAZZ eagle logo" width="800" height="800" loading="lazy"></div>
-      <div>
-        <p class="label reveal">What BAZZ does</p>
-        <h2 class="reveal">Bazz means eagle.</h2>
-        <p class="lede reveal">An eagle sees the whole field from above, then goes straight for what matters. That's how we write. We look at what people really struggle with, cut everything that doesn't help, and give you the clearest path to a fix.</p>
-        <p class="reveal about-p">No 300-page theory. No fluff. Each BAZZ book is short enough to finish, practical enough to use the same day, and honest about what it can and can't do.</p>
-      </div>
+    <div class="stage3d medal" id="medal" aria-label="The BAZZ eagle logo as a gold medallion under a spotlight. Drag to turn it." role="img">
+      <div class="fallback"><img src="assets/eagle-512.png" alt=""></div>
+      <span class="hint" aria-hidden="true">Drag to turn the eagle</span>
     </div>
     <div class="pillars">
       <article class="reveal">
@@ -140,14 +126,8 @@
 </footer>
 
 <script type="module">
-  import { mountShelf } from './assets/shelf3d.js';
-  mountShelf(document.getElementById('shelf'), [
-    { cover: 'assets/cover.jpg', title: 'AI for Beginners', color: '#0F1B2D', ink: '#14B8C9', url: 'product.html' },
-    { cover: 'assets/cover-money.jpg', title: 'Paycheck to Peace', color: '#6B1E3A', ink: '#E8B9A2', url: 'money.html' },
-    { cover: 'assets/cover-calm.jpg', title: 'Quiet Mind, Deep Sleep', color: '#1E2152', ink: '#B7A6F2', url: 'calm.html' },
-    { cover: 'assets/cover-career.jpg', title: 'Hired in 30 Days', color: '#12372A', ink: '#C8A24A', url: 'career.html' },
-    { cover: 'assets/cover-fit.jpg', title: '20-Minute Home Workout', color: '#1E1E20', ink: '#FF6A2B', url: 'fitness.html' },
-  ]);
+  import { mountLogo } from './assets/logo3d.js';
+  mountLogo(document.getElementById('medal'));
 </script>
 <script>
   // clicking a book: the page takes that book's colour, then opens its page
