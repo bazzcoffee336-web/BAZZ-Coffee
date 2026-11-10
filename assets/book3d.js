@@ -76,11 +76,12 @@ export function mountBook(el, opts = {}) {
 
   // stage
   const stageMat = new THREE.MeshStandardMaterial({ color: 0x1b2032, roughness: .35, metalness: .4 });
+  const base = new THREE.Group(); scene.add(base);
   const stage = new THREE.Mesh(new THREE.CylinderGeometry(2.6, 2.75, 0.18, 96), stageMat);
-  stage.position.y = -0.03; stage.receiveShadow = true; scene.add(stage);
+  stage.position.y = -0.03; stage.receiveShadow = true; base.add(stage);
   const rim = new THREE.Mesh(new THREE.TorusGeometry(2.62, 0.022, 12, 160),
     new THREE.MeshStandardMaterial({ color: 0xC9B48F, emissive: 0xC9B48F, emissiveIntensity: .6, metalness: .9, roughness: .25 }));
-  rim.rotation.x = Math.PI / 2; rim.position.y = 0.065; scene.add(rim);
+  rim.rotation.x = Math.PI / 2; rim.position.y = 0.065; base.add(rim);
   const floor = new THREE.Mesh(new THREE.CircleGeometry(30, 64), new THREE.MeshStandardMaterial({ color: 0x0c0f1a, roughness: .9 }));
   floor.rotation.x = -Math.PI / 2; floor.position.y = -0.12; floor.receiveShadow = true; // floor not added: page background shows through
 
@@ -123,20 +124,42 @@ export function mountBook(el, opts = {}) {
   glass.position.y = GH / 2 + 0.07; scene.add(glass);
   // gold base plate under the case
   const plate = new THREE.Mesh(new THREE.BoxGeometry(GW + 0.12, 0.05, GD + 0.12), capMat.clone());
-  plate.position.y = 0.09; scene.add(plate);
+  plate.position.y = 0.09; base.add(plate);
+
+  // spotlight that switches on once the glass and stand are gone
+  const accent = new THREE.Color(opts.color || '#C9B48F');
+  const beamCol = accent.clone().lerp(new THREE.Color(0xffffff), .45);
+  const spot = new THREE.SpotLight(beamCol, 0, 30, Math.PI / 9, .35, 1.4);
+  spot.position.set(0, 10, 1.2); spot.target = pivot; spot.castShadow = true; spot.shadow.mapSize.set(1024, 1024);
+  scene.add(spot);
+  const beamUni = { uCol: { value: beamCol }, uI: { value: 0 } };
+  const beamMesh = new THREE.Mesh(new THREE.ConeGeometry(2.3, 10, 64, 1, true),
+    new THREE.ShaderMaterial({ uniforms: beamUni, transparent: true, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending,
+      vertexShader: `varying float vY; varying float vF; void main(){ vY = uv.y; vec3 n = normalize(normalMatrix*normal); vec4 mv = modelViewMatrix*vec4(position,1.);
+        vF = pow(abs(dot(n, normalize(-mv.xyz))), 1.6); gl_Position = projectionMatrix*mv; }`,
+      fragmentShader: `uniform vec3 uCol; uniform float uI; varying float vY; varying float vF;
+        void main(){ float a = pow(vY, 1.3) * vF * .35 * uI; gl_FragColor = vec4(uCol * a, a); }` }));
+  beamMesh.position.set(0, 5, 0.6); beamMesh.rotation.x = -0.12; beamMesh.visible = false; scene.add(beamMesh);
+  const poolC = document.createElement('canvas'); poolC.width = poolC.height = 256;
+  { const g = poolC.getContext('2d'), r = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+    r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(.4, 'rgba(255,255,255,.35)'); r.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = r; g.fillRect(0, 0, 256, 256); }
+  const poolMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(poolC), color: beamCol, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+  const pool = new THREE.Mesh(new THREE.PlaneGeometry(5.5, 5.5), poolMat); pool.rotation.x = -Math.PI / 2; pool.position.y = 0.01; scene.add(pool);
+  const hemi = scene.children.find(o => o.isHemisphereLight);
 
   // interaction: click the glass to lift it, then drag the book
   let opened = false, openT = 0;
   let targetY = -0.45, targetX = 0, rotY = -0.45, rotX = 0, dragging = false, lastX = 0, lastY = 0, userTurned = 0, downX = 0, downY = 0;
   const hint = el.querySelector('.hint');
   const setHint = txt => { if (hint) hint.textContent = txt; };
-  setHint(matchMedia('(pointer: coarse)').matches ? 'Tap the glass to open it' : 'Click the glass to open it');
+  setHint(matchMedia('(pointer: coarse)').matches ? 'Tap the book to open it' : 'Click the book to open it');
   el.style.cursor = 'pointer';
   el.setAttribute('tabindex', '0');
   function openCase() {
     if (opened) return; opened = true; openT = performance.now(); el.style.cursor = 'grab';
     setHint(matchMedia('(pointer: coarse)').matches ? 'Drag to turn the book' : 'Drag to turn the book');
     el.classList.add('opened');
+    if (opts.color) { document.documentElement.style.setProperty('--aura', opts.color); document.body.classList.add('aura-on'); }
   }
   el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCase(); } });
   el.addEventListener('pointerdown', e => {
@@ -195,8 +218,23 @@ export function mountBook(el, opts = {}) {
       glassMat.opacity = .16 * (1 - e); edgeMat.opacity = .55 * (1 - e); capMat.opacity = 1 - e; streakMat.opacity = .1 * (1 - e);
       if (p >= 1) glass.visible = false;
     }
+    let showing = false;
+    if (opened && base.visible) {
+      const p = Math.max(0, Math.min(1, (now - openT - 500) / 1100)), e = p * p * (3 - 2 * p);
+      base.position.y = -e * 2.2; base.scale.setScalar(1 - e * .6);
+      if (p >= 1) base.visible = false; showing = true;
+    }
+    if (opened && beamUni.uI.value < 1) {
+      const p = Math.max(0, Math.min(1, (now - openT - 1500) / 900));
+      const flick = p < .5 ? (Math.sin(p * 60) > 0 ? 1 : .25) * p : p;
+      beamMesh.visible = p > 0; beamUni.uI.value = p >= 1 ? 1 : flick;
+      spot.intensity = 320 * beamUni.uI.value; poolMat.opacity = .55 * beamUni.uI.value;
+      key.intensity = 120 * (1 - .55 * p); rimL.color.copy(new THREE.Color(0x6f84ff).lerp(accent, p));
+      if (hemi) hemi.intensity = .35 * (1 - .4 * p);
+      showing = true;
+    }
     renderer.render(scene, camera);
-    if (!reduce || dragging || (opened && glass.visible)) requestAnimationFrame(loop);
+    if (!reduce || dragging || (opened && glass.visible) || showing) requestAnimationFrame(loop);
     else setTimeout(() => requestAnimationFrame(loop), 200);
   }
   requestAnimationFrame(loop);

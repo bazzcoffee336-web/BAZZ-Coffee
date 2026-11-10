@@ -184,3 +184,13 @@ footer ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
 @media (max-width:640px){.collection{grid-template-columns:repeat(2,1fr);gap:12px}.steps{grid-template-columns:1fr}.bk b{font-size:17px}.bk-body{padding:12px}}
 .stage3d.shelf canvas{-webkit-mask-image:none;mask-image:none}
 .home-hero{grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr)}.home-hero>*{min-width:0}@media (max-width:900px){.home-hero{grid-template-columns:minmax(0,1fr)}}
+
+/* aura: the page takes the colour of the opened book */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;mix-blend-mode:screen;opacity:0;transition:opacity 1.6s var(--ease);
+  background:radial-gradient(ellipse 55% 60% at 72% 40%,color-mix(in srgb,var(--aura,#C9B48F) 38%,transparent),transparent 70%),radial-gradient(ellipse 50% 45% at 8% 95%,color-mix(in srgb,var(--aura,#C9B48F) 22%,transparent),transparent 70%)}
+body.aura-on::after{opacity:1;animation:aura 7s ease-in-out infinite alternate}
+@keyframes aura{to{transform:scale(1.08) translate(-1.5%,1%)}}
+body.aura-on{--gold:var(--aura)}
+body.aura-on .btn:hover{box-shadow:0 16px 40px -12px var(--aura)}
+.stage3d::before{transition:opacity .8s}.stage3d.opened::before{opacity:0}
+@media (prefers-reduced-motion:reduce){body.aura-on::after{animation:none}}
