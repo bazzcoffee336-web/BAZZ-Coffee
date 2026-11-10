@@ -164,7 +164,7 @@ export function mountBook(el, opts = {}) {
 
   function resize() {
     const w = el.clientWidth, h = el.clientHeight;
-    renderer.setSize(w, h, false); camera.aspect = w / h;
+    renderer.setSize(w, h, false); renderer.domElement.style.setProperty('width', w + 'px', 'important'); renderer.domElement.style.setProperty('height', h + 'px', 'important'); camera.aspect = w / h;
     camera.position.z = w / h < 0.8 ? 14 : 10.5;
     camera.updateProjectionMatrix();
   }
