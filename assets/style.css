@@ -275,3 +275,40 @@ body.aura-go::after{transition-duration:.45s;background:radial-gradient(ellipse 
 @media (prefers-reduced-motion:reduce){.js-lights .lit .lamp{animation:none}}
 
 #stage::before,#stage::after{display:none}
+
+/* ---- rock wall gallery (full width, glossy floor, title over the floor) ---- */
+.night-wall.rock{padding:0;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-start;overflow:hidden;
+  background:linear-gradient(180deg,rgba(6,6,8,.55),rgba(6,6,8,.15) 30%,rgba(6,6,8,.35) 62%,#050506 63%),url(rock.jpg) center/cover,#141416}
+.night-wall.rock::before{display:none}
+.rock .wall{max-width:1320px;width:100%;margin:clamp(90px,11vh,130px) auto 0;padding:0 clamp(20px,4vw,56px);gap:clamp(16px,2.6vw,40px);
+  -webkit-box-reflect:below 6px linear-gradient(transparent 52%,rgba(255,255,255,.22))}
+/* niche cut into the rock: dark hollow with a bevelled lip */
+.rock .nic{aspect-ratio:3/5.2;border-radius:2px;background:linear-gradient(180deg,#141416,#0d0d0f 55%,#09090a);
+  box-shadow:inset 0 30px 40px -12px #000,inset 22px 0 30px -14px #000,inset -22px 0 30px -14px #000,inset 0 -10px 16px -8px rgba(255,255,255,.05),
+    0 0 0 1px rgba(0,0,0,.9),0 0 0 3px rgba(150,140,128,.12),0 0 0 4px rgba(0,0,0,.6),0 30px 50px -20px rgba(0,0,0,.9)}
+.rock .nic::before{opacity:.35}
+.rock .nic img.refl{display:none}
+/* name + price appear in the niche, below the book */
+.rock .nic-info{position:absolute;left:0;right:0;bottom:0;padding:0 8% 6%;gap:2px;text-align:center;align-items:center;opacity:0;transform:translateY(6px);transition:opacity .5s var(--ease),transform .5s var(--ease);z-index:3}
+.rock .niche{position:relative}
+.rock .niche:hover .nic-info,.rock .niche:focus-visible .nic-info{opacity:1;transform:none}
+.rock .nic-info b{font:400 clamp(13px,1.1vw,16px)/1.15 var(--serif);text-shadow:0 2px 8px #000}
+.rock .nic-info em{font-size:13px;margin:0}
+.rock .nic-info span{display:none}
+.rock .nic img:not(.refl){bottom:16%}
+.rock .glint{bottom:16%;top:auto;height:calc(64% * 1.414 * 3 / 5.2)}
+/* glossy black floor under the wall */
+.rock .floor{flex:1;min-height:120px;margin-top:-1px;background:linear-gradient(180deg,rgba(255,255,255,.035),transparent 30%)}
+.rock .wall-copy{position:absolute;left:clamp(20px,5vw,72px);bottom:clamp(28px,6vh,60px);max-width:520px;z-index:2}
+.rock .wall-copy .label{margin:0 0 10px}
+.rock .wall-copy h2{font:400 clamp(30px,3.6vw,54px)/1.05 var(--serif);margin:0 0 10px;text-shadow:0 4px 24px #000}
+.rock .wall-copy h2 em{font-style:italic;color:var(--gold)}
+.rock .wall-copy p:not(.label){font-size:15px;color:#B9B5C6;margin:0;max-width:40ch}
+.rock .wall-hint{position:absolute;right:clamp(20px,5vw,72px);bottom:clamp(28px,6vh,60px);margin:0;z-index:2}
+@media (hover:none){.rock .nic-info{opacity:1;transform:none}}
+@media (max-width:900px){.rock .wall{grid-template-columns:repeat(3,1fr);-webkit-box-reflect:none}
+  .night-wall.rock{background:linear-gradient(180deg,rgba(6,6,8,.55),rgba(6,6,8,.25) 40%,rgba(6,6,8,.6)),url(rock.jpg) center/cover,#141416}
+  .rock .floor{display:none}.rock .wall-copy{position:relative;left:auto;bottom:auto;padding:36px clamp(20px,4vw,56px) 16px}
+  .rock .wall-hint{position:relative;right:auto;bottom:auto;padding:0 clamp(20px,4vw,56px) 40px}}
+@media (max-width:640px){.rock .wall{grid-template-columns:repeat(2,1fr);gap:14px;margin-top:84px}}
+@media (max-width:900px){.rock .nic-info{position:static;opacity:1;transform:none;padding:10px 0 0}.rock .nic-info b{font-size:15px}.rock .nic img:not(.refl){bottom:12%}.rock .glint{bottom:12%}}
