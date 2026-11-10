@@ -149,6 +149,17 @@
     { cover: 'assets/cover-fit.jpg', title: '20-Minute Home Workout', color: '#1E1E20', ink: '#FF6A2B', url: 'fitness.html' },
   ]);
 </script>
+<script>
+  // clicking a book: the page takes that book's colour, then opens its page
+  const AURA = { 'product.html': '#14B8C9', 'money.html': '#D9A38B', 'calm.html': '#B7A6F2', 'career.html': '#C8A24A', 'fitness.html': '#FF6A2B' };
+  window.bazzGo = url => {
+    document.documentElement.style.setProperty('--aura', AURA[url] || '#C9B48F'); document.body.classList.add('aura-on', 'aura-go');
+    setTimeout(() => { location.href = url; }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 650);
+  };
+  document.querySelectorAll('.bk').forEach(a => a.addEventListener('click', e => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return; e.preventDefault(); bazzGo(a.getAttribute('href'));
+  }));
+</script>
 <script src="assets/site.js"></script>
 </body>
 </html>

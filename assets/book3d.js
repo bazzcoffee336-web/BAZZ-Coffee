@@ -1,27 +1,30 @@
 // 3D book on a lit stage. Usage: mountBook(containerEl, { interactive, autoRotate })
 import * as THREE from './three.module.min.js';
 
-function spineTexture(title) {
+function spineTexture(title, bg, ink) {
   const c = document.createElement('canvas'); c.width = 128; c.height = 1024;
   const g = c.getContext('2d');
   const grd = g.createLinearGradient(0, 0, 128, 0);
-  grd.addColorStop(0, '#141826'); grd.addColorStop(.5, '#26304f'); grd.addColorStop(1, '#141826');
+  grd.addColorStop(0, shade(bg, -.35)); grd.addColorStop(.5, shade(bg, .15)); grd.addColorStop(1, shade(bg, -.35));
   g.fillStyle = grd; g.fillRect(0, 0, 128, 1024);
-  g.fillStyle = '#C9B48F'; g.fillRect(0, 70, 128, 3); g.fillRect(0, 950, 128, 3);
+  g.fillStyle = ink; g.fillRect(0, 70, 128, 3); g.fillRect(0, 950, 128, 3);
   g.save(); g.translate(76, 512); g.rotate(Math.PI / 2);
   g.fillStyle = '#F6F2EA'; g.font = '600 46px Georgia, serif'; g.textAlign = 'center';
   g.fillText(title || 'AI for Beginners', 0, 0);
   g.restore();
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
-function backTexture(l1, l2) {
+function shade(hex, f) {
+  const c = new THREE.Color(hex); return '#' + (f < 0 ? c.multiplyScalar(1 + f) : c.lerp(new THREE.Color(0xffffff), f)).getHexString();
+}
+function backTexture(l1, l2, bg, ink) {
   const c = document.createElement('canvas'); c.width = 724; c.height = 1024;
   const g = c.getContext('2d');
   const grd = g.createLinearGradient(0, 0, 724, 1024);
-  grd.addColorStop(0, '#1F2433'); grd.addColorStop(1, '#2E3A6B');
+  grd.addColorStop(0, shade(bg, -.3)); grd.addColorStop(1, shade(bg, .12));
   g.fillStyle = grd; g.fillRect(0, 0, 724, 1024);
-  g.strokeStyle = 'rgba(201,180,143,.6)'; g.lineWidth = 3; g.strokeRect(40, 40, 644, 944);
-  g.fillStyle = '#C9B48F'; g.font = '600 40px Georgia, serif'; g.textAlign = 'center';
+  g.strokeStyle = ink; g.globalAlpha = .7; g.lineWidth = 3; g.strokeRect(40, 40, 644, 944); g.globalAlpha = 1;
+  g.fillStyle = ink; g.font = '600 40px Georgia, serif'; g.textAlign = 'center';
   g.fillText(l1 || '9 problems. 9 fixes.', 362, 430);
   g.fillStyle = '#F6F2EA'; g.font = '28px Arial, sans-serif';
   g.fillText(l2 || 'Plus 100 copy-paste prompts', 362, 490);
@@ -64,11 +67,11 @@ export function mountBook(el, opts = {}) {
   const mat = (map, rough = .55) => new THREE.MeshStandardMaterial({ map, roughness: rough, metalness: .05 });
   const mats = [
     mat(pagesTexture(true), .9),   // +x right edge (pages)
-    mat(spineTexture(opts.title), .45),      // -x spine
+    mat(spineTexture(opts.title, opts.bg || '#1F2433', opts.color || '#C9B48F'), .45),      // -x spine
     mat(pagesTexture(false), .9),  // +y top
     mat(pagesTexture(false), .9),  // -y bottom
     mat(cover, .38),               // +z front
-    mat(backTexture(opts.back1, opts.back2), .45),       // -z back
+    mat(backTexture(opts.back1, opts.back2, opts.bg || '#1F2433', opts.color || '#C9B48F'), .45),       // -z back
   ];
   const book = new THREE.Mesh(new THREE.BoxGeometry(W, H, D), mats);
   book.castShadow = true;
