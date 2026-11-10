@@ -328,3 +328,12 @@ body.aura-go::after{transition-duration:.45s;background:radial-gradient(ellipse 
   radial-gradient(ellipse 34% 30% at 50% 0%,rgba(255,244,226,.7),rgba(255,236,206,.25) 55%,transparent 100%),
   radial-gradient(ellipse 70% 75% at 50% 0%,color-mix(in srgb,var(--c) 22%,rgba(255,230,196,.16)),transparent 78%),
   radial-gradient(ellipse 42% 6% at 50% 84%,rgba(255,236,206,.4),transparent 80%)}
+
+/* ---- blend the cream sections into the stone wall instead of a hard line ---- */
+.night-wall.rock{padding-bottom:120px}
+.night-wall.rock::before,.night-wall.rock::after{content:"";display:block;position:absolute;left:0;right:0;height:150px;pointer-events:none;z-index:4;mix-blend-mode:normal;opacity:1;background-image:none}
+.night-wall.rock::before{top:0;background:linear-gradient(180deg,var(--cream) 0%,color-mix(in srgb,var(--cream) 82%,#2a2724) 18%,color-mix(in srgb,var(--cream) 45%,#1d1b19) 45%,color-mix(in srgb,var(--cream) 14%,transparent) 75%,transparent)}
+.night-wall.rock::after{bottom:0;background:linear-gradient(0deg,var(--cream) 0%,color-mix(in srgb,var(--cream) 82%,#0b0b0c) 18%,color-mix(in srgb,var(--cream) 40%,#070708) 45%,color-mix(in srgb,var(--cream) 10%,transparent) 75%,transparent)}
+.rock .wall{margin-top:clamp(140px,16vh,180px)}
+.rock .wall-copy,.rock .wall-hint{bottom:calc(120px + clamp(10px,3vh,30px))}
+@media (max-width:900px){.rock .wall{margin-top:150px}}
