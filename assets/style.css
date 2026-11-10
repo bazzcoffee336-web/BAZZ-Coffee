@@ -337,3 +337,15 @@ body.aura-go::after{transition-duration:.45s;background:radial-gradient(ellipse 
 .rock .wall{margin-top:clamp(140px,16vh,180px)}
 .rock .wall-copy,.rock .wall-hint{bottom:calc(120px + clamp(10px,3vh,30px))}
 @media (max-width:900px){.rock .wall{margin-top:150px}}
+
+/* ---- warm, soft blend between cream and stone (no grey band) ---- */
+.night-wall.rock{min-height:calc(100svh + 200px);padding-bottom:200px}
+.night-wall.rock::before,.night-wall.rock::after{height:260px;-webkit-mask:none;mask:none;filter:none;transform:none}
+.night-wall.rock::before{top:0;background:linear-gradient(180deg,
+  #F6F2EA 0%,rgba(246,242,234,.94) 12%,rgba(236,226,210,.78) 26%,rgba(205,188,164,.55) 42%,rgba(150,130,108,.32) 60%,rgba(90,76,62,.14) 78%,rgba(40,34,28,0) 100%)}
+.night-wall.rock::after{bottom:0;background:linear-gradient(0deg,
+  #F6F2EA 0%,rgba(246,242,234,.94) 14%,rgba(232,220,202,.76) 30%,rgba(190,170,145,.5) 48%,rgba(120,102,84,.26) 68%,rgba(40,34,28,0) 100%)}
+.rock .wall{margin-top:clamp(190px,22vh,230px)}
+.rock .wall-copy,.rock .wall-hint{bottom:calc(200px + clamp(16px,3vh,32px))}
+@media (max-width:900px){.night-wall.rock{min-height:0;padding-bottom:150px}.night-wall.rock::before,.night-wall.rock::after{height:170px}.rock .wall{margin-top:170px}}
+@media (max-width:900px){.rock .wall-copy,.rock .wall-hint{bottom:auto}.rock .wall{-webkit-box-reflect:below 0 linear-gradient(transparent,transparent)}}
