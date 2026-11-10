@@ -194,3 +194,4 @@ body.aura-on{--gold:var(--aura)}
 body.aura-on .btn:hover{box-shadow:0 16px 40px -12px var(--aura)}
 .stage3d::before{transition:opacity .8s}.stage3d.opened::before{opacity:0}
 @media (prefers-reduced-motion:reduce){body.aura-on::after{animation:none}}
+body.aura-go::after{transition-duration:.45s;background:radial-gradient(ellipse 90% 80% at 50% 50%,color-mix(in srgb,var(--aura) 55%,transparent),color-mix(in srgb,var(--aura) 18%,transparent) 75%)}

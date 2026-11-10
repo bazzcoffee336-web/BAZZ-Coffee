@@ -84,7 +84,7 @@ export function mountShelf(el, books) {
     wake();
   });
   el.addEventListener('pointerleave', () => { hover = null; px = py = 0; wake(); });
-  el.addEventListener('click', e => { const m = pick(e); if (m) location.href = m.userData.url; });
+  el.addEventListener('click', e => { const m = pick(e); if (m) (window.bazzGo || (u => location.href = u))(m.userData.url); });
 
   function resize() {
     const w = el.clientWidth, h = el.clientHeight; renderer.setSize(w, h); renderer.domElement.style.setProperty('width', w + 'px', 'important'); renderer.domElement.style.setProperty('height', h + 'px', 'important');
