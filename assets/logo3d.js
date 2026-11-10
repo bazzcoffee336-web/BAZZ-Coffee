@@ -88,6 +88,8 @@ export function mountLogo(el, opts = {}) {
   const dust = new THREE.Points(pg, new THREE.PointsMaterial({ color: 0xF2DDA8, size: .03, transparent: true, opacity: .75, depthWrite: false }));
   scene.add(dust);
 
+  if (opts.bare) { beam.visible = false; pool.visible = false; dust.visible = false; }
+
   // interaction: drag to spin (with momentum); otherwise the coin follows the mouse a little
   let rotY = opts.rotY ?? -0.35, rotX = 0, vel = 0, dragging = false, lastX = 0, lastY = 0, tiltX = 0, tiltY = 0, userT = 0;
   el.style.cursor = 'grab'; el.style.touchAction = 'pan-y';
