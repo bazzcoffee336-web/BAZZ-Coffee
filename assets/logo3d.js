@@ -89,7 +89,7 @@ export function mountLogo(el, opts = {}) {
   scene.add(dust);
 
   // interaction: drag to spin (with momentum); otherwise the coin follows the mouse a little
-  let rotY = -0.35, rotX = 0, vel = 0, dragging = false, lastX = 0, lastY = 0, tiltX = 0, tiltY = 0, userT = 0;
+  let rotY = opts.rotY ?? -0.35, rotX = 0, vel = 0, dragging = false, lastX = 0, lastY = 0, tiltX = 0, tiltY = 0, userT = 0;
   el.style.cursor = 'grab'; el.style.touchAction = 'pan-y';
   el.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; vel = 0; el.setPointerCapture(e.pointerId); el.style.cursor = 'grabbing'; wake(); });
   el.addEventListener('pointermove', e => {
