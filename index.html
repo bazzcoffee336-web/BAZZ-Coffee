@@ -21,8 +21,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<script>try{if(sessionStorage.getItem('bazz-welcome'))document.documentElement.classList.add('welcomed')}catch(e){}</script>
 </head>
 <body>
+<div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+  <div class="welcome-coin" id="welcome-coin" tabindex="0" role="button" aria-label="Enter BAZZ"></div>
+  <p class="welcome-title" id="welcome-title">Welcome to <b>BAZZ</b></p>
+  <p class="welcome-hint"><span class="hint-fine">Click on the coin</span><span class="hint-touch">Tap on the coin</span></p>
+</div>
 <a class="skip" href="#main">Skip to content</a>
 <nav id="nav">
   <a class="brand" href="index.html"><img src="assets/eagle.png" alt="" width="34" height="34">BAZZ</a>
@@ -167,6 +173,24 @@
 <script type="module">
   import { mountLogo } from './assets/logo3d.js';
   mountLogo(document.getElementById('medal'));
+  // welcome screen: the coin is the door to the home page
+  const welcome = document.getElementById('welcome');
+  if (welcome && !document.documentElement.classList.contains('welcomed')) {
+    const coin = document.getElementById('welcome-coin');
+    document.documentElement.classList.add('welcome-open');
+    mountLogo(coin, { rotY: -0.2 });
+    let x = 0, y = 0, done = false;
+    const enter = () => {
+      if (done) return; done = true;
+      try { sessionStorage.setItem('bazz-welcome', '1'); } catch (e) {}
+      welcome.classList.add('leaving');
+      const fast = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(() => { document.documentElement.classList.remove('welcome-open'); document.documentElement.classList.add('welcomed'); welcome.remove(); }, fast ? 0 : 1100);
+    };
+    coin.addEventListener('pointerdown', e => { x = e.clientX; y = e.clientY; });
+    coin.addEventListener('pointerup', e => { if (Math.hypot(e.clientX - x, e.clientY - y) < 10) enter(); });
+    coin.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enter(); } });
+  }
 </script>
 <script>
   // clicking a book: the page takes that book's colour, then opens its page
