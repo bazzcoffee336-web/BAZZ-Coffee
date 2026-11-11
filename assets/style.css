@@ -465,3 +465,4 @@ body{background:
 .outcome .ticks li{color:#3A3B45;border-bottom-color:rgba(35,36,44,.1)}
 .outcome .ticks li::before{border-color:var(--book-ink)}
 .outcome-box{background:#fff;border:1px solid rgba(35,36,44,.08);box-shadow:0 20px 50px -30px rgba(20,25,46,.35)}
+.outcome{border-bottom:0}
