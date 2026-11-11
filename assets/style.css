@@ -375,3 +375,28 @@ body.aura-go::after{transition-duration:.45s;background:radial-gradient(ellipse 
 /* ---- audit fixes: comfortable tap targets for menu and footer links ---- */
 nav ul a:not(.btn),footer a{display:inline-flex;align-items:center;min-height:40px;padding:0 4px}
 .buy a[href^="mailto"],.promise a[href^="mailto"],details a[href^="mailto"]{display:inline-block;padding:6px 0}
+
+/* ==== unslop polish pass ==== */
+/* 1 type: sentence-case labels, calm tracking (no shouting uppercase) */
+nav ul a{font:500 14px var(--sans);letter-spacing:0;text-transform:none}
+.kick,.label{font:500 14px var(--sans);letter-spacing:.01em;text-transform:none}
+.meta span,.pages figcaption,.wall-hint{font:400 13px var(--sans);letter-spacing:0;text-transform:none}
+.meta b{font-variant-numeric:tabular-nums}
+.bk-tag,.niche .bk-tag{font:500 13px var(--sans);letter-spacing:0;text-transform:none}
+.hint{font:400 13px var(--sans);letter-spacing:0;text-transform:none}
+.welcome-hint{font:400 15px var(--sans);letter-spacing:0;text-transform:none}
+/* 2 no italic emphasis: gold colour carries it */
+.hero h1 em,.rock .wall-copy h2 em{font-style:normal}
+/* 3 no coloured glow on buttons */
+.btn{box-shadow:none;font-weight:600;transition:transform .2s var(--ease),background-color .2s var(--ease),filter .2s var(--ease)}
+.btn:hover{transform:none;box-shadow:none;filter:brightness(1.06)}
+.btn:active{transform:scale(.98)}
+body.aura-on .btn:hover{box-shadow:none}
+/* 4 no endless loops: hint shows once, page aura stays still */
+.welcome-hint{animation:wIn 1.2s var(--ease) .8s forwards}
+body.aura-on::after{animation:none}
+/* 5 radius by size, not pills everywhere */
+.btn{border-radius:10px}
+nav .btn{border-radius:8px}
+input[type=email]{border-radius:10px}
+.hint{border:0;background:none;padding:0;border-radius:0}
