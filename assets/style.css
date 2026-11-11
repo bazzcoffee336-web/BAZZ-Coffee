@@ -371,3 +371,7 @@ body.aura-go::after{transition-duration:.45s;background:radial-gradient(ellipse 
 .welcome.leaving .welcome-coin{transform:scale(1.6)}
 @media (prefers-reduced-motion:reduce){.welcome-title,.welcome-hint{animation:none;opacity:1}.welcome,.welcome-coin{transition:none}}
 .welcome-coin canvas{-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 52%,transparent 71%);mask-image:radial-gradient(circle at 50% 50%,#000 52%,transparent 71%)}
+
+/* ---- audit fixes: comfortable tap targets for menu and footer links ---- */
+nav ul a:not(.btn),footer a{display:inline-flex;align-items:center;min-height:40px;padding:0 4px}
+.buy a[href^="mailto"],.promise a[href^="mailto"],details a[href^="mailto"]{display:inline-block;padding:6px 0}
