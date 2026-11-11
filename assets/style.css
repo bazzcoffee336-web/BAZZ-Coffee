@@ -436,3 +436,14 @@ body{background:
   .promise h2{font-size:34px}
   .promise li{font-size:16px}
 }
+
+/* ---- product pages: the goal and what you get ---- */
+.outcome h2{max-width:22ch;font:400 clamp(30px,3.6vw,48px)/1.12 var(--serif);margin:0 0 40px}
+.outcome-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(24px,4vw,56px);align-items:start}
+.outcome h3{font:500 15px var(--sans);color:var(--gold);margin:0 0 12px}
+.ticks{list-style:none;margin:0;padding:0}
+.ticks li{position:relative;padding:12px 0 12px 30px;border-bottom:1px solid rgba(246,242,234,.08);color:#D9D5E3;line-height:1.55}
+.ticks li::before{content:"";position:absolute;left:2px;top:19px;width:12px;height:7px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}
+.outcome-box{background:linear-gradient(160deg,#171c2c,#1f2744);border:1px solid rgba(201,180,143,.22);border-radius:16px;padding:clamp(22px,3vw,32px)}
+.outcome-box .btn{margin-top:22px;width:100%}
+@media (max-width:900px){.outcome-grid{grid-template-columns:1fr}}
