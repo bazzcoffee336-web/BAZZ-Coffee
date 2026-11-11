@@ -425,3 +425,4 @@ body{background:
   radial-gradient(ellipse 60% 70% at 50% 45%,rgba(28,35,64,.75),transparent 70%),
   radial-gradient(ellipse 40% 40% at 50% 92%,rgba(47,49,60,.55),transparent 70%),
   #0F1322}
+.about h2 em{font-style:normal;color:#9A7B45}
