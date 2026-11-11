@@ -477,3 +477,10 @@ body{background:
 
 /* stone wall: only the lit books, no name or price (the link keeps the book name for screen readers) */
 .rock .nic-info{display:none!important}
+
+/* stone wall: the title sits above the books */
+.rock .wall-copy{position:relative;left:auto;bottom:auto;max-width:1320px;width:100%;margin:clamp(150px,18vh,190px) auto 0;padding:0 clamp(20px,4vw,56px);z-index:5}
+.rock .wall-copy p:not(.label){color:#D9D5E3}
+.rock .wall-copy h2{text-shadow:0 2px 18px rgba(0,0,0,.7)}
+.rock .wall{margin-top:clamp(28px,4vh,44px)}
+@media (max-width:900px){.rock .wall-copy{margin-top:150px;padding:0 clamp(20px,4vw,56px)}.rock .wall{margin-top:24px}}
