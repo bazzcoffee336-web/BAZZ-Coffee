@@ -474,3 +474,6 @@ body{background:
 .night-wall.rock{padding-bottom:160px}
 .night-wall.rock::after{height:200px}
 .rock .wall-copy,.rock .wall-hint{bottom:calc(160px + clamp(16px,3vh,32px))}
+
+/* stone wall: only the lit books, no name or price (the link keeps the book name for screen readers) */
+.rock .nic-info{display:none!important}
