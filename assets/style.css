@@ -407,3 +407,21 @@ input[type=email]{border-radius:10px}
 .btn:not(.ghost):hover{background:var(--accent-hi);filter:none}
 .btn:not(.ghost):focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 nav ul a.btn{opacity:1}
+
+/* ==== one starry navy everywhere (matches the hero sky) ==== */
+:root{--night:#0F1322;--navy:#14192E;--indigo:#1C2340}
+body{background:
+  url(stars.svg) 0 0/640px 640px repeat,
+  radial-gradient(ellipse 70% 50% at 50% 100%,rgba(47,49,60,.55),transparent 70%),
+  linear-gradient(180deg,#0F1322 0%,#14192E 45%,#0E111C 100%) fixed,
+  #0F1322}
+.hero{background:
+  url(stars.svg) 0 0/640px 640px repeat,
+  radial-gradient(ellipse 60% 70% at 70% 45%,rgba(28,35,64,.75),transparent 70%),
+  radial-gradient(ellipse 40% 40% at 70% 92%,rgba(47,49,60,.55),transparent 70%),
+  #0F1322}
+.welcome{background:
+  url(stars.svg) 0 0/640px 640px repeat,
+  radial-gradient(ellipse 60% 70% at 50% 45%,rgba(28,35,64,.75),transparent 70%),
+  radial-gradient(ellipse 40% 40% at 50% 92%,rgba(47,49,60,.55),transparent 70%),
+  #0F1322}
