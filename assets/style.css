@@ -426,3 +426,13 @@ body{background:
   radial-gradient(ellipse 40% 40% at 50% 92%,rgba(47,49,60,.55),transparent 70%),
   #0F1322}
 .about h2 em{font-style:normal;color:#9A7B45}
+
+/* promise list: text and email flow as one paragraph, comfortable on phones */
+.promise li{display:block;position:relative;padding:12px 0 12px 28px;line-height:1.55}
+.promise li::before{position:absolute;left:0;top:12px}
+.promise a[href^="mailto"]{display:inline;padding:0;overflow-wrap:anywhere}
+@media (max-width:640px){
+  .promise{gap:20px;padding:28px 22px;border-radius:20px}
+  .promise h2{font-size:34px}
+  .promise li{font-size:16px}
+}
