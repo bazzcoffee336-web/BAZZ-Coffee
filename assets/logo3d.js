@@ -59,7 +59,7 @@ export function mountLogo(el, opts = {}) {
   const edge = new THREE.Mesh(new THREE.TorusGeometry(R, T / 2 + .02, 24, 160), gold); coin.add(edge);
   const img = new Image();
   img.onload = () => { const { map, metal } = faceTextures(img); faceMat.map = map; faceMat.metalnessMap = metal; faceMat.needsUpdate = true; el.classList.add('ready'); wake(); };
-  img.src = opts.logo || 'assets/eagle-512.png';
+  img.src = opts.logo || 'assets/eagle-512.jpg';
   const pivot = new THREE.Group(); pivot.add(coin); pivot.position.y = 1.75; scene.add(pivot);
 
   // lights + a real spotlight beam from above
