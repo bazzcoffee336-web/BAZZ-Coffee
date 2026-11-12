@@ -160,7 +160,7 @@ export function mountBook(el, opts = {}) {
   el.setAttribute('tabindex', '0');
   function openCase() {
     if (opened) return; opened = true; openT = performance.now(); el.style.cursor = 'grab';
-    setHint(matchMedia('(pointer: coarse)').matches ? 'Drag to turn the book' : 'Drag to turn the book');
+    
     el.classList.add('opened');
 
   }
