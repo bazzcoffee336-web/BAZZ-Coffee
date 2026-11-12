@@ -22,7 +22,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/medal-32.png?v=3"><link rel="icon" type="image/png" sizes="64x64" href="assets/medal-64.png?v=3"><link rel="apple-touch-icon" href="assets/medal-180.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=491036">
+<link rel="stylesheet" href="assets/style.css?v=491489">
 <script>try{if(sessionStorage.getItem('bazz-welcome'))document.documentElement.classList.add('welcomed')}catch(e){}</script>
 </head>
 <body>
@@ -97,6 +97,7 @@
       <h2>Pick the problem you <em>want gone</em></h2>
       <p>Every book is laid out to read comfortably on a phone.</p>
     </div>
+    <div class="books3d" id="books3d" aria-hidden="true"></div>
     <div class="wall">
       <a aria-label="AI for Beginners, $99.99" class="bk niche" href="product.html" style="--c:#14B8C9">
         <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover.jpg" alt="AI for Beginners cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover.jpg" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
@@ -173,6 +174,17 @@
 <script type="module">
   import { mountLogo } from './assets/logo3d.js';
   mountLogo(document.getElementById('medal'));
+  import('./assets/books3d.js?v=3').then(({ mountBooks }) => {
+    const sec = document.getElementById('books');
+    const ok = mountBooks(document.getElementById('books3d'), [
+      { cover: 'assets/cover.jpg', title: 'AI for Beginners', color: '#0F1B2D', ink: '#14B8C9', url: 'product.html' },
+      { cover: 'assets/cover-money.jpg', title: 'Paycheck to Peace', color: '#6B1E3A', ink: '#E8B9A2', url: 'money.html' },
+      { cover: 'assets/cover-calm.jpg', title: 'Quiet Mind, Deep Sleep', color: '#1E2152', ink: '#B7A6F2', url: 'calm.html' },
+      { cover: 'assets/cover-career.jpg', title: 'Hired in 30 Days', color: '#12372A', ink: '#C8A24A', url: 'career.html' },
+      { cover: 'assets/cover-fit.jpg', title: '20-Minute Home Workout', color: '#1E1E20', ink: '#FF6A2B', url: 'fitness.html' },
+    ], url => (window.bazzGo || (u => location.href = u))(url));
+    if (ok) { sec.classList.remove('night-wall', 'rock'); sec.classList.add('sky-books'); }
+  });
   // welcome screen: the coin is the door to the home page
   const welcome = document.getElementById('welcome');
   if (welcome && !document.documentElement.classList.contains('welcomed')) {
