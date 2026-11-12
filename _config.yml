@@ -1,0 +1,6 @@
+# Build settings: publish the website only, never internal notes
+exclude:
+  - CLAUDE.md
+  - README.md
+  - .claude
+include: []
