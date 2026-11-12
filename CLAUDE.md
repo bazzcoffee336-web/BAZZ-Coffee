@@ -9,8 +9,8 @@ against one of them, say so and recommend a fix.
   speed, find another way.
 - **Free only.** Everything runs at $0: Supabase's free plan, Cloudflare Pages,
   free third-party APIs. Say up front if anything would cost money.
-- **The owner merges.** Push to the working branch; never merge or approve
-  pull requests.
+- **Claude merges BAZZ website changes.** The owner asked (12 Nov 2026) that Claude open the pull
+  request and squash-merge it itself after testing, instead of asking the owner to click merge.
 - **Keep the blurred search header** on laptops and TVs (phones have the bottom
   bar, 7 Nov 2026) when changing other things.
 - **Quick checks for small changes.** For a small change (text, colours,
