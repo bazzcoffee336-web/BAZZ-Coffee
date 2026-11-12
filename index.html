@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://formsubmit.co; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BAZZ | Books that fix real-life problems</title>
 <meta name="description" content="BAZZ makes practical books. Each one takes a problem people search for every day and fixes it step by step: AI, money, sleep, career, fitness, hair and skin.">
@@ -23,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="modulepreload" href="assets/three.module.min.js">
-<link rel="stylesheet" href="assets/style.css?v=497428">
+<link rel="stylesheet" href="assets/style.css?v=497876">
 <script>try{if(sessionStorage.getItem('bazz-welcome'))document.documentElement.classList.add('welcomed')}catch(e){}</script>
 </head>
 <body>
@@ -166,7 +168,8 @@
       <p class="lede reveal">Ordering opens soon. Leave your email and we'll send you one message when the books are ready to buy. Nothing else.</p>
       <form id="form" novalidate>
         <label class="sr" for="email">Your email</label>
-        <input id="email" type="email" required placeholder="you@email.com" autocomplete="email">
+        <input id="email" type="email" required maxlength="254" placeholder="you@email.com" autocomplete="email">
+        <input type="text" name="_honey" id="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
         <button class="btn" type="submit">Notify me</button>
       </form>
       <p class="ok" role="status">You're on the list. We'll email you when ordering opens.</p>
@@ -240,6 +243,6 @@
     }, { threshold: .25 }).observe(wall);
   })();
 </script>
-<script src="assets/site.js?v=497428"></script>
+<script src="assets/site.js?v=497876"></script>
 </body>
 </html>

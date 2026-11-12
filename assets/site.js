@@ -17,12 +17,18 @@
     const email = document.getElementById('email');
     form.addEventListener('submit', e => {
       e.preventDefault();
-      if (!email.value || !email.checkValidity()) { email.focus(); return; }
+      const v = email.value.trim().toLowerCase();
+      const hp = document.getElementById('hp');
+      if (hp && hp.value) return;                                   // bots fill the hidden field
+      if (!v || v.length > 254 || !/^[^\s@<>()"']+@[^\s@<>()"']+\.[a-z]{2,}$/.test(v) || !email.checkValidity()) { email.focus(); return; }
+      let last = 0; try { last = +(localStorage.getItem('bazz-sent') || 0); } catch (e) {}
+      if (Date.now() - last < 60000) { return; }                   // one signup a minute per browser
+      try { localStorage.setItem('bazz-sent', Date.now()); } catch (e) {}
       const btn = form.querySelector('button'); btn.disabled = true; btn.textContent = 'Sending...';
       fetch('https://formsubmit.co/ajax/bazzcoffee336@gmail.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email: email.value, product: 'AI for Beginners ebook', _subject: 'New ebook waitlist signup', _template: 'table', _captcha: 'false' })
+        body: JSON.stringify({ email: v, product: document.title.split('|')[0].trim().slice(0, 80), _subject: 'New ebook waitlist signup', _template: 'table', _captcha: 'false' })
       }).then(r => { if (!r.ok) throw 0; form.classList.add('sent'); btn.textContent = 'Done'; })
         .catch(() => { btn.disabled = false; btn.textContent = 'Try again'; });
     });

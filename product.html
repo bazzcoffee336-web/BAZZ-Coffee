@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://formsubmit.co; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI for Beginners | Save Hours Every Week with ChatGPT and Claude</title>
 <meta name="description" content="AI for Beginners ebook: 9 chapters, 100 copy-paste prompts. Instant PDF download.">
@@ -17,7 +19,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/medal-32.png?v=3"><link rel="icon" type="image/png" sizes="64x64" href="assets/medal-64.png?v=3"><link rel="apple-touch-icon" href="assets/medal-180.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=497428">
+<link rel="stylesheet" href="assets/style.css?v=497876">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -119,8 +121,9 @@
         <p style="margin:0;color:#C9C5D6;font-size:15px">Leave your email and we'll send you the buy link the day it opens.</p>
         <form id="form" novalidate>
           <label class="sr" for="email">Your email</label>
-          <input id="email" type="email" required placeholder="you@email.com" autocomplete="email">
-          <button class="btn" type="submit">Notify me</button>
+          <input id="email" type="email" required maxlength="254" placeholder="you@email.com" autocomplete="email">
+          <input type="text" name="_honey" id="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+        <button class="btn" type="submit">Notify me</button>
         </form>
         <p class="ok" role="status">You're on the list. We'll email you the buy link.</p>
         <p class="note">One email, no spam. Not affiliated with OpenAI or Anthropic.</p>
@@ -148,6 +151,6 @@
   import { mountBook } from './assets/book3d.js?v=7';
   mountBook(document.getElementById('stage'), { color: '#14B8C9', bg: '#0F1B2D' });
 </script>
-<script src="assets/site.js?v=497428"></script>
+<script src="assets/site.js?v=497876"></script>
 </body>
 </html>
