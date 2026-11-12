@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BAZZ | Books that fix real-life problems</title>
-<meta name="description" content="BAZZ makes practical books. Each one takes a problem people search for every day and fixes it step by step: AI, money, sleep, career and fitness.">
+<meta name="description" content="BAZZ makes practical books. Each one takes a problem people search for every day and fixes it step by step: AI, money, sleep, career, fitness, hair and skin.">
 <meta name="theme-color" content="#0C0F1A">
 <link rel="canonical" href="https://bazzcoffee336-web.github.io/BAZZ-Coffee/">
 <meta property="og:type" content="website">
@@ -22,7 +22,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/medal-32.png?v=3"><link rel="icon" type="image/png" sizes="64x64" href="assets/medal-64.png?v=3"><link rel="apple-touch-icon" href="assets/medal-180.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=491951">
+<link rel="stylesheet" href="assets/style.css?v=493228">
 <script>try{if(sessionStorage.getItem('bazz-welcome'))document.documentElement.classList.add('welcomed')}catch(e){}</script>
 </head>
 <body>
@@ -53,7 +53,7 @@
         <a class="btn ghost" href="#how">How it works</a>
       </div>
       <div class="meta">
-        <span><b>45</b>Problems fixed</span>
+        <span><b>63</b>Problems fixed</span>
         <span><b>10</b>Minutes a chapter</span>
       </div>
     </div>
@@ -119,6 +119,14 @@
         <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-fit.jpg" alt="The 20-Minute Home Workout cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-fit.jpg" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
         <span class="nic-info"><span class="bk-tag">Fitness</span><b>The 20-Minute Home Workout</b><span>Get fit at home without a gym.</span><em>$99.99 &rarr;</em></span>
       </a>
+      <a aria-label="Protect Your Hair, $99.99" class="bk niche" href="hair.html" style="--c:#D9A441">
+        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-hair.jpg" alt="Protect Your Hair cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-hair.jpg" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
+        <span class="nic-info"><span class="bk-tag">Hair</span><b>Protect Your Hair</b><span>Stop breakage and hair fall.</span><em>$99.99 &rarr;</em></span>
+      </a>
+      <a aria-label="Protect Your Face, $99.99" class="bk niche" href="face.html" style="--c:#F2A98C">
+        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-face.jpg" alt="Protect Your Face cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-face.jpg" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
+        <span class="nic-info"><span class="bk-tag">Skin</span><b>Protect Your Face</b><span>A simple routine for healthy skin.</span><em>$99.99 &rarr;</em></span>
+      </a>
     </div>
     <div class="floor" aria-hidden="true"></div>
   </section>
@@ -173,7 +181,7 @@
 <script type="module">
   import { mountLogo } from './assets/logo3d.js';
   mountLogo(document.getElementById('medal'));
-  import('./assets/books3d.js?v=3').then(({ mountBooks }) => {
+  import('./assets/books3d.js?v=4').then(({ mountBooks }) => {
     const sec = document.getElementById('books');
     const ok = mountBooks(document.getElementById('books3d'), [
       { cover: 'assets/cover.jpg', title: 'AI for Beginners', color: '#0F1B2D', ink: '#14B8C9', url: 'product.html' },
@@ -181,6 +189,8 @@
       { cover: 'assets/cover-calm.jpg', title: 'Quiet Mind, Deep Sleep', color: '#1E2152', ink: '#B7A6F2', url: 'calm.html' },
       { cover: 'assets/cover-career.jpg', title: 'Hired in 30 Days', color: '#12372A', ink: '#C8A24A', url: 'career.html' },
       { cover: 'assets/cover-fit.jpg', title: '20-Minute Home Workout', color: '#1E1E20', ink: '#FF6A2B', url: 'fitness.html' },
+      { cover: 'assets/cover-hair.jpg', title: 'Protect Your Hair', color: '#3A2418', ink: '#E7B95A', url: 'hair.html' },
+      { cover: 'assets/cover-face.jpg', title: 'Protect Your Face', color: '#1F4F4A', ink: '#F6BBA2', url: 'face.html' },
     ], url => (window.bazzGo || (u => location.href = u))(url));
     if (ok) { sec.classList.remove('night-wall', 'rock'); sec.classList.add('sky-books'); }
   });
@@ -205,7 +215,7 @@
 </script>
 <script>
   // clicking a book: the page takes that book's colour, then opens its page
-  const AURA = { 'product.html': '#14B8C9', 'money.html': '#D9A38B', 'calm.html': '#B7A6F2', 'career.html': '#C8A24A', 'fitness.html': '#FF6A2B' };
+  const AURA = { 'product.html': '#14B8C9', 'money.html': '#D9A38B', 'calm.html': '#B7A6F2', 'career.html': '#C8A24A', 'fitness.html': '#FF6A2B', 'hair.html': '#D9A441', 'face.html': '#F2A98C' };
   window.bazzGo = url => {
     document.documentElement.style.setProperty('--aura', AURA[url] || '#C9B48F'); document.body.classList.add('aura-on', 'aura-go');
     setTimeout(() => { location.href = url; }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 650);
@@ -225,6 +235,6 @@
     }, { threshold: .25 }).observe(wall);
   })();
 </script>
-<script src="assets/site.js?v=490609"></script>
+<script src="assets/site.js?v=493228"></script>
 </body>
 </html>

@@ -522,3 +522,4 @@ body{background:
 .bundle-line a{color:var(--gold)}
 .bundle-line s{color:var(--muted);margin-left:4px}
 @media (max-width:900px){.bundle-card{grid-template-columns:1fr}.bundle .ticks{columns:1}}
+@media (max-width:900px){.sky-books .books3d{height:min(310vw,1340px)}}

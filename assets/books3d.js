@@ -71,8 +71,8 @@ export function mountBooks(el, books, onOpen) {
   function layout(aspect) {
     const n = items.length;
     if (aspect >= 0.95) {            // one row with a gentle arc
-      const gap = 2.1;
-      items.forEach((it, k) => { const a = k - (n - 1) / 2; it.base.set(a * gap, 0, -Math.abs(a) * 0.35); it.yaw = -a * 0.16; });
+      const gap = n > 5 ? 1.85 : 2.1;
+      items.forEach((it, k) => { const a = k - (n - 1) / 2; it.base.set(a * gap, 0, -Math.abs(a) * (n > 5 ? 0.28 : 0.35)); it.yaw = -a * (n > 5 ? 0.12 : 0.16); });
       layoutW = (n - 1) * gap + W * 1.6; layoutH = H * 1.7;
     } else {                         // phones: rows of 2, last one centred
       const gx = 1.95, gy = H + 1.05, rows = Math.ceil(n / 2);
