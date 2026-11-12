@@ -42,14 +42,15 @@ function pagesTexture(vertical) {
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 
+const LITE = matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 8) <= 4;
 export function mountBook(el, opts = {}) {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   } catch (e) { el.classList.add('no-webgl'); return; }
-  renderer.setPixelRatio(Math.min(2, devicePixelRatio));
-  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.setPixelRatio(Math.min(LITE ? 1.5 : 2, devicePixelRatio));
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = LITE ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15;
   el.appendChild(renderer.domElement);
@@ -91,7 +92,7 @@ export function mountBook(el, opts = {}) {
   // lights
   scene.add(new THREE.HemisphereLight(0x8fa0ff, 0x1a1408, .35));
   const key = new THREE.SpotLight(0xfff1d6, 120, 30, Math.PI / 7, .45, 1.6);
-  key.position.set(3.5, 8, 5); key.target = pivot; key.castShadow = true; key.shadow.mapSize.set(2048, 2048); key.shadow.bias = -0.0004;
+  key.position.set(3.5, 8, 5); key.target = pivot; key.castShadow = true; key.shadow.mapSize.set(LITE ? 512 : 1024, LITE ? 512 : 1024); key.shadow.bias = -0.0004;
   scene.add(key, key.target);
   const rimL = new THREE.SpotLight(0x6f84ff, 70, 25, Math.PI / 6, .6, 1.6);
   rimL.position.set(-5, 5, -3); rimL.target = pivot; scene.add(rimL);
@@ -133,7 +134,7 @@ export function mountBook(el, opts = {}) {
   const accent = new THREE.Color(opts.color || '#C9B48F');
   const beamCol = accent.clone().lerp(new THREE.Color(0xffffff), .45);
   const spot = new THREE.SpotLight(beamCol, 0, 30, Math.PI / 9, .35, 1.4);
-  spot.position.set(0, 10, 1.2); spot.target = pivot; spot.castShadow = true; spot.shadow.mapSize.set(1024, 1024);
+  spot.position.set(0, 10, 1.2); spot.target = pivot; spot.castShadow = true; spot.shadow.mapSize.set(512, 512);
   scene.add(spot);
   const beamUni = { uCol: { value: beamCol }, uI: { value: 0 } };
   const beamMesh = new THREE.Mesh(new THREE.ConeGeometry(2.3, 10, 64, 1, true),

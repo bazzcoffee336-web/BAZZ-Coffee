@@ -2,7 +2,9 @@
 import * as THREE from './three.module.min.js';
 
 const ROT = Math.PI / 2;
+let faceCache = null;
 function faceTextures(img) {
+  if (faceCache) return faceCache;
   const S = 1024, c = document.createElement('canvas'); c.width = c.height = S;
   const g = c.getContext('2d');
   // navy enamel disc
@@ -26,15 +28,17 @@ function faceTextures(img) {
   const map = new THREE.CanvasTexture(c); map.colorSpace = THREE.SRGBColorSpace; map.anisotropy = 8;
   const metal = new THREE.CanvasTexture(m);
   for (const x of [map, metal]) { x.center.set(.5, .5); x.rotation = ROT; }
-  return { map, metal };
+  faceCache = { map, metal };
+  return faceCache;
 }
 
+const LITE = matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 8) <= 4;
 export function mountLogo(el, opts = {}) {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let renderer;
   try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
   catch (e) { el.classList.add('no-webgl'); return; }
-  renderer.setPixelRatio(Math.min(2, devicePixelRatio));
+  renderer.setPixelRatio(Math.min(LITE ? 1.5 : 2, devicePixelRatio));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
   el.appendChild(renderer.domElement);
@@ -47,16 +51,16 @@ export function mountLogo(el, opts = {}) {
   envScene.background = new THREE.Color(0x05070d);
   const panel = (col, x, y, z, w, h) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: col, side: THREE.DoubleSide })); m.position.set(x, y, z); m.lookAt(0, 0, 0); envScene.add(m); };
   panel(0xfff1d6, 0, 8, 2, 10, 4); panel(0xffe2a8, 7, 2, 5, 3, 8); panel(0x6f84ff, -8, 1, -2, 3, 6); panel(0xffffff, 0, 0, 9, 4, 2);
-  const pmrem = new THREE.PMREMGenerator(renderer); scene.environment = pmrem.fromScene(envScene, 0.04).texture;
+  const pmrem = new THREE.PMREMGenerator(renderer); scene.environment = pmrem.fromScene(envScene, 0.04).texture; pmrem.dispose();
 
   const R = 1.6, T = 0.24;
   const gold = new THREE.MeshStandardMaterial({ color: 0xD9B872, metalness: 1, roughness: .28 });
   const faceMat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 1, roughness: .32 });
   const coin = new THREE.Group();
-  const body = new THREE.Mesh(new THREE.CylinderGeometry(R, R, T, 128, 1, false), [gold, faceMat, faceMat]);
+  const body = new THREE.Mesh(new THREE.CylinderGeometry(R, R, T, LITE ? 72 : 128, 1, false), [gold, faceMat, faceMat]);
   body.rotation.x = Math.PI / 2; coin.add(body);
   // ribbed outer edge
-  const edge = new THREE.Mesh(new THREE.TorusGeometry(R, T / 2 + .02, 24, 160), gold); coin.add(edge);
+  const edge = new THREE.Mesh(new THREE.TorusGeometry(R, T / 2 + .02, LITE ? 14 : 24, LITE ? 96 : 160), gold); coin.add(edge);
   const img = new Image();
   img.onload = () => { const { map, metal } = faceTextures(img); faceMat.map = map; faceMat.metalnessMap = metal; faceMat.needsUpdate = true; el.classList.add('ready'); wake(); };
   img.src = opts.logo || 'assets/eagle-512.jpg';
@@ -82,7 +86,7 @@ export function mountLogo(el, opts = {}) {
   const pool = new THREE.Mesh(new THREE.PlaneGeometry(6.5, 6.5), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(poolC), color: beamCol, transparent: true, opacity: .45, blending: THREE.AdditiveBlending, depthWrite: false }));
   pool.rotation.x = -Math.PI / 2; pool.position.y = -0.2; scene.add(pool);
 
-  const N = 240, pos = new Float32Array(N * 3);
+  const N = LITE ? 120 : 240, pos = new Float32Array(N * 3);
   for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - .5) * 6; pos[i * 3 + 1] = Math.random() * 6; pos[i * 3 + 2] = (Math.random() - .5) * 4; }
   const pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   const dust = new THREE.Points(pg, new THREE.PointsMaterial({ color: 0xF2DDA8, size: .03, transparent: true, opacity: .75, depthWrite: false }));
@@ -114,8 +118,11 @@ export function mountLogo(el, opts = {}) {
   new IntersectionObserver(es => { visible = es[0].isIntersecting; wake(); }).observe(el);
   document.addEventListener('visibilitychange', wake);
   function wake() { if (raf === null && visible && !document.hidden) raf = requestAnimationFrame(loop); }
+  let drawn = 0, dead = false;
   function loop(now) {
-    raf = null;
+    raf = null; if (dead) return;
+    if (LITE && now - drawn < 30 && !dragging) { raf = requestAnimationFrame(loop); return; }
+    drawn = now;
     const dt = Math.min(50, now - (last || now)); last = now; const t = (now - t0) / 1000;
     if (!dragging) {
       rotY += vel; vel *= Math.pow(0.95, dt / 16.7);
@@ -130,4 +137,5 @@ export function mountLogo(el, opts = {}) {
     if (visible && !document.hidden && (!reduce || dragging || Math.abs(vel) > 0.001)) raf = requestAnimationFrame(loop);
   }
   resize();
+  return () => { dead = true; if (raf !== null) cancelAnimationFrame(raf); renderer.dispose(); try { renderer.forceContextLoss(); } catch (e) {} renderer.domElement.remove(); };
 }

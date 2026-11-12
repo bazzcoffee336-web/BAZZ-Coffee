@@ -24,12 +24,13 @@ function glowTex() {
   g.fillStyle = r; g.fillRect(0, 0, 256, 256); return new THREE.CanvasTexture(c);
 }
 
+const LITE = matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 8) <= 4;
 export function mountBooks(el, books, onOpen) {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let renderer;
   try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
   catch (e) { return false; }
-  renderer.setPixelRatio(Math.min(2, devicePixelRatio));
+  renderer.setPixelRatio(Math.min(LITE ? 1.5 : 2, devicePixelRatio));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
   el.appendChild(renderer.domElement);
@@ -61,7 +62,7 @@ export function mountBooks(el, books, onOpen) {
   });
 
   // a few stars in front of the camera for depth
-  const N = 160, pos = new Float32Array(N * 3);
+  const N = LITE ? 80 : 160, pos = new Float32Array(N * 3);
   for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - .5) * 16; pos[i * 3 + 1] = (Math.random() - .5) * 10; pos[i * 3 + 2] = -2 - Math.random() * 6; }
   const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   const stars = new THREE.Points(sg, new THREE.PointsMaterial({ color: 0xE8E4F0, size: .03, transparent: true, opacity: .7, depthWrite: false }));
@@ -106,8 +107,11 @@ export function mountBooks(el, books, onOpen) {
   new IntersectionObserver(es => { visible = es[0].isIntersecting; wake(); }).observe(el);
   document.addEventListener('visibilitychange', wake);
   function wake() { if (raf === null && visible && !document.hidden) raf = requestAnimationFrame(loop); }
+  let drawn = 0;
   function loop(now) {
     raf = null;
+    if (LITE && now - drawn < 30) { raf = requestAnimationFrame(loop); return; }
+    drawn = now;
     const dt = Math.min(50, now - (last || now)); last = now; const t = (now - t0) / 1000;
     const k = 1 - Math.pow(0.88, dt / 16.7); let moving = false;
     items.forEach(it => {
