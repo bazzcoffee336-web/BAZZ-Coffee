@@ -22,7 +22,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/medal-32.png?v=3"><link rel="icon" type="image/png" sizes="64x64" href="assets/medal-64.png?v=3"><link rel="apple-touch-icon" href="assets/medal-180.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=494499">
+<link rel="modulepreload" href="assets/three.module.min.js">
+<link rel="stylesheet" href="assets/style.css?v=497428">
 <script>try{if(sessionStorage.getItem('bazz-welcome'))document.documentElement.classList.add('welcomed')}catch(e){}</script>
 </head>
 <body>
@@ -179,9 +180,10 @@
 </footer>
 
 <script type="module">
-  import { mountLogo } from './assets/logo3d.js';
-  mountLogo(document.getElementById('medal'));
-  import('./assets/books3d.js?v=6').then(({ mountBooks }) => {
+  import { mountLogo } from './assets/logo3d.js?v=8';
+  const startHero = () => mountLogo(document.getElementById('medal'));
+  const booksEl = document.getElementById('books3d');
+  const loadBooks = () => import('./assets/books3d.js?v=8').then(({ mountBooks }) => {
     const sec = document.getElementById('books');
     const ok = mountBooks(document.getElementById('books3d'), [
       { cover: 'assets/cover.jpg?v=3', title: 'AI for Beginners', color: '#0F1B2D', ink: '#14B8C9', url: 'product.html' },
@@ -192,21 +194,25 @@
       { cover: 'assets/cover-hair.jpg?v=2', title: 'The Hair Rescue', color: '#3A2418', ink: '#E7B95A', url: 'hair.html' },
       { cover: 'assets/cover-face.jpg?v=2', title: 'The Skin Reset', color: '#1F4F4A', ink: '#F6BBA2', url: 'face.html' },
     ], url => (window.bazzGo || (u => location.href = u))(url));
-    if (ok) { sec.classList.remove('night-wall', 'rock'); sec.classList.add('sky-books'); }
+    if (ok) { sec.classList.remove('night-wall', 'rock'); } else { sec.classList.remove('sky-books'); }
   });
+  // build the 3D books only when the visitor scrolls near them
+  document.getElementById('books').classList.add('sky-books');
+  new IntersectionObserver((es, io) => { if (es.some(e => e.isIntersecting)) { io.disconnect(); loadBooks(); } }, { rootMargin: '600px 0px' }).observe(booksEl);
   // welcome screen: the coin is the door to the home page
   const welcome = document.getElementById('welcome');
+  if (!welcome || document.documentElement.classList.contains('welcomed')) startHero();
   if (welcome && !document.documentElement.classList.contains('welcomed')) {
     const coin = document.getElementById('welcome-coin');
     document.documentElement.classList.add('welcome-open');
-    mountLogo(coin, { rotY: -0.2 });
+    const stopWelcome = mountLogo(coin, { rotY: -0.2 });
     let x = 0, y = 0, done = false;
     const enter = () => {
       if (done) return; done = true;
       try { sessionStorage.setItem('bazz-welcome', '1'); } catch (e) {}
       welcome.classList.add('leaving');
       const fast = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      setTimeout(() => { document.documentElement.classList.remove('welcome-open'); document.documentElement.classList.add('welcomed'); welcome.remove(); }, fast ? 0 : 1100);
+      setTimeout(() => { document.documentElement.classList.remove('welcome-open'); document.documentElement.classList.add('welcomed'); if (stopWelcome) stopWelcome(); welcome.remove(); startHero(); }, fast ? 0 : 1100);
     };
     coin.addEventListener('pointerdown', e => { x = e.clientX; y = e.clientY; });
     coin.addEventListener('pointerup', e => { if (Math.hypot(e.clientX - x, e.clientY - y) < 10) enter(); });
@@ -234,6 +240,6 @@
     }, { threshold: .25 }).observe(wall);
   })();
 </script>
-<script src="assets/site.js?v=494499"></script>
+<script src="assets/site.js?v=497428"></script>
 </body>
 </html>

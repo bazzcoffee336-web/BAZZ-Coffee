@@ -523,3 +523,8 @@ body{background:
 .bundle-line s{color:var(--muted);margin-left:4px}
 @media (max-width:900px){.bundle-card{grid-template-columns:1fr}.bundle .ticks{columns:1}}
 @media (max-width:900px){.sky-books .books3d{height:min(310vw,1340px)}}
+
+/* ---- speed: no full-page blend layer, background doesn't repaint on scroll ---- */
+body{background-attachment:scroll}
+body::after{mix-blend-mode:normal;display:none}
+body.aura-on::after{display:block}
