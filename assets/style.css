@@ -484,3 +484,7 @@ body{background:
 .rock .wall-copy h2{text-shadow:0 2px 18px rgba(0,0,0,.7)}
 .rock .wall{margin-top:clamp(28px,4vh,44px)}
 @media (max-width:900px){.rock .wall-copy{margin-top:150px;padding:0 clamp(20px,4vw,56px)}.rock .wall{margin-top:24px}}
+
+/* soft edges: every 3D scene fades to nothing before it reaches its box edge, so no straight cut is ever visible */
+.stage3d canvas,.stage3d.medal canvas{-webkit-mask-image:radial-gradient(ellipse closest-side at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse closest-side at 50% 50%,#000 55%,transparent 100%)}
+.welcome-coin canvas{-webkit-mask-image:radial-gradient(closest-side at 50% 50%,#000 60%,transparent 100%);mask-image:radial-gradient(closest-side at 50% 50%,#000 60%,transparent 100%)}
