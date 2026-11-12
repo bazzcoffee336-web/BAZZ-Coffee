@@ -1,7 +1,11 @@
 {
 	// BAZZ website: a static site served by Cloudflare Workers (static assets, no server code)
-	"name": "bazz",
+	"name": "bazz-coffee",
 	"compatibility_date": "2026-11-12",
+	// builds ./site before every deploy, so no build command is needed in the dashboard
+	"build": {
+		"command": "sh build.sh"
+	},
 	"assets": {
 		"directory": "./site"
 	}
