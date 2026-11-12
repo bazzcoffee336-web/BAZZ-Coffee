@@ -3,4 +3,7 @@ exclude:
   - CLAUDE.md
   - README.md
   - .claude
+  - build.sh
+  - wrangler.jsonc
+  - site
 include: []
