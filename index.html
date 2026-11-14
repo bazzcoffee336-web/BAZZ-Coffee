@@ -182,10 +182,10 @@
 </footer>
 
 <script type="module">
-  import { mountLogo } from './assets/logo3d.js?v=10';
+  import { mountLogo } from './assets/logo3d.js?v=11';
   const startHero = () => mountLogo(document.getElementById('medal'));
   const booksEl = document.getElementById('books3d');
-  const loadBooks = () => import('./assets/books3d.js?v=9').then(({ mountBooks }) => {
+  const loadBooks = () => import('./assets/books3d.js?v=10').then(({ mountBooks }) => {
     const sec = document.getElementById('books');
     const ok = mountBooks(document.getElementById('books3d'), [
       { cover: 'assets/cover.webp?v=5', title: 'AI for Beginners', color: '#0F1B2D', ink: '#14B8C9', url: 'product.html' },
