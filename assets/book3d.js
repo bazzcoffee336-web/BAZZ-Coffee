@@ -61,7 +61,7 @@ export function mountBook(el, opts = {}) {
   camera.position.set(0, 1.6, 9.5);
 
   // book: 1 x 1.414 x 0.2
-  const W = 2.2, H = W * 1.414, D = 0.32;
+  const W = 2.2, H = W * 1.414, D = 0.06;
   const loader = new THREE.TextureLoader();
   const cover = loader.load(opts.cover || 'assets/cover.jpg', () => el.classList.add('ready'));
   cover.colorSpace = THREE.SRGBColorSpace; cover.anisotropy = 8;
