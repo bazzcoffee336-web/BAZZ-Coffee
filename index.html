@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://formsubmit.co; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://formsubmit.co; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BAZZ | Books that fix real-life problems</title>
@@ -22,10 +22,9 @@
 <meta name="twitter:title" content="BAZZ | Stop searching for the fix. Start using it.">
 <meta name="twitter:image" content="https://bazzcoffee336-web.github.io/BAZZ-Coffee/assets/og-bazz.jpg?v=3">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/medal-32.png?v=3"><link rel="icon" type="image/png" sizes="64x64" href="assets/medal-64.png?v=3"><link rel="apple-touch-icon" href="assets/medal-180.png?v=3">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/Manrope-normal-3.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/DMSerifDisplay-normal-1.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="modulepreload" href="assets/three.module.min.js">
-<link rel="stylesheet" href="assets/style.css?v=497876">
+<link rel="stylesheet" href="assets/style.css?v=497878">
 <script>try{if(sessionStorage.getItem('bazz-welcome'))document.documentElement.classList.add('welcomed')}catch(e){}</script>
 </head>
 <body>
@@ -36,7 +35,7 @@
 </div>
 <a class="skip" href="#main">Skip to content</a>
 <nav id="nav">
-  <a class="brand" href="index.html"><img src="assets/eagle.png" alt="" width="34" height="34">BAZZ</a>
+  <a class="brand" href="index.html"><img src="assets/eagle.webp?v=4" alt="" width="34" height="34">BAZZ</a>
   <ul>
     <li><a href="#about">About</a></li>
     <li><a href="#books">Books</a></li>
@@ -61,13 +60,13 @@
       </div>
     </div>
     <div class="stage3d medal" id="medal" aria-label="The BAZZ logo as a gold coin under a spotlight." role="img">
-      <div class="fallback"><img src="assets/eagle-512.jpg" alt="" loading="lazy"></div>
+      <div class="fallback"><img src="assets/eagle-512.webp?v=4" alt="" loading="lazy"></div>
     </div>
   </header>
 
   <section id="about" class="light about">
     <div class="about-grid">
-      <div class="about-mark reveal"><img src="assets/logo.jpg" alt="BAZZ logo" width="800" height="800" loading="lazy"></div>
+      <div class="about-mark reveal"><img src="assets/logo.webp?v=4" alt="BAZZ logo" width="800" height="800" loading="lazy"></div>
       <div>
         <p class="label reveal">Why these books work</p>
         <h2 class="reveal">You know what to do. These books show you <em>how</em></h2>
@@ -103,31 +102,31 @@
     <div class="books3d" id="books3d" aria-hidden="true"></div>
     <div class="wall">
       <a aria-label="AI for Beginners, $99.99" class="bk niche" href="product.html" style="--c:#14B8C9">
-        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover.jpg?v=3" alt="AI for Beginners cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover.jpg?v=3" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
+        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover.webp?v=4" alt="AI for Beginners cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover.webp?v=4" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
         <span class="nic-info"><span class="bk-tag">AI</span><b>AI for Beginners</b><span>Save hours every week with ChatGPT and Claude.</span><em>$99.99 &rarr;</em></span>
       </a>
       <a aria-label="Paycheck to Peace, $99.99" class="bk niche" href="money.html" style="--c:#D9A38B">
-        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-money.jpg?v=3" alt="Paycheck to Peace cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-money.jpg?v=3" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
+        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-money.webp?v=4" alt="Paycheck to Peace cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-money.webp?v=4" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
         <span class="nic-info"><span class="bk-tag">Money</span><b>Paycheck to Peace</b><span>Stop living paycheck to paycheck in 90 days.</span><em>$99.99 &rarr;</em></span>
       </a>
       <a aria-label="Quiet Mind, Deep Sleep, $99.99" class="bk niche" href="calm.html" style="--c:#B7A6F2">
-        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-calm.jpg?v=3" alt="Quiet Mind, Deep Sleep cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-calm.jpg?v=3" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
+        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-calm.webp?v=4" alt="Quiet Mind, Deep Sleep cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-calm.webp?v=4" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
         <span class="nic-info"><span class="bk-tag">Sleep &amp; calm</span><b>Quiet Mind, Deep Sleep</b><span>Stop overthinking and sleep better in 21 days.</span><em>$99.99 &rarr;</em></span>
       </a>
       <a aria-label="Hired in 30 Days, $99.99" class="bk niche" href="career.html" style="--c:#C8A24A">
-        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-career.jpg?v=3" alt="Hired in 30 Days cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-career.jpg?v=3" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
+        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-career.webp?v=4" alt="Hired in 30 Days cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-career.webp?v=4" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
         <span class="nic-info"><span class="bk-tag">Career</span><b>Hired in 30 Days</b><span>Land a better job without applying everywhere.</span><em>$99.99 &rarr;</em></span>
       </a>
       <a aria-label="The 20-Minute Home Workout, $99.99" class="bk niche" href="fitness.html" style="--c:#FF6A2B">
-        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-fit.jpg?v=3" alt="The 20-Minute Home Workout cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-fit.jpg?v=3" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
+        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-fit.webp?v=4" alt="The 20-Minute Home Workout cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-fit.webp?v=4" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
         <span class="nic-info"><span class="bk-tag">Fitness</span><b>The 20-Minute Home Workout</b><span>Get fit at home without a gym.</span><em>$99.99 &rarr;</em></span>
       </a>
       <a aria-label="The Hair Rescue, $99.99" class="bk niche" href="hair.html" style="--c:#D9A441">
-        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-hair.jpg?v=2" alt="The Hair Rescue cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-hair.jpg?v=2" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
+        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-hair.webp?v=4" alt="The Hair Rescue cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-hair.webp?v=4" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
         <span class="nic-info"><span class="bk-tag">Hair</span><b>The Hair Rescue</b><span>Less breakage, healthier hair in 60 days.</span><em>$99.99 &rarr;</em></span>
       </a>
       <a aria-label="The Skin Reset, $99.99" class="bk niche" href="face.html" style="--c:#F2A98C">
-        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-face.jpg?v=2" alt="The Skin Reset cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-face.jpg?v=2" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
+        <span class="nic"><span class="lamp" aria-hidden="true"></span><span class="wash" aria-hidden="true"></span><img src="assets/cover-face.webp?v=4" alt="The Skin Reset cover" loading="lazy" width="724" height="1024"><span class="glint" aria-hidden="true"></span><img class="refl" src="assets/cover-face.webp?v=4" alt="" aria-hidden="true" loading="lazy" width="724" height="1024"></span>
         <span class="nic-info"><span class="bk-tag">Skin</span><b>The Skin Reset</b><span>A 3-step routine for clear, healthy skin.</span><em>$99.99 &rarr;</em></span>
       </a>
     </div>
@@ -163,7 +162,7 @@
 
   <section id="list" class="light">
     <div class="final">
-      <img src="assets/eagle.png" alt="" width="128" height="128">
+      <img src="assets/eagle.webp?v=4" alt="" width="128" height="128">
       <h2 class="reveal">Be the first to get them</h2>
       <p class="lede reveal">Ordering opens soon. Leave your email and we'll send you one message when the books are ready to buy. Nothing else.</p>
       <form id="form" novalidate>
@@ -183,19 +182,19 @@
 </footer>
 
 <script type="module">
-  import { mountLogo } from './assets/logo3d.js?v=8';
+  import { mountLogo } from './assets/logo3d.js?v=9';
   const startHero = () => mountLogo(document.getElementById('medal'));
   const booksEl = document.getElementById('books3d');
   const loadBooks = () => import('./assets/books3d.js?v=8').then(({ mountBooks }) => {
     const sec = document.getElementById('books');
     const ok = mountBooks(document.getElementById('books3d'), [
-      { cover: 'assets/cover.jpg?v=3', title: 'AI for Beginners', color: '#0F1B2D', ink: '#14B8C9', url: 'product.html' },
-      { cover: 'assets/cover-money.jpg?v=3', title: 'Paycheck to Peace', color: '#6B1E3A', ink: '#E8B9A2', url: 'money.html' },
-      { cover: 'assets/cover-calm.jpg?v=3', title: 'Quiet Mind, Deep Sleep', color: '#1E2152', ink: '#B7A6F2', url: 'calm.html' },
-      { cover: 'assets/cover-career.jpg?v=3', title: 'Hired in 30 Days', color: '#12372A', ink: '#C8A24A', url: 'career.html' },
-      { cover: 'assets/cover-fit.jpg?v=3', title: '20-Minute Home Workout', color: '#1E1E20', ink: '#FF6A2B', url: 'fitness.html' },
-      { cover: 'assets/cover-hair.jpg?v=2', title: 'The Hair Rescue', color: '#3A2418', ink: '#E7B95A', url: 'hair.html' },
-      { cover: 'assets/cover-face.jpg?v=2', title: 'The Skin Reset', color: '#1F4F4A', ink: '#F6BBA2', url: 'face.html' },
+      { cover: 'assets/cover.webp?v=4', title: 'AI for Beginners', color: '#0F1B2D', ink: '#14B8C9', url: 'product.html' },
+      { cover: 'assets/cover-money.webp?v=4', title: 'Paycheck to Peace', color: '#6B1E3A', ink: '#E8B9A2', url: 'money.html' },
+      { cover: 'assets/cover-calm.webp?v=4', title: 'Quiet Mind, Deep Sleep', color: '#1E2152', ink: '#B7A6F2', url: 'calm.html' },
+      { cover: 'assets/cover-career.webp?v=4', title: 'Hired in 30 Days', color: '#12372A', ink: '#C8A24A', url: 'career.html' },
+      { cover: 'assets/cover-fit.webp?v=4', title: '20-Minute Home Workout', color: '#1E1E20', ink: '#FF6A2B', url: 'fitness.html' },
+      { cover: 'assets/cover-hair.webp?v=4', title: 'The Hair Rescue', color: '#3A2418', ink: '#E7B95A', url: 'hair.html' },
+      { cover: 'assets/cover-face.webp?v=4', title: 'The Skin Reset', color: '#1F4F4A', ink: '#F6BBA2', url: 'face.html' },
     ], url => (window.bazzGo || (u => location.href = u))(url));
     if (ok) { sec.classList.remove('night-wall', 'rock'); } else { sec.classList.remove('sky-books'); }
   });
