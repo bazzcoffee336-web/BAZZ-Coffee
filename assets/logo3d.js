@@ -38,7 +38,7 @@ export function mountLogo(el, opts = {}) {
   let renderer;
   try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
   catch (e) { el.classList.add('no-webgl'); return; }
-  renderer.setPixelRatio(Math.min(LITE ? 1.5 : 2, devicePixelRatio));
+  renderer.setPixelRatio(Math.min(2, devicePixelRatio));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
   el.appendChild(renderer.domElement);

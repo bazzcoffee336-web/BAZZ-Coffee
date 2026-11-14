@@ -49,7 +49,7 @@ export function mountBook(el, opts = {}) {
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   } catch (e) { el.classList.add('no-webgl'); return; }
-  renderer.setPixelRatio(Math.min(LITE ? 1.5 : 2, devicePixelRatio));
+  renderer.setPixelRatio(Math.min(2, devicePixelRatio));
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = LITE ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15;

@@ -30,7 +30,7 @@ export function mountBooks(el, books, onOpen) {
   let renderer;
   try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
   catch (e) { return false; }
-  renderer.setPixelRatio(Math.min(LITE ? 1.5 : 2, devicePixelRatio));
+  renderer.setPixelRatio(Math.min(2, devicePixelRatio));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
   el.appendChild(renderer.domElement);
