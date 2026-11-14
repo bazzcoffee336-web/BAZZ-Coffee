@@ -582,3 +582,4 @@ body.aura-on::after{display:block}
 .trust li::before{content:"✓";color:#FF6B5B;font-weight:700}
 .trust a{color:inherit;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
 .trust li:last-child{flex-wrap:wrap}
+@media (max-width:900px){.about-mark{display:flex;justify-content:center}.about-mark img{display:block;margin:0 auto}}
