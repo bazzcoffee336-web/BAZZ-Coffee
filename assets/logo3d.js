@@ -32,6 +32,17 @@ function faceTextures(img) {
   return faceCache;
 }
 
+// Smart frame rate: 60fps on strong phones, 30fps on weak ones.
+// Weak = little memory or few cores; others are measured and drop to 30 if they can't keep up.
+function makePacer() {
+  let slow = (navigator.deviceMemory || 8) <= 2 || (navigator.hardwareConcurrency || 8) <= 2;
+  let n = 0, sum = 0, prev = 0, drawn = 0;
+  return now => {
+    if (slow && now - drawn < 30) return false;
+    if (!slow && prev) { const d = now - prev; if (d < 100) { sum += d; n++; } if (n === 60) { if (sum / n > 22) slow = true; n = sum = 0; } }
+    prev = now; drawn = now; return true;
+  };
+}
 const LITE = matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 8) <= 4;
 export function mountLogo(el, opts = {}) {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -119,8 +130,10 @@ export function mountLogo(el, opts = {}) {
   document.addEventListener('visibilitychange', wake);
   function wake() { if (raf === null && visible && !document.hidden) raf = requestAnimationFrame(loop); }
   let drawn = 0, dead = false;
+  const pace = makePacer();
   function loop(now) {
     raf = null; if (dead) return;
+    if (!pace(now) && !dragging) { raf = requestAnimationFrame(loop); return; }
     drawn = now;
     const dt = Math.min(50, now - (last || now)); last = now; const t = (now - t0) / 1000;
     if (!dragging) {
