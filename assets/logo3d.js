@@ -121,7 +121,6 @@ export function mountLogo(el, opts = {}) {
   let drawn = 0, dead = false;
   function loop(now) {
     raf = null; if (dead) return;
-    if (LITE && now - drawn < 30 && !dragging) { raf = requestAnimationFrame(loop); return; }
     drawn = now;
     const dt = Math.min(50, now - (last || now)); last = now; const t = (now - t0) / 1000;
     if (!dragging) {

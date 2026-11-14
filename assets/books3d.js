@@ -110,7 +110,6 @@ export function mountBooks(el, books, onOpen) {
   let drawn = 0;
   function loop(now) {
     raf = null;
-    if (LITE && now - drawn < 30) { raf = requestAnimationFrame(loop); return; }
     drawn = now;
     const dt = Math.min(50, now - (last || now)); last = now; const t = (now - t0) / 1000;
     const k = 1 - Math.pow(0.88, dt / 16.7); let moving = false;
