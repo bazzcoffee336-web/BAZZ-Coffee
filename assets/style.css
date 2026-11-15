@@ -583,3 +583,6 @@ body.aura-on::after{display:block}
 .trust a{color:inherit;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
 .trust li:last-child{flex-wrap:wrap}
 @media (max-width:900px){.about-mark{display:flex;justify-content:center}.about-mark img{display:block;margin:0 auto}}
+/* still coin when there is no graphics chip */
+.welcome-coin .coin-still{width:100%;height:100%;object-fit:contain;display:block}
+.stage3d.medal .fallback img{border-radius:0;box-shadow:none}

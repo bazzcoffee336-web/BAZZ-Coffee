@@ -34,10 +34,14 @@ function faceTextures(img) {
 
 // Smart frame rate: 60fps on strong phones, 30fps on weak ones.
 // Weak = little memory or few cores; others are measured and drop to 30 if they can't keep up.
+// No graphics chip (software rendering): draw a still frame instead of animating.
+const SOFT = (() => { try { const g = document.createElement('canvas').getContext('webgl'); const e = g && g.getExtension('WEBGL_debug_renderer_info');
+  const r = e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : ''; return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(r); } catch (e) { return false; } })();
 function makePacer() {
   let slow = (navigator.deviceMemory || 8) <= 2 || (navigator.hardwareConcurrency || 8) <= 2;
-  let n = 0, sum = 0, prev = 0, drawn = 0;
+  let n = 0, sum = 0, prev = 0, drawn = 0, still = 0;
   return now => {
+    if (SOFT) return still++ < 2;
     if (slow && now - drawn < 30) return false;
     if (!slow && prev) { const d = now - prev; if (d < 100) { sum += d; n++; } if (n === 60) { if (sum / n > 22) slow = true; n = sum = 0; } }
     prev = now; drawn = now; return true;
