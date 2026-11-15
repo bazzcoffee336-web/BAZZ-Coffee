@@ -23,8 +23,8 @@
 <meta name="twitter:image" content="https://bazz-coffee.bazzcoffee336.workers.dev/assets/og-bazz.jpg?v=6">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/medal-32.png?v=3"><link rel="icon" type="image/png" sizes="64x64" href="assets/medal-64.png?v=3"><link rel="apple-touch-icon" href="assets/app-180.png?v=3"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="BAZZ"><meta name="application-name" content="BAZZ">
 <link rel="preload" href="assets/fonts/Manrope-normal-3.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/DMSerifDisplay-normal-1.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="modulepreload" href="assets/three.module.min.js">
-<link rel="stylesheet" href="assets/style.css?v=497879">
+
+<link rel="stylesheet" href="assets/style.css?v=497880">
 <script>try{if(sessionStorage.getItem('bazz-welcome'))document.documentElement.classList.add('welcomed')}catch(e){}</script>
 </head>
 <body>
@@ -60,7 +60,7 @@
       </div>
     </div>
     <div class="stage3d medal" id="medal" aria-label="The BAZZ logo as a gold coin under a spotlight." role="img">
-      <div class="fallback"><img src="assets/eagle-512.webp?v=4" alt="" loading="lazy"></div>
+      <div class="fallback"><img src="assets/coin3d.webp?v=1" alt="" loading="lazy"></div>
     </div>
   </header>
 
@@ -182,10 +182,13 @@
 </footer>
 
 <script type="module">
-  import { mountLogo } from './assets/logo3d.js?v=12';
-  const startHero = () => mountLogo(document.getElementById('medal'));
+  // no graphics chip: show still coin images instead of 3D (much lighter)
+  const SOFT = (() => { try { const g = document.createElement('canvas').getContext('webgl'); if (!g) return true; const e = g.getExtension('WEBGL_debug_renderer_info'); return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : ''); } catch (e) { return true; } })();
+  let three = null; const logo = () => three || (three = import('./assets/logo3d.js?v=13'));
+  const still = el => { el.classList.add('no-webgl'); };
+  const startHero = () => SOFT ? still(document.getElementById('medal')) : logo().then(m => m.mountLogo(document.getElementById('medal')));
   const booksEl = document.getElementById('books3d');
-  const loadBooks = () => import('./assets/books3d.js?v=11').then(({ mountBooks }) => {
+  const loadBooks = () => SOFT ? document.getElementById('books').classList.remove('sky-books', 'rock') : import('./assets/books3d.js?v=12').then(({ mountBooks }) => {
     const sec = document.getElementById('books');
     const ok = mountBooks(document.getElementById('books3d'), [
       { cover: 'assets/cover.webp?v=5', title: 'AI for Beginners', color: '#0F1B2D', ink: '#14B8C9', url: 'product' },
@@ -207,7 +210,9 @@
   if (welcome && !document.documentElement.classList.contains('welcomed')) {
     const coin = document.getElementById('welcome-coin');
     document.documentElement.classList.add('welcome-open');
-    const stopWelcome = mountLogo(coin, { rotY: -0.2 });
+    let stopWelcome = null;
+    if (SOFT) coin.innerHTML = '<img class="coin-still" src="assets/coin3d.webp?v=1" alt="">';
+    else logo().then(m => { stopWelcome = m.mountLogo(coin, { rotY: -0.2 }); });
     let x = 0, y = 0, done = false;
     const enter = () => {
       if (done) return; done = true;
