@@ -1,12 +1,20 @@
 {
-	// BAZZ website: a static site served by Cloudflare Workers (static assets, no server code)
+	// BAZZ website: static site on Cloudflare Workers, at https://bazzbooks.store
 	"name": "bazz-coffee",
-	"compatibility_date": "2026-11-12",
+	"compatibility_date": "2026-11-16",
+	// tiny Worker: redirects the old workers.dev and www addresses to bazzbooks.store
+	"main": "worker/index.js",
 	// builds ./site before every deploy, so no build command is needed in the dashboard
 	"build": {
 		"command": "sh build.sh"
 	},
 	"assets": {
-		"directory": "./site"
-	}
+		"directory": "./site",
+		"binding": "ASSETS",
+		"run_worker_first": true
+	},
+	"routes": [
+		{ "pattern": "bazzbooks.store", "custom_domain": true },
+		{ "pattern": "www.bazzbooks.store", "custom_domain": true }
+	]
 }
