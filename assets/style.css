@@ -586,3 +586,11 @@ body.aura-on::after{display:block}
 /* still coin when there is no graphics chip */
 .welcome-coin .coin-still{width:100%;height:100%;object-fit:contain;display:block}
 .stage3d.medal .fallback img{border-radius:0;box-shadow:none}
+
+/* no-refund notice + agreement */
+.terms{margin:18px 0 14px;padding:16px 18px;border-radius:14px;background:rgba(255,107,91,.08);border:1px solid rgba(255,107,91,.35);font-size:15px;line-height:1.55;color:#E8E4F0}
+.terms p{margin:0}.terms .terms-h{font-weight:700;color:#FF8A7D;margin-bottom:6px;letter-spacing:.01em}
+.terms a{color:inherit;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+.agree{display:flex;gap:10px;align-items:flex-start;margin:12px 0;font-size:14px;line-height:1.5;color:#C9C5D6;cursor:pointer;width:100%}
+.agree input{width:20px;height:20px;flex:none;margin:1px 0 0;accent-color:#FF6B5B;cursor:pointer}
+#form button:disabled{opacity:.45;cursor:not-allowed}

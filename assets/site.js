@@ -15,11 +15,14 @@
   const form = document.getElementById('form');
   if (form) {
     const email = document.getElementById('email');
+    const agree = document.getElementById('agree'), sendBtn = form.querySelector('button');
+    if (agree) { const sync = () => { sendBtn.disabled = !agree.checked; }; agree.addEventListener('change', sync); sync(); }
     form.addEventListener('submit', e => {
       e.preventDefault();
       const v = email.value.trim().toLowerCase();
       const hp = document.getElementById('hp');
-      if (hp && hp.value) return;                                   // bots fill the hidden field
+      if (hp && hp.value) return;
+      if (agree && !agree.checked) { agree.focus(); return; }       // must accept the no-refund terms                                   // bots fill the hidden field
       if (!v || v.length > 254 || !/^[^\s@<>()"']+@[^\s@<>()"']+\.[a-z]{2,}$/.test(v) || !email.checkValidity()) { email.focus(); return; }
       let last = 0; try { last = +(localStorage.getItem('bazz-sent') || 0); } catch (e) {}
       if (Date.now() - last < 60000) { return; }                   // one signup a minute per browser
