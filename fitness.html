@@ -18,7 +18,7 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Book", "name": "The 20-Minute Home Workout", "bookFormat": "https://schema.org/EBook", "inLanguage": "en", "image": "https://bazzbooks.store/assets/cover-fit.webp?v=5", "description": "The 20-Minute Home Workout ebook: 9 real fitness problems, 9 simple fixes, plus 30 workout cards and checklists.", "brand": {"@type": "Brand", "name": "BAZZ"}, "publisher": {"@type": "Organization", "name": "BAZZ"}, "offers": {"@type": "Offer", "price": "99.99", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder", "url": "https://bazzbooks.store/fitness"}}</script>
 <link rel="icon" type="image/png" sizes="32x32" href="assets/medal-32.png?v=3"><link rel="icon" type="image/png" sizes="64x64" href="assets/medal-64.png?v=3"><link rel="apple-touch-icon" href="assets/app-180.png?v=3"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="BAZZ"><meta name="application-name" content="BAZZ">
 <link rel="preload" href="assets/fonts/Manrope-normal-3.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/DMSerifDisplay-normal-1.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/style.css?v=497880">
+<link rel="stylesheet" href="assets/style.css?v=497881">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -118,11 +118,16 @@
         </ul>
         <p style="margin:0 0 6px;font-weight:600">Checkout isn't open yet.</p>
         <p style="margin:0;color:#C9C5D6;font-size:15px">Leave your email and we'll send you the buy link the day it opens.</p>
+        <div class="terms" role="note">
+          <p class="terms-h">⬇ Digital download · All sales final</p>
+          <p>You get the full PDF the moment you pay. Because it can't be returned, <b>we can't offer refunds</b>. If your file won't open or is damaged, email <a href="mailto:hello@bazzbooks.store">hello@bazzbooks.store</a> and we'll send you a working copy.</p>
+        </div>
         <form id="form" novalidate>
           <label class="sr" for="email">Your email</label>
           <input id="email" type="email" required maxlength="254" placeholder="you@email.com" autocomplete="email">
           <input type="text" name="_honey" id="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
-        <button class="btn" type="submit">Notify me</button>
+          <label class="agree"><input type="checkbox" id="agree" required> I understand this is an instant PDF download and I can't cancel or get a refund once it's downloaded.</label>
+        <button class="btn" type="submit" disabled>Notify me</button>
         </form>
         <p class="ok" role="status">You're on the list. We'll email you the buy link.</p>
         <p class="note">One email, no spam. General fitness education, not medical advice.</p>
@@ -155,6 +160,6 @@
   if (SOFT) document.getElementById('stage').classList.add('no-webgl');
   else import('./assets/book3d.js?v=12').then(({ mountBook }) => mountBook(document.getElementById('stage'), { color: '#FF6A2B', bg: '#1E1E20', cover: 'assets/cover-fit.webp?v=5', title: 'The 20-Minute Home Workout', back1: 'Get fit without a gym', back2: '20 minutes at a time' }));
 </script>
-<script src="assets/site.js?v=497876"></script>
+<script src="assets/site.js?v=497881"></script>
 </body>
 </html>
