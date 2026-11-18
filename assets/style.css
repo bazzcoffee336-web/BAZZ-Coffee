@@ -601,3 +601,6 @@ body.aura-on::after{display:block}
 .policy h2{font:700 21px Manrope,sans-serif;margin:34px 0 8px;color:#D9BE85}
 .policy .upd{color:#9C98AE;font-size:14px;margin:0 0 10px}.policy a{color:#FF8A7D}
 .agree a{color:#FF8A7D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+
+.agree b{color:#F4EFE6;font-weight:600}
+.agree{padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
