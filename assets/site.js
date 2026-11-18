@@ -28,7 +28,7 @@
       if (Date.now() - last < 60000) { return; }                   // one signup a minute per browser
       try { localStorage.setItem('bazz-sent', Date.now()); } catch (e) {}
       const btn = form.querySelector('button'); btn.disabled = true; btn.textContent = 'Sending...';
-      fetch('https://formsubmit.co/ajax/bazzcoffee336@gmail.com', {
+      fetch('https://formsubmit.co/ajax/info@bazzbooks.store', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({ email: v, product: document.title.split('|')[0].trim().slice(0, 80), _subject: 'New ebook waitlist signup', _template: 'table', _captcha: 'false' })
