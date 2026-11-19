@@ -17,8 +17,19 @@
     const email = document.getElementById('email');
     const agree = document.getElementById('agree'), sendBtn = form.querySelector('button');
     if (agree) { const sync = () => { sendBtn.disabled = !agree.checked; }; agree.addEventListener('change', sync); sync(); }
+    // buy mode (Wayl): on while testing only with ?buy=1 in the address
+    const buyMode = /[?&]buy=1/.test(location.search) || form.hasAttribute('data-buy');
+    if (buyMode) { sendBtn.textContent = 'Buy now'; form.classList.add('paying'); }
     form.addEventListener('submit', e => {
       e.preventDefault();
+      if (buyMode) {
+        if (agree && !agree.checked) { agree.focus(); return; }
+        sendBtn.disabled = true; sendBtn.textContent = 'Opening payment...';
+        fetch('/api/buy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ book: location.pathname.replace(/[^a-z]/g, '') || 'product', agree: true }) })
+          .then(r => r.json()).then(d => { if (!d.url) throw 0; location.href = d.url; })
+          .catch(() => { sendBtn.disabled = false; sendBtn.textContent = 'Try again'; });
+        return;
+      }
       const v = email.value.trim().toLowerCase();
       const hp = document.getElementById('hp');
       if (hp && hp.value) return;
