@@ -91,6 +91,20 @@ async function thanks(url, env) {
   return page('Thank you', `<h1>Thank you. <i>Your book is ready.</i></h1><p>${esc(BOOKS[slug].title)}, PDF</p><a class="btn" href="${dl}">Download your PDF</a><p>Save this page's link: it is your personal download link.<br>Questions? <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a></p>`);
 }
 
+
+// finds the PDF even if the upload renamed it a little ("The Hair Rescue.pdf", "books/the-hair-rescue (1).pdf")
+const norm = s => s.toLowerCase().replace(/\.pdf$/, '').replace(/\(\d+\)/g, '').replace(/[^a-z0-9]/g, '');
+async function findBook(env, file) {
+  const exact = await env.BOOKS.get(file);
+  if (exact) return exact;
+  const want = norm(file);
+  let cursor, keys = [];
+  do { const l = await env.BOOKS.list({ cursor, limit: 1000 }); keys.push(...l.objects.map(o => o.key)); cursor = l.truncated ? l.cursor : null; } while (cursor);
+  const hit = keys.find(k => /\.pdf$/i.test(k) && norm(k.split('/').pop()) === want) || keys.find(k => /\.pdf$/i.test(k) && norm(k).includes(want));
+  if (!hit) { log('bucket_keys', { want: file, keys: keys.slice(0, 50) }); return null; }
+  return env.BOOKS.get(hit);
+}
+
 // GET /dl/<ref>/<signature>  -> the PDF, only for a paid order
 async function download(request, url, env) {
   const [, , ref, sig] = url.pathname.split('/').map(decodeURIComponent);
@@ -98,7 +112,7 @@ async function download(request, url, env) {
   if (!slug || !env.WAYL_API_KEY || !env.BOOKS || !same(sig, await hmac(env.WAYL_API_KEY, 'dl:' + ref))) return new Response('Not found', { status: 404 });
   const r = await wayl(env, '/links/' + encodeURIComponent(ref));
   if (!isPaid(r.body && r.body.data)) { log('download_refused', { ref }); return new Response('This order is not paid.', { status: 403 }); }
-  const obj = await env.BOOKS.get(BOOKS[slug].file);
+  const obj = await findBook(env, BOOKS[slug].file);
   if (!obj) { log('download_missing_file', { ref, file: BOOKS[slug].file }); return new Response('File missing. Email info@bazzbooks.store and we will send it.', { status: 500 }); }
   log('download', { ref, book: slug, ip_country: request.cf && request.cf.country, ua: (request.headers.get('user-agent') || '').slice(0, 120) });
   return new Response(obj.body, { headers: { 'content-type': 'application/pdf', 'content-disposition': `attachment; filename="${BOOKS[slug].file}"`, 'cache-control': 'private, no-store' } });
