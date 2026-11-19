@@ -16,6 +16,7 @@
 		"run_worker_first": true
 	},
 	// private PDFs, only sent after Wayl says the order is paid
+	"r2_buckets": [{ "binding": "BOOKS", "bucket_name": "bazz-books" }],
 	// "test" until the test payment works, then "live"
 	"vars": { "WAYL_ENV": "test" },
 	// order and download logs (proof of delivery for Wayl), free plan
