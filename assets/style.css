@@ -614,3 +614,4 @@ body.aura-on::after{display:block}
 
 .nr{margin:14px 0 16px;padding:10px 14px;border-radius:10px;background:rgba(255,107,91,.08);border:1px solid rgba(255,107,91,.3);font-size:14px;line-height:1.5;color:#E8E4F0}
 .nr a{color:#FF8A7D;text-decoration:underline;text-underline-offset:2px}
+.nr-i{color:#FF6B5B;vertical-align:-3px;margin-right:4px}
