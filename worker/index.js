@@ -113,7 +113,7 @@ async function download(request, url, env) {
   const r = await wayl(env, '/links/' + encodeURIComponent(ref));
   if (!isPaid(r.body && r.body.data)) { log('download_refused', { ref }); return new Response('This order is not paid.', { status: 403 }); }
   const paidAt = Date.parse((r.body.data.completedAt || r.body.data.updatedAt) || '');
-  if (paidAt && Date.now() - paidAt > 2 * 3600 * 1000) { log('download_expired', { ref }); return page('Link expired', `<h1>This link has <i>expired</i></h1><p>Download links work for 2 hours after payment. If you bought this book, email <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a> with your order number and we'll help.</p>`); }
+  if (paidAt && Date.now() - paidAt > 2 * 3600 * 1000) { log('download_expired', { ref }); return page('Link expired', `<h1>This link has <i>expired</i></h1><p>If you bought this book, email <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a> with your order number and we'll help.</p>`); }
   const obj = await findBook(env, BOOKS[slug].file);
   if (!obj) { log('download_missing_file', { ref, file: BOOKS[slug].file }); return new Response('File missing. Email info@bazzbooks.store and we will send it.', { status: 500 }); }
   log('download', { ref, book: slug, ip_country: request.cf && request.cf.country, ua: (request.headers.get('user-agent') || '').slice(0, 120) });
