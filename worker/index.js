@@ -115,7 +115,7 @@ export default {
     try {
       if (p === '/api/buy' && request.method === 'POST') return await buy(request, env);
       if (p === '/api/wayl-webhook' && request.method === 'POST') return await webhook(request, env);
-      if (p === '/thanks') return await thanks(url, env);
+      if (p === '/thanks' || p === '/thanks/') return await thanks(url, env);
       if (p.startsWith('/dl/')) return await download(request, url, env);
     } catch (e) {
       log('error', { path: p, msg: String(e && e.message || e) });
