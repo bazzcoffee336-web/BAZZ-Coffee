@@ -20,6 +20,8 @@
 	// "test" until the test payment works, then "live"
 	"vars": { "WAYL_ENV": "live" },
 	// order and download logs (proof of delivery for Wayl), free plan
+	// free rate limiter for the Buy button: 10 tries a minute per visitor
+	"ratelimits": [{ "name": "BUY_LIMIT", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } }],
 	"observability": { "enabled": true },
 	"routes": [
 		{ "pattern": "bazzbooks.store", "custom_domain": true },
