@@ -29,7 +29,7 @@ function same(a, b) {
   return d === 0;
 }
 const log = (event, data) => console.log(JSON.stringify({ event, at: new Date().toISOString(), ...data }));
-const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
+const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' } });
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const webhookSecret = env => hmac(env.WAYL_API_KEY, 'bazz-webhook');
 const bookOf = ref => { const m = /^bz-([a-z]+)-/.exec(ref || ''); return m && BOOKS[m[1]] ? m[1] : null; };
@@ -39,11 +39,20 @@ async function wayl(env, path, init = {}) {
   const body = await r.json().catch(() => ({}));
   return { ok: r.ok, status: r.status, body };
 }
-const isPaid = d => !!d && (/^(complete|completed|paid|success|succeeded)$/i.test(d.status || '') || !!d.completedAt);
+// refunded, reversed, cancelled or charged-back orders never count as paid
+const isPaid = d => !!d && !/refund|revers|cancel|charge|fail|void/i.test(d.status || '') && (/^(complete|completed|paid|success|succeeded)$/i.test(d.status || '') || !!d.completedAt);
+// security headers for pages the worker builds itself (the static site gets them from _headers)
+const SEC = { 'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'", 'x-frame-options': 'DENY', 'x-content-type-options': 'nosniff', 'referrer-policy': 'no-referrer', 'strict-transport-security': 'max-age=31536000; includeSubDomains' };
 
 // POST /api/buy  {book, agree:true}  -> {url}
 async function buy(request, env) {
   if (!env.WAYL_API_KEY) return json({ error: 'Checkout is not set up yet.' }, 503);
+  // stop bots: at most 10 checkout tries a minute per visitor (free Workers rate limiter)
+  if (env.BUY_LIMIT) {
+    const ip = request.headers.get('cf-connecting-ip') || 'unknown';
+    const { success } = await env.BUY_LIMIT.limit({ key: ip });
+    if (!success) { log('buy_rate_limited', {}); return json({ error: 'Too many tries. Please wait a minute and try again.' }, 429); }
+  }
   let input; try { input = await request.json(); } catch { return json({ error: 'Bad request.' }, 400); }
   const slug = input && input.book;
   if (!BOOKS[slug]) return json({ error: 'Unknown book.' }, 400);
@@ -77,7 +86,7 @@ async function webhook(request, env) {
   return new Response('ok');
 }
 
-const page = (title, body) => new Response(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${title} | BAZZ</title><link rel="icon" href="/assets/app-192.png"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0C0E1A;color:#F3EFE6;font:17px/1.6 system-ui,sans-serif;padding:24px;box-sizing:border-box}main{max-width:520px;text-align:center}h1{font-family:Georgia,serif;font-weight:400;font-size:34px;margin:0 0 12px}h1 i{color:#D9BE85}.btn{display:inline-block;margin:18px 0;padding:15px 28px;border-radius:999px;background:#FF6B5B;color:#0C0E1A;font-weight:700;text-decoration:none}p{color:#C9C5D6}a{color:#D9BE85}</style></head><body><main>${body}</main></body></html>`, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+const page = (title, body) => new Response(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${title} | BAZZ</title><link rel="icon" href="/assets/app-192.png"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0C0E1A;color:#F3EFE6;font:17px/1.6 system-ui,sans-serif;padding:24px;box-sizing:border-box}main{max-width:520px;text-align:center}h1{font-family:Georgia,serif;font-weight:400;font-size:34px;margin:0 0 12px}h1 i{color:#D9BE85}.btn{display:inline-block;margin:18px 0;padding:15px 28px;border-radius:999px;background:#FF6B5B;color:#0C0E1A;font-weight:700;text-decoration:none}p{color:#C9C5D6}a{color:#D9BE85}</style></head><body><main>${body}</main></body></html>`, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', ...SEC } });
 
 // GET /thanks?referenceId=...  (Wayl sends the buyer here after paying)
 async function thanks(url, env) {
@@ -117,7 +126,7 @@ async function download(request, url, env) {
   const obj = await findBook(env, BOOKS[slug].file);
   if (!obj) { log('download_missing_file', { ref, file: BOOKS[slug].file }); return new Response('File missing. Email info@bazzbooks.store and we will send it.', { status: 500 }); }
   log('download', { ref, book: slug, ip_country: request.cf && request.cf.country, ua: (request.headers.get('user-agent') || '').slice(0, 120) });
-  return new Response(obj.body, { headers: { 'content-type': 'application/pdf', 'content-disposition': `attachment; filename="${BOOKS[slug].file}"`, 'cache-control': 'private, no-store' } });
+  return new Response(obj.body, { headers: { 'content-type': 'application/pdf', 'content-disposition': `attachment; filename="${BOOKS[slug].file}"`, 'cache-control': 'private, no-store', ...SEC } });
 }
 
 export default {
