@@ -88,7 +88,7 @@ async function thanks(url, env) {
   if (!isPaid(r.body && r.body.data)) { log('thanks_unpaid', { ref, status: r.body && r.body.data && r.body.data.status }); return page('Waiting', `<h1>Waiting for <i>your payment</i></h1><p>We haven't seen your payment yet. If you just paid, wait a few seconds and <a href="">refresh this page</a>.</p><p>Need help? <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a></p>`); }
   const dl = `/dl/${encodeURIComponent(ref)}/${await hmac(env.WAYL_API_KEY, 'dl:' + ref)}`;
   log('thanks_paid', { ref, book: slug });
-  return page('Thank you', `<h1>Thank you. <i>Your book is ready.</i></h1><p>${esc(BOOKS[slug].title)}, PDF</p><a class="btn" href="${dl}" onclick="setTimeout(function(){location.href='/'},4000)">Download your PDF</a><p>Questions? <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a></p>`);
+  return page('Thank you', `<h1>Thank you. <i>Your book is ready.</i></h1><p>${esc(BOOKS[slug].title)}, PDF</p><a class="btn" href="${dl}" onclick="setTimeout(function(){location.href='/'},4000)">Download your PDF</a><p>Questions? <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a><br>Follow <a href="https://www.instagram.com/bazzbooks0/" target="_blank" rel="noopener">@bazzbooks0</a> for a free tip every day.</p>`);
 }
 
 
