@@ -648,3 +648,5 @@ form.paying input[type=email],form.paying label[for=email]{display:none}
 .whobox b{color:#F3EFE6}.whobox a{color:#D9BE85}
 .hero-free{margin:14px 0 0;font-size:16px}
 .freebtn{display:inline-flex;margin:0 0 18px}
+.btn.freebtn{background:#D9BE85;color:#0C0E1A;border:2px solid #D9BE85;font-weight:700;box-shadow:0 8px 24px -10px rgba(217,190,133,.7)}
+.btn.freebtn:hover{background:#E8D3A2;border-color:#E8D3A2}
