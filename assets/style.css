@@ -640,3 +640,9 @@ form.paying input[type=email],form.paying label[for=email]{display:none}
 .vmonth{margin:-4px 0 14px;color:#C9C5D6;font-size:14px;font-style:italic}
 
 .freech{margin:-6px 0 14px}.freech a{color:#D9BE85;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+
+.who{max-width:720px;margin:0 auto;text-align:center}
+.who img{border-radius:50%;box-shadow:0 0 0 2px #C9A86A}
+.who p{font-size:18px;line-height:1.7;color:#3B4050}
+.whobox{margin:18px 0 6px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(217,190,133,.25);font-size:14px;line-height:1.6;color:#C9C5D6;text-align:left}
+.whobox b{color:#F3EFE6}.whobox a{color:#D9BE85}
