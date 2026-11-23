@@ -97,7 +97,8 @@ async function thanks(url, env) {
   if (!isPaid(r.body && r.body.data)) { log('thanks_unpaid', { ref, status: r.body && r.body.data && r.body.data.status }); return page('Waiting', `<h1>Waiting for <i>your payment</i></h1><p>We haven't seen your payment yet. If you just paid, wait a few seconds and <a href="">refresh this page</a>.</p><p>Need help? <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a></p>`); }
   const dl = `/dl/${encodeURIComponent(ref)}/${await hmac(env.WAYL_API_KEY, 'dl:' + ref)}`;
   log('thanks_paid', { ref, book: slug });
-  return page('Thank you', `<h1>Thank you. <i>Your book is ready.</i></h1><p>${esc(BOOKS[slug].title)}, PDF</p><a class="btn" href="${dl}" onclick="setTimeout(function(){location.href='/'},4000)">Download your PDF</a><p>Questions? <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a><br>Follow <a href="https://www.instagram.com/bazzbooks0/" target="_blank" rel="noopener">@bazzbooks0</a> for a free tip every day.</p>`);
+  const lp = LEARN[slug] ? `<p><a class="btn" style="background:#D9BE85" href="/learn/${encodeURIComponent(ref)}/${await hmac(env.WAYL_API_KEY, 'learn:' + ref)}">Open your videos and tracker</a><br><small>Bookmark it: this is your personal page to come back to.</small></p>` : '';
+  return page('Thank you', `<h1>Thank you. <i>Your book is ready.</i></h1><p>${esc(BOOKS[slug].title)}, PDF</p>${lp}<a class="btn" href="${dl}" onclick="setTimeout(function(){location.href='/'},4000)">Download your PDF</a><p>Questions? <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a><br>Follow <a href="https://www.instagram.com/bazzbooks0/" target="_blank" rel="noopener">@bazzbooks0</a> for a free tip every day.</p>`);
 }
 
 
@@ -112,6 +113,47 @@ async function findBook(env, file) {
   const hit = keys.find(k => /\.pdf$/i.test(k) && norm(k.split('/').pop()) === want) || keys.find(k => /\.pdf$/i.test(k) && norm(k).includes(want));
   if (!hit) { log('bucket_keys', { want: file, keys: keys.slice(0, 50) }); return null; }
   return env.BOOKS.get(hit);
+}
+
+
+// buyer page with how-to videos and a tracker (only books that have one)
+const LEARN = {
+  fitness: { moves: [['squat','Squat'],['pushup','Push-up'],['bridge','Glute bridge'],['row','Row'],['lunge','Lunge'],['plank','Plank']] },
+};
+async function learn(request, url, env) {
+  const [, , ref, sig] = url.pathname.split('/').map(decodeURIComponent);
+  const slug = bookOf(ref);
+  if (!slug || !LEARN[slug] || !env.WAYL_API_KEY || !same(sig, await hmac(env.WAYL_API_KEY, 'learn:' + ref))) return new Response('Not found', { status: 404 });
+  const r = await wayl(env, '/links/' + encodeURIComponent(ref));
+  if (!isPaid(r.body && r.body.data)) return new Response('This order is not paid.', { status: 403 });
+  log('learn_open', { ref, book: slug });
+  const v = LEARN[slug].moves.map(([k, t]) => `<figure><video controls playsinline preload="none" poster="/assets/learn/${slug}/poster-${k}.jpg" src="/assets/learn/${slug}/howto-${k}.mp4"></video><figcaption>${t}</figcaption></figure>`).join('');
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const grid = [1,2,3,4,5,6].map(w => `<tr><th>Week ${w}</th>${days.map((d,i) => `<td><button data-k="w${w}d${i}" aria-label="Week ${w} ${d}"></button></td>`).join('')}</tr>`).join('');
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Your workout page | BAZZ</title><link rel="icon" href="/assets/app-192.png"><style>
+body{margin:0;background:#0C0E1A;color:#F3EFE6;font:16px/1.6 system-ui,sans-serif}main{max-width:900px;margin:0 auto;padding:28px 18px 60px}
+h1{font-family:Georgia,serif;font-weight:400;font-size:34px;margin:0 0 6px}h1 i,h2 i{color:#D9BE85}h2{font-family:Georgia,serif;font-weight:400;font-size:26px;margin:36px 0 12px}p{color:#C9C5D6}
+.v{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}figure{margin:0;background:#141a33;border-radius:16px;overflow:hidden}video{width:100%;display:block;aspect-ratio:4/5;background:#141a33}figcaption{padding:10px 14px;font-weight:700}
+table{width:100%;border-collapse:separate;border-spacing:6px}th{text-align:left;color:#D9BE85;font-size:13px;font-weight:700;white-space:nowrap}thead th{text-align:center}td button{width:100%;aspect-ratio:1;border-radius:10px;border:2px solid #3a4266;background:#141a33;cursor:pointer;font-size:18px;color:#0C0E1A}
+td button.on{background:#FF6B5B;border-color:#FF6B5B}td button.on::after{content:"✓"}.stat{display:flex;gap:12px;flex-wrap:wrap}.stat div{flex:1;min-width:140px;background:#141a33;border-radius:14px;padding:14px}.stat b{display:block;font-family:Georgia,serif;font-size:30px;color:#D9BE85;font-weight:400}
+.task{background:#141a33;border-left:4px solid #FF6B5B;border-radius:12px;padding:14px 16px}a{color:#D9BE85}</style></head><body><main>
+<p style="margin:0;letter-spacing:.2em;font-size:12px;color:#D9BE85;font-weight:700">BAZZ · YOUR WORKOUT PAGE</p>
+<h1>Welcome back. <i>Let's move.</i></h1><p>Bookmark this page. Come back after every workout and tick the day.</p>
+<div class="stat"><div><b id="n">0</b>days ticked</div><div><b id="s">0</b>day streak</div><div><b id="wk">Week 1</b>you are here</div></div>
+<h2>Today's <i>task</i></h2><div class="task" id="task"></div>
+<h2>Watch the <i>6 moves</i></h2><div class="v">${v}</div>
+<h2>Your 6-week <i>tracker</i></h2><p>Tap a day after you move: a workout or a 20-minute walk. Missed a day? Fine. Never miss twice.</p>
+<table><thead><tr><th></th>${days.map(d => `<th>${d}</th>`).join('')}</tr></thead><tbody>${grid}</tbody></table>
+<p style="margin-top:28px">Your ticks are saved on this device. Questions? <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a><br><small>General fitness education, not medical advice. Stop if you feel sharp pain.</small></p>
+</main><script>
+(function(){var K='bazz-fit-'+location.pathname.split('/')[2],st={};try{st=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
+var T=['Do the 10-minute starting check from Chapter 2, then tick today.','Workout A: 2 rounds of squat, push-up, bridge. Slow and steady.','20-minute walk. Talk test: you can talk, but not sing.','Workout B: 2 rounds of row, lunge, plank.','Rest or a gentle walk. Missed yesterday? Do 10 minutes today.','Workout A again. Try one move at the harder level.','Look back at your week. Write one win that is not about the scale.'];
+var bs=document.querySelectorAll('td button');function save(){try{localStorage.setItem(K,JSON.stringify(st))}catch(e){}}
+function draw(){var n=0,last=-1,streak=0,run=0;bs.forEach(function(b,i){var on=!!st[b.dataset.k];b.classList.toggle('on',on);if(on){n++;last=i;run++;streak=run}else{run=0}});
+document.getElementById('n').textContent=n;document.getElementById('s').textContent=streak;var next=last+1;document.getElementById('wk').textContent='Week '+Math.min(6,Math.floor(next/7)+1);document.getElementById('task').textContent=T[next%7]}
+bs.forEach(function(b){b.onclick=function(){st[b.dataset.k]=!st[b.dataset.k];save();draw()}});draw()})();
+</script></body></html>`;
+  return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self'; media-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'", 'x-frame-options': 'DENY', 'x-content-type-options': 'nosniff', 'referrer-policy': 'no-referrer' } });
 }
 
 // GET /dl/<ref>/<signature>  -> the PDF, only for a paid order
@@ -142,6 +184,7 @@ export default {
       if (p === '/api/wayl-webhook' && request.method === 'POST') return await webhook(request, env);
       if (p === '/thanks' || p === '/thanks/') return await thanks(url, env);
       if (p.startsWith('/dl/')) return await download(request, url, env);
+      if (p.startsWith('/learn/')) return await learn(request, url, env);
     } catch (e) {
       log('error', { path: p, msg: String(e && e.message || e) });
       return new Response('Something went wrong. Email info@bazzbooks.store and we will help.', { status: 500 });
