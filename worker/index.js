@@ -19,21 +19,21 @@ const BOOKS = {
 
 // Workout videos (voiced, 3D) live on a media CDN; the QR codes and pages keep using bazzbooks.store links
 const FITV = {
- "ch1": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/fb3dcc77-25a9-4822-81c1-b994528bfc1e.mp4",
- "ch2": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/4a916536-a0f5-4c45-a81d-90009a49db89.mp4",
- "ch3": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/cb1ea4a0-713b-46c5-a10c-cae93c8138be.mp4",
- "ch4": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/e605a398-847f-435f-b331-81ff15cd3a53.mp4",
- "ch5": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/40aa6458-c033-4d54-bc37-4a16e902c6e5.mp4",
- "ch6": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/cdd2b37a-3126-4620-a523-3a67ce63d4de.mp4",
- "ch7": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/a860a5ef-c5cf-49ea-bd47-b5576bd12e8a.mp4",
- "ch8": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/86e680a7-1869-407e-848e-8ae2675c563e.mp4",
- "ch9": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/33509309-eb3f-4f63-9d4d-dad4b6d4558b.mp4",
- "howto-squat": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/1152c1b0-7ab2-4e00-abc3-584cc01436fa.mp4",
- "howto-pushup": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/9619ab03-10bf-4934-9480-de8fd048d96c.mp4",
- "howto-bridge": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/e067d38a-b687-4bdb-8d68-75acd845b6db.mp4",
- "howto-row": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/683c3183-0009-4aeb-9e4a-38ec22908292.mp4",
- "howto-lunge": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/e562fe64-232a-4a6f-ae1e-eaa2ba7b1271.mp4",
- "howto-plank": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/0eaac5b8-9cf7-4216-9f41-3420fc3cd6d4.mp4"
+ "ch1": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/6fa5de03-c5fb-4a0f-9645-a303e92d070c.mp4",
+ "ch2": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/9626db51-fda4-46ee-935e-4baa5b613631.mp4",
+ "ch3": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/64114c0c-77fd-4f21-8dd3-5d424d50c03d.mp4",
+ "ch4": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/ca6b906f-52fd-45ad-88c0-3bdce50ecce7.mp4",
+ "ch5": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/e6cd9ab1-aea1-495e-b7e9-5f319fdfd5e1.mp4",
+ "ch6": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/c7b70d0a-26a8-4837-b04c-91e75d0bf194.mp4",
+ "ch7": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/80e839ea-04fb-4a12-abb1-e1ca9a3a0ec4.mp4",
+ "ch8": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/3914d3eb-94bc-4554-9b98-2279c4259e98.mp4",
+ "ch9": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/8febf4bd-cfa2-4213-bdf8-288855cc0115.mp4",
+ "howto-squat": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/c144aab9-0e0e-4bf8-bb44-0b7b9b3c354d.mp4",
+ "howto-pushup": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/c244fade-0159-4ff9-86d3-058a8a380a04.mp4",
+ "howto-bridge": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/c4006b29-a378-45c2-b3f1-5dd71a1ba805.mp4",
+ "howto-row": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/1dd67aa7-713c-4f95-a498-a7d52fac55cf.mp4",
+ "howto-lunge": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/863bc9b2-da01-4def-ad0d-ab61371f2305.mp4",
+ "howto-plank": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/00efee3d-7b09-495e-9c0e-cd8332ca3fcc.mp4"
 };
 const enc = new TextEncoder();
 const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
