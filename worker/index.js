@@ -98,9 +98,69 @@ async function thanks(url, env) {
   const dl = `/dl/${encodeURIComponent(ref)}/${await hmac(env.WAYL_API_KEY, 'dl:' + ref)}`;
   log('thanks_paid', { ref, book: slug });
   const lp = LEARN[slug] ? `<p><a class="btn" style="background:#D9BE85" href="/learn/${encodeURIComponent(ref)}/${await hmac(env.WAYL_API_KEY, 'learn:' + ref)}">Open your videos and tracker</a><br><small>Bookmark it: this is your personal page to come back to.</small></p>` : '';
-  return page('Thank you', `<h1>Thank you. <i>Your book is ready.</i></h1><p>${esc(BOOKS[slug].title)}, PDF</p>${lp}<a class="btn" href="${dl}" onclick="setTimeout(function(){location.href='/'},4000)">Download your PDF</a><p>Questions? <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a><br>Follow <a href="https://www.instagram.com/bazzbooks0/" target="_blank" rel="noopener">@bazzbooks0</a> for a free tip every day.</p>`);
+  return page('Thank you', `<h1>Thank you. <i>Your book is ready.</i></h1><p>${esc(BOOKS[slug].title)}, PDF</p>${lp}<a class="btn" href="${dl}" onclick="setTimeout(function(){location.href='/'},4000)">Download your PDF</a><p>Read it for a few days, then <a href="/review/${encodeURIComponent(ref)}/${await hmac(env.WAYL_API_KEY, 'review:' + ref)}">leave a quick review</a>. It really helps.<br><small>Bookmark this page to come back to it.</small></p><p>Questions? <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a><br>Follow <a href="https://www.instagram.com/bazzbooks0/" target="_blank" rel="noopener">@bazzbooks0</a> for a free tip every day.</p>`);
 }
 
+
+// ---- Reviews: only verified buyers can write one (signed link from the thanks page).
+// New reviews wait in R2 "reviews/pending/"; the owner approves them at /admin/reviews?key=ADMIN_KEY.
+const RSEC = { ...SEC, 'content-security-policy': SEC['content-security-policy'].replace("form-action 'none'", "form-action 'self'") };
+const rpage = (title, body) => { const r = page(title, body); for (const [k, v] of Object.entries(RSEC)) r.headers.set(k, v); return r; };
+const RSTYLE = `<style>form{text-align:left;margin-top:18px}label{display:block;margin:14px 0 6px;color:#F3EFE6;font-weight:600}input[type=text],textarea{width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid #3a3f5c;background:#141830;color:#F3EFE6;font:16px system-ui}textarea{min-height:130px}.st{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:6px}.st input{display:none}.st label{font-size:38px;margin:0;color:#3a3f5c;cursor:pointer}.st input:checked~label,.st label:hover,.st label:hover~label{color:#D9BE85}.ck{display:flex;gap:10px;align-items:flex-start;font-weight:400;color:#C9C5D6;font-size:15px}button{margin-top:18px;width:100%;padding:15px;border:0;border-radius:999px;background:#D9BE85;color:#0C0E1A;font:700 17px system-ui;cursor:pointer}</style>`;
+async function review(request, url, env) {
+  const [, , ref, sig] = url.pathname.split('/').map(decodeURIComponent);
+  const slug = bookOf(ref);
+  if (!slug || !env.WAYL_API_KEY || !env.BOOKS || !same(sig, await hmac(env.WAYL_API_KEY, 'review:' + ref))) return new Response('Not found', { status: 404 });
+  const title = esc(BOOKS[slug].title);
+  if (request.method === 'POST') {
+    const f = await request.formData();
+    const stars = Math.round(Number(f.get('stars')));
+    const name = String(f.get('name') || '').trim().slice(0, 40);
+    const country = String(f.get('country') || '').trim().slice(0, 40);
+    const text = String(f.get('text') || '').trim().slice(0, 800);
+    if (!(stars >= 1 && stars <= 5) || !name || text.length < 10 || f.get('ok') !== 'yes') return rpage('Review', `<h1>Almost there</h1><p>Please pick 1 to 5 stars, write your first name and at least a sentence, and tick the box.</p><p><a href="">Go back</a></p>`);
+    await env.BOOKS.put('reviews/pending/' + ref + '.json', JSON.stringify({ ref, book: slug, stars, name, country, text, at: new Date().toISOString() }));
+    log('review_new', { ref, book: slug, stars });
+    return rpage('Thank you', `<h1>Thank you, <i>${esc(name)}</i></h1><p>Your review of ${title} will appear on the website after a quick check. We never change what you wrote.</p><p><a href="/">Back to BAZZ</a></p>`);
+  }
+  return rpage('Review', `${RSTYLE}<h1>How was <i>${title}</i>?</h1><p>Your honest review helps other readers decide. Good or bad, we show it as you wrote it.</p>
+<form method="post"><label>Your rating</label><div class="st">${[5,4,3,2,1].map(n => `<input type="radio" name="stars" id="s${n}" value="${n}" required><label for="s${n}" title="${n} stars">★</label>`).join('')}</div>
+<label for="n">First name</label><input type="text" id="n" name="name" maxlength="40" required autocomplete="given-name">
+<label for="c">Country (optional)</label><input type="text" id="c" name="country" maxlength="40" autocomplete="country-name">
+<label for="t">Your review</label><textarea id="t" name="text" maxlength="800" minlength="10" required placeholder="What did you try? What changed?"></textarea>
+<label class="ck"><input type="checkbox" name="ok" value="yes" required> BAZZ may show my review with my first name and country on bazzbooks.store.</label>
+<button type="submit">Send my review</button></form>`);
+}
+// GET /api/reviews?book=fitness -> approved reviews for that book (public, cached 5 min)
+async function reviewsApi(url, env) {
+  const slug = url.searchParams.get('book');
+  if (!BOOKS[slug] || !env.BOOKS) return json({ reviews: [] });
+  const cache = caches.default, key = new Request(SITE + '/api/reviews?book=' + slug);
+  const hit = await cache.match(key); if (hit) return hit;
+  const l = await env.BOOKS.list({ prefix: 'reviews/approved/' + slug + '/' });
+  const out = [];
+  for (const o of l.objects.slice(0, 50)) { const r = await env.BOOKS.get(o.key); if (r) { const d = await r.json(); out.push({ stars: d.stars, name: d.name, country: d.country, text: d.text, at: d.at.slice(0, 10) }); } }
+  out.sort((a, b) => b.at.localeCompare(a.at));
+  const res = new Response(JSON.stringify({ reviews: out }), { headers: { 'content-type': 'application/json', 'cache-control': 'public, max-age=300', 'x-content-type-options': 'nosniff' } });
+  await cache.put(key, res.clone()); return res;
+}
+// GET/POST /admin/reviews?key=ADMIN_KEY : owner approves or deletes waiting reviews
+async function admin(request, url, env) {
+  if (!env.ADMIN_KEY || !same(url.searchParams.get('key') || '', env.ADMIN_KEY)) return new Response('Not found', { status: 404 });
+  if (request.method === 'POST') {
+    const f = await request.formData(); const ref = String(f.get('ref') || ''), act = f.get('act');
+    const slug = bookOf(ref); const pk = 'reviews/pending/' + ref + '.json';
+    const r = slug && await env.BOOKS.get(pk);
+    if (r) { if (act === 'approve') await env.BOOKS.put(`reviews/approved/${slug}/${ref}.json`, await r.text()); await env.BOOKS.delete(pk); await caches.default.delete(new Request(SITE + '/api/reviews?book=' + slug)); log('review_' + act, { ref }); }
+    return Response.redirect(url.toString(), 303);
+  }
+  const l = await env.BOOKS.list({ prefix: 'reviews/pending/' });
+  const items = [];
+  for (const o of l.objects) { const r = await env.BOOKS.get(o.key); if (r) items.push(await r.json()); }
+  const k = esc(url.searchParams.get('key'));
+  const rows = items.map(d => `<div style="text-align:left;background:#141830;border-radius:14px;padding:16px;margin:12px 0"><b>${'★'.repeat(d.stars)}${'☆'.repeat(5 - d.stars)}</b> · ${esc(BOOKS[d.book].title)}<br><b>${esc(d.name)}</b>${d.country ? ', ' + esc(d.country) : ''} · ${esc(d.at.slice(0, 10))}<p style="color:#F3EFE6">${esc(d.text)}</p><form method="post" action="?key=${k}" style="display:flex;gap:8px"><input type="hidden" name="ref" value="${esc(d.ref)}"><button name="act" value="approve" style="flex:1;padding:10px;border:0;border-radius:999px;background:#D9BE85;font-weight:700">Show on website</button><button name="act" value="delete" style="flex:1;padding:10px;border:0;border-radius:999px;background:#3a3f5c;color:#fff">Delete</button></form></div>`).join('');
+  return rpage('Reviews', `<h1>Waiting <i>reviews</i></h1>${rows || '<p>No new reviews right now.</p>'}`);
+}
 
 // finds the PDF even if the upload renamed it a little ("The Hair Rescue.pdf", "books/the-hair-rescue (1).pdf")
 const norm = s => s.toLowerCase().replace(/\.pdf$/, '').replace(/\(\d+\)/g, '').replace(/[^a-z0-9]/g, '');
@@ -185,6 +245,9 @@ export default {
       if (p === '/thanks' || p === '/thanks/') return await thanks(url, env);
       if (p.startsWith('/dl/')) return await download(request, url, env);
       if (p.startsWith('/learn/')) return await learn(request, url, env);
+      if (p.startsWith('/review/')) return await review(request, url, env);
+      if (p === '/api/reviews') return await reviewsApi(url, env);
+      if (p === '/admin/reviews') return await admin(request, url, env);
     } catch (e) {
       log('error', { path: p, msg: String(e && e.message || e) });
       return new Response('Something went wrong. Email info@bazzbooks.store and we will help.', { status: 500 });

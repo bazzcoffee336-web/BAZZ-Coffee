@@ -101,6 +101,30 @@
     </div>
   </section>
 
+  <section id="reviews" data-book="calm">
+    <p class="label">Reviews</p>
+    <h2>What readers say</h2>
+    <div class="rv-sum"></div>
+    <div class="rv-list"></div>
+    <div class="rv-empty"><b>No reviews yet. This book is new.</b><br>Only people who bought the book can leave a review, and we show every one as written, good or bad. Want a look first? <a href="sample-calm">Read Chapter One free</a>.</div>
+  </section>
+  <style>
+#reviews{max-width:1080px;margin:0 auto;padding:56px 22px}
+#reviews h2{margin:6px 0 10px}
+.rv-sum{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:6px 0 22px;color:#C9C5D6}
+.rv-avg{font:400 44px/1 "DM Serif Display",Georgia,serif;color:#F3EFE6}
+.rv-stars span{color:#3a3f5c;font-size:20px;letter-spacing:2px}.rv-stars span.on{color:#D9BE85}
+.rv-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.rv-card{margin:0;background:#141830;border:1px solid #262b48;border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.rv-card blockquote{margin:0;color:#F3EFE6;font-size:16px;line-height:1.6}
+.rv-card figcaption{color:#C9C5D6;font-size:14px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:auto}
+.rv-badge{background:rgba(217,190,133,.14);color:#D9BE85;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+.rv-empty{background:#141830;border:1px dashed #3a3f5c;border-radius:18px;padding:22px;color:#C9C5D6;max-width:640px}
+.rv-empty b{color:#F3EFE6}
+#reviews.has .rv-empty{display:none}
+</style>
+  <script src="assets/reviews.js?v=1" defer></script>
+
   <section id="buy">
     <div class="buy">
       <div>
