@@ -17,6 +17,24 @@ const BOOKS = {
   face: { title: 'The Skin Reset', file: 'The-Skin-Reset.pdf' },
 };
 
+// Workout videos (voiced, 3D) live on a media CDN; the QR codes and pages keep using bazzbooks.store links
+const FITV = {
+ "ch1": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/fb3dcc77-25a9-4822-81c1-b994528bfc1e.mp4",
+ "ch2": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/4a916536-a0f5-4c45-a81d-90009a49db89.mp4",
+ "ch3": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/cb1ea4a0-713b-46c5-a10c-cae93c8138be.mp4",
+ "ch4": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/e605a398-847f-435f-b331-81ff15cd3a53.mp4",
+ "ch5": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/40aa6458-c033-4d54-bc37-4a16e902c6e5.mp4",
+ "ch6": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/cdd2b37a-3126-4620-a523-3a67ce63d4de.mp4",
+ "ch7": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/a860a5ef-c5cf-49ea-bd47-b5576bd12e8a.mp4",
+ "ch8": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/86e680a7-1869-407e-848e-8ae2675c563e.mp4",
+ "ch9": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/33509309-eb3f-4f63-9d4d-dad4b6d4558b.mp4",
+ "howto-squat": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/1152c1b0-7ab2-4e00-abc3-584cc01436fa.mp4",
+ "howto-pushup": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/9619ab03-10bf-4934-9480-de8fd048d96c.mp4",
+ "howto-bridge": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/e067d38a-b687-4bdb-8d68-75acd845b6db.mp4",
+ "howto-row": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/683c3183-0009-4aeb-9e4a-38ec22908292.mp4",
+ "howto-lunge": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/e562fe64-232a-4a6f-ae1e-eaa2ba7b1271.mp4",
+ "howto-plank": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/0eaac5b8-9cf7-4216-9f41-3420fc3cd6d4.mp4"
+};
 const enc = new TextEncoder();
 const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
 async function hmac(secret, msg) {
@@ -213,7 +231,7 @@ function draw(){var n=0,last=-1,streak=0,run=0;bs.forEach(function(b,i){var on=!
 document.getElementById('n').textContent=n;document.getElementById('s').textContent=streak;var next=last+1;document.getElementById('wk').textContent='Week '+Math.min(6,Math.floor(next/7)+1);document.getElementById('task').textContent=T[next%7]}
 bs.forEach(function(b){b.onclick=function(){st[b.dataset.k]=!st[b.dataset.k];save();draw()}});draw()})();
 </script></body></html>`;
-  return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self'; media-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'", 'x-frame-options': 'DENY', 'x-content-type-options': 'nosniff', 'referrer-policy': 'no-referrer' } });
+  return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self'; media-src 'self' https://d2ol7oe51mr4n9.cloudfront.net; base-uri 'none'; form-action 'none'; frame-ancestors 'none'", 'x-frame-options': 'DENY', 'x-content-type-options': 'nosniff', 'referrer-policy': 'no-referrer' } });
 }
 
 // GET /dl/<ref>/<signature>  -> the PDF, only for a paid order
@@ -245,6 +263,7 @@ export default {
       if (p === '/thanks' || p === '/thanks/') return await thanks(url, env);
       if (p.startsWith('/dl/')) return await download(request, url, env);
       if (p.startsWith('/learn/')) return await learn(request, url, env);
+      { const mv = /^\/assets\/learn\/fitness\/([a-z0-9-]+)\.mp4$/.exec(p); if (mv && FITV[mv[1]]) return Response.redirect(FITV[mv[1]], 302); }
       if (p.startsWith('/review/')) return await review(request, url, env);
       if (p === '/api/reviews') return await reviewsApi(url, env);
       if (p === '/admin/reviews') return await admin(request, url, env);
