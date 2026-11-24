@@ -35,6 +35,18 @@ const FITV = {
  "howto-lunge": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/863bc9b2-da01-4def-ad0d-ab61371f2305.mp4",
  "howto-plank": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/00efee3d-7b09-495e-9c0e-cd8332ca3fcc.mp4"
 };
+// Voiced book chapter videos (free Kokoro voice), hosted on the media CDN.
+const BKV = {
+ "protect-your-face/ch1": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/5ad32b46-6b1e-4447-ad3a-abc77de643ed.mp4",
+ "protect-your-face/ch2": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/3a967b5a-e903-4510-ae9a-89e8a9547df3.mp4",
+ "protect-your-face/ch3": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/621b179c-f429-4dce-a7fe-5bdee4e981f3.mp4",
+ "protect-your-face/ch4": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/6a4c396e-ab85-45ee-b70b-2c43a00e1329.mp4",
+ "protect-your-face/ch5": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/f97981fe-0763-4a6d-87d9-7ce4b169146b.mp4",
+ "protect-your-face/ch6": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/1636bcbe-ab51-4869-a40c-6917139c46a3.mp4",
+ "protect-your-face/ch7": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/725daf37-25f9-423f-a45b-2661797b8565.mp4",
+ "protect-your-face/ch8": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/8206761c-525d-4fdc-bb83-65ed42391176.mp4",
+ "protect-your-face/ch9": "https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/ec165b46-31e5-48f5-845b-016714aab7a1.mp4"
+};
 const enc = new TextEncoder();
 const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
 async function hmac(secret, msg) {
@@ -264,6 +276,7 @@ export default {
       if (p.startsWith('/dl/')) return await download(request, url, env);
       if (p.startsWith('/learn/')) return await learn(request, url, env);
       { const mv = /^\/assets\/learn\/fitness\/([a-z0-9-]+)\.mp4$/.exec(p); if (mv && FITV[mv[1]]) return Response.redirect(FITV[mv[1]], 302); }
+      { const bv = /^\/assets\/learn\/([a-z0-9-]+\/ch[1-9])\.mp4$/.exec(p); if (bv && BKV[bv[1]]) return Response.redirect(BKV[bv[1]], 302); }
       if (p.startsWith('/review/')) return await review(request, url, env);
       if (p === '/api/reviews') return await reviewsApi(url, env);
       if (p === '/admin/reviews') return await admin(request, url, env);
