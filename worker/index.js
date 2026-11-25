@@ -4,6 +4,7 @@
 const HOME = 'bazzbooks.store';
 const SITE = 'https://' + HOME;
 const WAYL = 'https://api.thewayl.com/api/v1';
+const MAX_DL = 5; // downloads allowed per paid order (stops a shared link)
 const PRICE_IQD = 131000; // about $99.99 (Wayl takes IQD only)
 
 // page slug -> PDF file name in the private R2 bucket "bazz-books"
@@ -300,9 +301,14 @@ async function download(request, url, env) {
   if (!isPaid(r.body && r.body.data)) { log('download_refused', { ref }); return new Response('This order is not paid.', { status: 403 }); }
   const paidAt = Date.parse((r.body.data.completedAt || r.body.data.updatedAt) || '');
   if (paidAt && Date.now() - paidAt > 2 * 3600 * 1000) { log('download_expired', { ref }); return page('Link expired', `<h1>This link has <i>expired</i></h1><p>If you bought this book, email <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a> with your order number and we'll help.</p>`); }
+  // stop a shared link: each paid order can download at most MAX_DL times
+  const ck = 'dl-count/' + ref + '.txt', seen = await env.BOOKS.get(ck);
+  const n = seen ? (parseInt(await seen.text(), 10) || 0) : 0;
+  if (n >= MAX_DL) { log('download_limit', { ref, n }); return page('Download limit', `<h1>This link was <i>already used</i></h1><p>If you need your book again, email <a href="mailto:info@bazzbooks.store">info@bazzbooks.store</a> and we'll help.</p>`); }
   const obj = await findBook(env, BOOKS[slug].file);
   if (!obj) { log('download_missing_file', { ref, file: BOOKS[slug].file }); return new Response('File missing. Email info@bazzbooks.store and we will send it.', { status: 500 }); }
-  log('download', { ref, book: slug, ip_country: request.cf && request.cf.country, ua: (request.headers.get('user-agent') || '').slice(0, 120) });
+  await env.BOOKS.put(ck, String(n + 1));
+  log('download', { ref, book: slug, count: n + 1, ip_country: request.cf && request.cf.country, ua: (request.headers.get('user-agent') || '').slice(0, 120) });
   return new Response(obj.body, { headers: { 'content-type': 'application/pdf', 'content-disposition': `attachment; filename="${BOOKS[slug].file}"`, 'cache-control': 'private, no-store', ...SEC } });
 }
 
@@ -322,6 +328,11 @@ export default {
       if (p.startsWith('/learn/')) return await learn(request, url, env);
       { const mv = /^\/assets\/learn\/fitness\/([a-z0-9-]+)\.mp4$/.exec(p); if (mv && FITV[mv[1]]) return Response.redirect(FITV[mv[1]], 302); }
       { const bv = /^\/assets\/learn\/([a-z0-9-]+\/ch[1-9])\.mp4$/.exec(p); if (bv && BKV[bv[1]]) return Response.redirect(BKV[bv[1]], 302); }
+      // black-and-white eagle photo (public domain, US Fish & Wildlife), kept on the media CDN, served from our own domain
+      { const im = { '/assets/eagle-bw.webp': 'e2587694-aa7b-460c-8418-158e0bb3955a', '/assets/eagle-bw-sm.webp': '4d5a5355-82f2-42cc-834d-13c63acaa550' }[p];
+        if (im) { const r = await fetch(`https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/${im}.webp`, { cf: { cacheEverything: true, cacheTtl: 31536000 } });
+          if (!r.ok) return new Response('Not found', { status: 404 });
+          return new Response(r.body, { headers: { 'content-type': 'image/webp', 'cache-control': 'public, max-age=31536000, immutable', 'x-content-type-options': 'nosniff' } }); } }
       if (p.startsWith('/review/')) return await review(request, url, env);
       if (p === '/api/reviews') return await reviewsApi(url, env);
       if (p === '/admin/reviews') return await admin(request, url, env);
