@@ -811,3 +811,10 @@ h1 em,h2 em{font-style:normal}
 .eg-still{height:auto}.eg-still .eg-stick{position:relative}.eg-still .eg-txt{opacity:1}.eg-still .eg-hint{display:none}
 .hero.tiles{padding-top:80px}
 .eg-bird{width:min(44vmin,360px)}.eg-hint{color:#C9B48F;font-weight:600}.eg-stick{padding-top:40px}
+
+/* real black-and-white eagle photo on a pale misty sky */
+.eg{background:linear-gradient(180deg,#EDEDED 0%,#F7F7F5 60%,#E9E9E6 100%)}
+.eg-glow{display:none}
+.eg-bird{width:min(92vw,980px);-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 55%,transparent 75%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 55%,transparent 75%);mix-blend-mode:multiply}
+.eg-txt{margin-top:-40px}.eg-txt b{color:#111}.eg-txt span{color:#555}.eg-hint{color:#555}
+body:has(.eg) nav:not(.solid) .brand,body:has(.eg) nav:not(.solid) ul a:not(.btn){color:#111}
