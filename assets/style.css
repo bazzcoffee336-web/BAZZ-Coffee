@@ -819,3 +819,4 @@ h1 em,h2 em{font-style:normal}
 .eg-txt{margin-top:-40px}.eg-txt b{color:#111}.eg-txt span{color:#555}.eg-hint{color:#555}
 body:has(.eg) nav:not(.solid) .brand,body:has(.eg) nav:not(.solid) ul a:not(.btn){color:#111}
 .eg{background:#fff}.eg-bird{-webkit-mask-image:none;mask-image:none;width:min(94vw,820px)}
+@media (min-width:901px){.eg-stick{padding-top:110px}.eg-bird{width:min(80vw,700px)}}
