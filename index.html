@@ -48,20 +48,12 @@
 </nav>
 
 <main id="main">
-  <header class="hero ps" id="ps">
-    <div class="ps-left">
-      <h1>Stop searching for the fix. <em>Start using it.</em></h1>
-      <a class="ps-peek" id="ps-peek" href="sample-product"><img id="ps-page" src="assets/page-1-sm.webp?v=6" alt="A real page from the book" width="700" height="990"><span>Look inside &rarr;</span></a>
-    </div>
-    <a class="ps-cover" id="ps-link" href="product"><img id="ps-cover" src="assets/cover-sm.webp?v=5" alt="AI for Beginners" width="600" height="900" fetchpriority="high"></a>
-    <div class="ps-right">
-      <span class="ps-tag" id="ps-tag">AI</span>
-      <h2 id="ps-title">AI for Beginners</h2>
-      <p id="ps-desc">Save hours every week with ChatGPT and Claude.</p>
-      <p class="ps-price">$99.99 <small>PDF &middot; instant download</small></p>
-      <a class="btn" id="ps-buy" href="product">Get this book <span aria-hidden="true">&rarr;</span></a>
-      <div class="ps-thumbs" role="group" aria-label="Choose a book"><button type="button" class="ps-t on" data-i="0" aria-label="AI for Beginners"><img src="assets/cover-sm.webp?v=5" alt="" width="60" height="90"></button><button type="button" class="ps-t" data-i="1" aria-label="Paycheck to Peace"><img src="assets/cover-money-sm.webp?v=5" alt="" width="60" height="90"></button><button type="button" class="ps-t" data-i="2" aria-label="Quiet Mind, Deep Sleep"><img src="assets/cover-calm-sm.webp?v=5" alt="" width="60" height="90"></button><button type="button" class="ps-t" data-i="3" aria-label="Hired in 30 Days"><img src="assets/cover-career-sm.webp?v=5" alt="" width="60" height="90"></button><button type="button" class="ps-t" data-i="4" aria-label="The 20-Minute Home Workout"><img src="assets/cover-fit-sm.webp?v=5" alt="" width="60" height="90" loading="lazy"></button><button type="button" class="ps-t" data-i="5" aria-label="The Hair Rescue"><img src="assets/cover-hair-sm.webp?v=5" alt="" width="60" height="90" loading="lazy"></button><button type="button" class="ps-t" data-i="6" aria-label="The Skin Reset"><img src="assets/cover-face-sm.webp?v=5" alt="" width="60" height="90" loading="lazy"></button></div>
-    </div>
+  <header class="hero arc" id="arc">
+    <div class="arc-glow" aria-hidden="true"></div>
+    <h1>Stop searching for the fix.<br><em>Start using it.</em></h1>
+    <p class="lede">7 short, practical books. One problem each. One 10-minute chapter a day.</p>
+    <div class="cta-row"><a class="btn" href="#books">Browse the books <span aria-hidden="true">&rarr;</span></a><a class="btn ghost" href="#how">How it works</a></div>
+    <div class="arc-fan"><a href="product" style="--i:-3"><img src="assets/cover-sm.webp?v=5" alt="AI for Beginners" width="300" height="450"></a><a href="money" style="--i:-2"><img src="assets/cover-money-sm.webp?v=5" alt="Paycheck to Peace" width="300" height="450"></a><a href="calm" style="--i:-1"><img src="assets/cover-calm-sm.webp?v=5" alt="Quiet Mind, Deep Sleep" width="300" height="450"></a><a href="career" style="--i:0"><img src="assets/cover-career-sm.webp?v=5" alt="Hired in 30 Days" width="300" height="450"></a><a href="fitness" style="--i:1"><img src="assets/cover-fit-sm.webp?v=5" alt="The 20-Minute Home Workout" width="300" height="450"></a><a href="hair" style="--i:2"><img src="assets/cover-hair-sm.webp?v=5" alt="The Hair Rescue" width="300" height="450"></a><a href="face" style="--i:3"><img src="assets/cover-face-sm.webp?v=5" alt="The Skin Reset" width="300" height="450"></a></div>
   </header>
 
   <section id="about" class="light about">
@@ -282,11 +274,6 @@
     }, { threshold: .25 }).observe(wall);
   })();
 </script>
-<script>const PSB=[["product", "cover-sm", "page-1-sm", "AI", "AI for Beginners", "Save hours every week with ChatGPT and Claude."], ["money", "cover-money-sm", "money-page-1-sm", "Money", "Paycheck to Peace", "Stop living paycheck to paycheck in 90 days."], ["calm", "cover-calm-sm", "calm-page-1-sm", "Sleep & calm", "Quiet Mind, Deep Sleep", "Stop overthinking and sleep better in 21 days."], ["career", "cover-career-sm", "career-page-1-sm", "Career", "Hired in 30 Days", "Land a better job without applying everywhere."], ["fitness", "cover-fit-sm", "fit-page-1-sm", "Fitness", "The 20-Minute Home Workout", "Get fit at home without a gym."], ["hair", "cover-hair-sm", "hair-page-1-sm", "Hair", "The Hair Rescue", "Less breakage, healthier hair in 60 days."], ["face", "cover-face-sm", "face-page-1-sm", "Skin", "The Skin Reset", "A 3-step routine for clear, healthy skin."]];
-document.querySelectorAll('.ps-t').forEach(b=>b.addEventListener('click',()=>{const [u,c,p,tag,t,d]=PSB[b.dataset.i];
-const $=id=>document.getElementById(id);$('ps-cover').src='assets/'+c+'.webp?v=5';$('ps-cover').alt=t;$('ps-page').src='assets/'+p+'.webp?v=6';
-$('ps-tag').textContent=tag;$('ps-title').textContent=t;$('ps-desc').textContent=d;$('ps-link').href=u;$('ps-buy').href=u;$('ps-peek').href='sample-'+u;
-document.querySelectorAll('.ps-t').forEach(x=>x.classList.toggle('on',x===b));}));</script>
 <script src="assets/site.js?v=497890"></script>
 </body>
 </html>
