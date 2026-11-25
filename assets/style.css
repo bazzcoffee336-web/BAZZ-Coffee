@@ -797,3 +797,17 @@ h1 em,h2 em{font-style:normal}
 @media (min-width:901px){.tl:first-child{grid-column:span 2;grid-row:auto;flex-direction:row;text-align:left;gap:26px;padding:26px 34px}.tl:first-child img{width:34%}.tl:first-child .tl-h{font-size:30px;margin:0 0 8px;display:block}
  .tl:first-child>span{display:block}.tl:first-child .tl-txt{flex:1}}
 @media (max-width:900px){.hero.tiles h1{font-size:30px}}
+
+/* scroll intro: the BAZZ eagle flies in as you scroll (no video, ~10 KB image) */
+.eg{position:relative;height:220vh;background:radial-gradient(ellipse 60% 50% at 50% 55%,#1C2340,#0B0E18 75%)}
+.eg-stick{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.eg-glow{position:absolute;width:70vmin;height:70vmin;border-radius:50%;background:radial-gradient(circle,rgba(217,190,133,.28),transparent 65%);filter:blur(10px)}
+.eg-bird{position:relative;width:min(58vmin,440px);height:auto;will-change:transform,filter,opacity;
+ -webkit-mask-image:radial-gradient(circle at 52% 50%,#000 48%,transparent 70%);mask-image:radial-gradient(circle at 52% 50%,#000 48%,transparent 70%)}
+.eg-txt{position:relative;margin:10px 0 0;text-align:center;opacity:0}
+.eg-txt b{display:block;font:900 clamp(44px,8vw,110px)/1 'Wide',var(--sans);letter-spacing:.04em;color:#F6EBD3}
+.eg-txt span{display:block;margin-top:10px;font-size:clamp(15px,1.6vw,20px);letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.eg-hint{position:absolute;bottom:28px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#9E9AB0}
+.eg-still{height:auto}.eg-still .eg-stick{position:relative}.eg-still .eg-txt{opacity:1}.eg-still .eg-hint{display:none}
+.hero.tiles{padding-top:80px}
+.eg-bird{width:min(44vmin,360px)}.eg-hint{color:#C9B48F;font-weight:600}.eg-stick{padding-top:40px}
