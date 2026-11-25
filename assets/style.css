@@ -680,3 +680,19 @@ form.paying input[type=email],form.paying label[for=email]{display:none}
 @media (max-width:900px){.hero.arc{padding-top:120px}.arc-glow{top:-75vw;width:150vw;height:150vw}.arc-fan{margin-top:40px;height:200px}.arc-fan a{width:96px;transform:translateX(calc(-50% + var(--i)*42px)) translateY(calc(abs(var(--i))*8px)) rotate(calc(var(--i)*6deg))}}
 .hero.arc{padding-top:120px}.arc-fan{margin-top:36px}
 @media (max-width:900px){.arc-glow{top:-128vw}.hero.arc{padding-top:110px}}
+
+/* magazine hero: cream page, huge dark serif headline, numbered book row */
+.hero.mag{display:block;min-height:auto;background:var(--cream);color:#14192E;padding:130px clamp(20px,6vw,90px) 70px}
+.mg-top{display:grid;grid-template-columns:1.6fr 1fr;gap:clamp(24px,4vw,70px);align-items:end;border-bottom:2px solid #14192E;padding-bottom:36px}
+.hero.mag h1{font-size:clamp(46px,7.4vw,118px);line-height:.95;margin:0;color:#14192E;letter-spacing:-.02em}
+.hero.mag h1 em{color:#9A7B45;font-style:italic}
+.mg-side p{color:#3A3F55;font-size:17px;margin:0 0 22px}
+.mg-row{display:grid;grid-template-columns:repeat(7,1fr);gap:clamp(10px,1.6vw,22px);margin-top:34px}
+.mg-row a{display:block;color:#14192E;text-decoration:none}
+.mg-n{display:block;font:400 22px var(--serif);color:#9A7B45;margin-bottom:8px}
+.mg-row img{display:block;width:100%;height:auto;border-radius:4px;box-shadow:0 10px 24px rgba(20,25,46,.25);transition:transform .25s}
+.mg-row a:hover img{transform:translateY(-6px)}
+.mg-row b{display:block;font-size:14px;line-height:1.3;margin-top:12px}.mg-row small{display:block;color:#6B6F80;font-size:13px;margin-top:3px}
+@media (max-width:900px){.hero.mag{padding-top:110px}.mg-top{grid-template-columns:1fr}.hero.mag h1{font-size:48px}
+.mg-row{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-right:calc(-1*clamp(20px,6vw,90px));padding-bottom:8px}.mg-row a{flex:0 0 42%;scroll-snap-align:start}}
+body:has(.hero.mag) nav:not(.solid) .brand,body:has(.hero.mag) nav:not(.solid) ul a:not(.btn){color:#14192E}
