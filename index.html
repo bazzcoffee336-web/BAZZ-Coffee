@@ -26,7 +26,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/medal-32.png?v=3"><link rel="icon" type="image/png" sizes="64x64" href="assets/medal-64.png?v=3"><link rel="apple-touch-icon" href="assets/app-180.png?v=3"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="BAZZ"><meta name="application-name" content="BAZZ">
 <link rel="preload" href="assets/fonts/Manrope-normal-3.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/DMSerifDisplay-normal-1.woff2" as="font" type="font/woff2" crossorigin>
 
-<link rel="stylesheet" href="assets/style.css?v=b3d22c">
+<link rel="stylesheet" href="assets/style.css?v=bc7a4c">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -47,6 +47,8 @@
       <div class="eg-glow" aria-hidden="true"></div>
       <img class="eg-bird" id="eg-bird" src="assets/eagle-bw.webp" srcset="assets/eagle-bw-sm.webp 800w, assets/eagle-bw.webp 1600w" sizes="100vw" alt="A golden eagle in flight" width="1600" height="1067" fetchpriority="high">
       <p class="eg-txt" id="eg-txt"><b>BAZZ</b><span>Books that fix real life</span></p>
+      <div class="eg-side eg-l" id="eg-l"><p class="eg-k">7 books &middot; 7 real problems</p><p class="eg-big">One problem.<br>One fix.<br>10 minutes a day.</p><a class="eg-link" href="#tiles">See the books &rarr;</a></div>
+      <div class="eg-side eg-r" id="eg-r"><a href="product"><img src="assets/cover-sm.webp?v=5" alt="AI for Beginners" width="300" height="450"></a><a href="calm"><img src="assets/cover-calm-sm.webp?v=5" alt="Quiet Mind, Deep Sleep" width="300" height="450"></a><a href="face"><img src="assets/cover-face-sm.webp?v=5" alt="The Skin Reset" width="300" height="450"></a></div>
       <p class="eg-hint" id="eg-hint">Scroll &darr;</p>
     </div>
   </section>
@@ -234,12 +236,12 @@
     }, { threshold: .25 }).observe(wall);
   })();
 </script>
-<script>(function(){var s=document.getElementById('eg'),b=document.getElementById('eg-bird'),t=document.getElementById('eg-txt'),h=document.getElementById('eg-hint');if(!s)return;
+<script>(function(){var s=document.getElementById('eg'),b=document.getElementById('eg-bird'),t=document.getElementById('eg-txt'),h=document.getElementById('eg-hint'),L=document.getElementById('eg-l'),R=document.getElementById('eg-r');if(!s)return;
 if(matchMedia('(prefers-reduced-motion: reduce)').matches){s.classList.add('eg-still');return}
 var q=false;function f(){q=false;var r=s.getBoundingClientRect(),p=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
-var e=1-Math.pow(1-p,3);b.style.transform='scale('+(0.45+e*0.4)+') rotate('+((1-e)*-8)+'deg)';
+var e=1-Math.pow(1-p,3);b.style.transform='scale('+(0.45+e*(innerWidth>900?0.22:0.4))+') rotate('+((1-e)*-8)+'deg)';
 b.style.filter='blur('+((1-e)*4).toFixed(1)+'px)';b.style.opacity=Math.min(1,0.6+p*2);
-t.style.opacity=Math.max(0,(p-0.55)/0.35);t.style.transform='translateY('+(1-Math.min(1,Math.max(0,(p-0.55)/0.35)))*30+'px)';h.style.opacity=Math.max(0,1-p*5)}
+var k=Math.min(1,Math.max(0,(p-0.15)/0.45)),k2=1-Math.pow(1-k,3);L.style.setProperty('--x',(-(1-k2)*60)+'vw');L.style.opacity=k;R.style.setProperty('--x',((1-k2)*60)+'vw');R.style.opacity=k;t.style.opacity=Math.max(0,(p-0.55)/0.35);t.style.transform='translateY('+(1-Math.min(1,Math.max(0,(p-0.55)/0.35)))*30+'px)';h.style.opacity=Math.max(0,1-p*5)}
 addEventListener('scroll',function(){if(!q){q=true;requestAnimationFrame(f)}},{passive:true});f()})();</script>
 <script src="assets/site.js?v=497890"></script>
 </body>
