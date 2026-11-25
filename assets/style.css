@@ -772,3 +772,12 @@ body:has(.hero.lux) .label::before{background:color-mix(in srgb,var(--bk) 80%,#0
 body:has(.hero.lux) .buy .box,body:has(.hero.lux) .rv-empty{background:linear-gradient(180deg,color-mix(in srgb,var(--bk) 30%,var(--bkd)),color-mix(in srgb,var(--bk) 15%,var(--bkd)));border-color:color-mix(in srgb,var(--acc) 35%,transparent)}
 .hero.lux{background:radial-gradient(ellipse 55% 60% at 50% 50%,color-mix(in srgb,var(--bk) 85%,transparent),transparent 70%),linear-gradient(180deg,var(--bkd) 0%,color-mix(in srgb,var(--bk) 45%,var(--bkd)) 50%,var(--bkd) 100%)}
 .hero.lux h1{color:#FFF8F4}.lx-lede,.lx-r p{color:color-mix(in srgb,var(--tint) 85%,var(--bk))}.lx-note{color:color-mix(in srgb,var(--tint) 60%,var(--bk))}
+
+/* site headline font: wide black caps (free Archivo Expanded Black, self-hosted) */
+@font-face{font-family:'Wide';src:url(fonts/ArchivoWide-900.woff2) format('woff2');font-weight:900;font-display:swap}
+h1,.hero h1,.hero.lux h1{font-family:'Wide',var(--sans)!important;font-weight:900!important;text-transform:uppercase;letter-spacing:-.01em;line-height:1.02}
+.hero h1{font-size:clamp(36px,5vw,72px)}.hero.lux h1{font-size:clamp(38px,4.4vw,66px)}
+h2{font-family:'Wide',var(--sans);font-weight:900;text-transform:uppercase;letter-spacing:-.005em;font-size:clamp(26px,3.2vw,44px);line-height:1.08;max-width:22ch}
+h1 em,h2 em{font-style:normal}
+@media (max-width:900px){.hero h1,.hero.lux h1{font-size:38px}h2{font-size:26px}}
+@media (max-width:900px){main h1:not(.hero h1){font-size:30px}}h1:not(.hero h1){font-size:clamp(30px,4vw,56px)}
