@@ -820,3 +820,20 @@ h1 em,h2 em{font-style:normal}
 body:has(.eg) nav:not(.solid) .brand,body:has(.eg) nav:not(.solid) ul a:not(.btn){color:#111}
 .eg{background:#fff}.eg-bird{-webkit-mask-image:none;mask-image:none;width:min(94vw,820px)}
 @media (min-width:901px){.eg-stick{padding-top:110px}.eg-bird{width:min(80vw,700px)}}
+
+/* home page palette: charcoal black, off-white, lilac purple (owner picked option A) */
+body:has(.hero.tiles){--night:#121111;--navy:#1A1919;--indigo:#232121;--cream:#F9F9F9;--sand:#EFEFEF;--gold:#D485FC;--gold-2:#E2AEFD;--accent:#D485FC;--accent-hi:#E2AEFD;--ink:#121111;background:#121111}
+body:has(.hero.tiles) .hero.tiles{background:radial-gradient(ellipse 50% 40% at 70% 20%,rgba(212,133,252,.16),transparent 70%),#121111}
+body:has(.hero.tiles) main>section:not(.light):not(.eg),body:has(.hero.tiles) footer{background:radial-gradient(ellipse 50% 40% at 50% 30%,rgba(212,133,252,.10),transparent 70%),#121111}
+body:has(.hero.tiles) main>section.light{background:#F9F9F9}
+body:has(.hero.tiles) .eg{background:#fff}
+body:has(.hero.tiles) .btn:not(.ghost){background:#D485FC;color:#121111;box-shadow:0 0 30px rgba(212,133,252,.35)}
+body:has(.hero.tiles) .btn:not(.ghost):hover{background:#E2AEFD}
+body:has(.hero.tiles) nav.solid{background:rgba(18,17,17,.88)}
+body:has(.hero.tiles) h1 em,body:has(.hero.tiles) h2 em{color:#D485FC}
+body:has(.hero.tiles) .light h2 em{color:#A64FD6}
+body:has(.hero.tiles) .label,body:has(.hero.tiles) .kick{color:#B565E0}
+body:has(.hero.tiles) .label::before{background:#B565E0}
+/* phone: keep the AI tile's price on its own line */
+.tl-txt{display:flex;flex-direction:column;align-items:center;gap:6px}
+@media (min-width:901px){.tl:first-child .tl-txt{align-items:flex-start}}
