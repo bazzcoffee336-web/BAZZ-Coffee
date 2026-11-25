@@ -837,3 +837,26 @@ body:has(.hero.tiles) .label::before{background:#B565E0}
 /* phone: keep the AI tile's price on its own line */
 .tl-txt{display:flex;flex-direction:column;align-items:center;gap:6px}
 @media (min-width:901px){.tl:first-child .tl-txt{align-items:flex-start}}
+
+/* eagle intro: words slide in from the left, books from the right; less empty space */
+.eg{height:170vh}.eg-stick{padding-top:72px}
+.eg-side{position:absolute;top:50%;margin-top:-10px;transform:translateY(-50%);opacity:0;will-change:transform,opacity}
+.eg-l{left:clamp(20px,5vw,80px);max-width:300px;text-align:left}
+.eg-k{margin:0 0 10px;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#A64FD6;font-weight:600}
+.eg-big{margin:0 0 16px;font:900 clamp(24px,2.4vw,36px)/1.1 'Wide',var(--sans);text-transform:uppercase;color:#121111}
+.eg-link{color:#121111;font-weight:600;text-decoration:none;border-bottom:2px solid #D485FC;padding-bottom:2px}
+.eg-r{right:clamp(20px,5vw,80px);display:flex;flex-direction:column;gap:12px;width:clamp(110px,10vw,150px)}
+.eg-r a{display:block;transition:transform .25s}.eg-r a:nth-child(2){margin-left:-28px}.eg-r a:hover{transform:translateX(-6px)}
+.eg-r img{display:block;width:100%;height:auto;border-radius:4px;box-shadow:0 14px 30px rgba(0,0,0,.25)}
+.eg-still .eg-side{opacity:1;transform:translateY(-50%)}
+@media (max-width:900px){.eg{height:160vh}
+ .eg-side{position:relative;top:auto;margin:0;transform:none}
+ .eg-stick{justify-content:center;gap:4px}
+ .eg-l{left:auto;max-width:none;text-align:center;order:3;margin-top:18px}.eg-big{font-size:22px;margin-bottom:10px}
+ .eg-r{right:auto;order:4;flex-direction:row;width:auto;gap:10px;margin-top:16px}.eg-r a{width:78px}.eg-r a:nth-child(2){margin-left:0;margin-top:-14px}
+ .eg-txt{order:2}.eg-bird{order:1}.eg-hint{display:none}}
+
+.eg-side{transform:translate(var(--x,0),-50%)}
+@media (min-width:901px){.eg-stick{padding-top:90px}.eg-txt{margin-top:-60px}}
+@media (max-width:900px){.eg-side{transform:translateX(var(--x,0))}}
+@media (min-width:901px){.eg-side{top:54%}.eg-r{width:clamp(90px,7.5vw,112px);gap:10px}.eg-big{font-size:clamp(22px,2.1vw,32px)}}
