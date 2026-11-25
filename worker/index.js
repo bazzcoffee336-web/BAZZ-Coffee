@@ -322,7 +322,7 @@ export default {
       if (p.startsWith('/learn/')) return await learn(request, url, env);
       { const mv = /^\/assets\/learn\/fitness\/([a-z0-9-]+)\.mp4$/.exec(p); if (mv && FITV[mv[1]]) return Response.redirect(FITV[mv[1]], 302); }
       { const bv = /^\/assets\/learn\/([a-z0-9-]+\/ch[1-9])\.mp4$/.exec(p); if (bv && BKV[bv[1]]) return Response.redirect(BKV[bv[1]], 302); }
-      { const im = { '/assets/eagle-bw.webp': 'b3ba8823-7566-4847-9518-4774dd71df22', '/assets/eagle-bw-sm.webp': '5e988839-9177-42ee-a052-7fa23e0b2bbd' }[p];
+      { const im = { '/assets/eagle-bw.webp': 'e2587694-aa7b-460c-8418-158e0bb3955a', '/assets/eagle-bw-sm.webp': '4d5a5355-82f2-42cc-834d-13c63acaa550' }[p];
         if (im) { const r = await fetch(`https://d2ol7oe51mr4n9.cloudfront.net/user_3LjuXNf36dEL9stYcd9RGT1kiva/${im}.webp`, { cf: { cacheEverything: true, cacheTtl: 31536000 } });
           return new Response(r.body, { status: r.status, headers: { 'content-type': 'image/webp', 'cache-control': 'public, max-age=31536000, immutable', 'x-content-type-options': 'nosniff' } }); } }
       if (p.startsWith('/review/')) return await review(request, url, env);
