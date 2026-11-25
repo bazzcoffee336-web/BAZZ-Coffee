@@ -696,3 +696,23 @@ form.paying input[type=email],form.paying label[for=email]{display:none}
 @media (max-width:900px){.hero.mag{padding-top:110px}.mg-top{grid-template-columns:1fr}.hero.mag h1{font-size:48px}
 .mg-row{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-right:calc(-1*clamp(20px,6vw,90px));padding-bottom:8px}.mg-row a{flex:0 0 42%;scroll-snap-align:start}}
 body:has(.hero.mag) nav:not(.solid) .brand,body:has(.hero.mag) nav:not(.solid) ul a:not(.btn){color:#14192E}
+
+/* bookshelf hero: centred title, stepped shape behind, books standing on a shelf */
+.hero.shelf{display:flex;flex-direction:column;align-items:center;text-align:center;min-height:auto;padding:130px clamp(16px,5vw,80px) 0;overflow:hidden}
+.sh-steps{position:absolute;inset:auto 0 0 0;height:58%;pointer-events:none;background:#1C2340;
+ clip-path:polygon(0 0,14% 0,14% 22%,28% 22%,28% 44%,72% 44%,72% 22%,86% 22%,86% 0,100% 0,100% 100%,0 100%)}
+.hero.shelf h1{position:relative;font-size:clamp(40px,5.6vw,80px);max-width:15ch;margin:0 0 16px}
+.hero.shelf .lede{position:relative;max-width:44ch;margin:0 auto 24px}
+.sh-wrap{position:relative;width:min(100%,1100px);margin-top:50px}
+.sh-row{display:flex;justify-content:center;align-items:flex-end;gap:clamp(6px,1.2vw,16px);padding:0 2%}
+.sh-row a{flex:1;max-width:150px;transition:transform .25s}
+.sh-row a:nth-child(odd){transform:translateY(0)}.sh-row a:hover{transform:translateY(-12px)}
+.sh-row img{display:block;width:100%;height:auto;border-radius:3px 6px 6px 3px;box-shadow:inset 4px 0 0 rgba(0,0,0,.25),0 14px 26px rgba(0,0,0,.5)}
+.sh-board{height:18px;margin:0 -2%;background:linear-gradient(#8A6A3D,#5C4424);border-radius:3px;box-shadow:0 14px 30px rgba(0,0,0,.6)}
+@media (max-width:900px){.hero.shelf{padding-top:110px}.sh-wrap{margin-top:34px}.sh-row{gap:4px}.sh-board{height:12px}
+ .sh-steps{clip-path:polygon(0 0,20% 0,20% 30%,80% 30%,80% 0,100% 0,100% 100%,0 100%)}}
+.sh-steps{height:34%;clip-path:polygon(0 30%,12% 30%,12% 0,88% 0,88% 30%,100% 30%,100% 100%,0 100%)}
+.hero.shelf h1{max-width:18ch}.hero.shelf .cta-row{display:flex;position:relative}
+.sh-row a{max-width:128px}.sh-wrap{width:min(100%,1000px)}
+@media (max-width:900px){.sh-steps{height:22%;clip-path:polygon(0 40%,10% 40%,10% 0,90% 0,90% 40%,100% 40%,100% 100%,0 100%)}}
+@media (min-width:901px){.hero.shelf{padding-top:110px}.hero.shelf h1{font-size:clamp(40px,4.6vw,66px)}.sh-wrap{margin-top:34px}}
