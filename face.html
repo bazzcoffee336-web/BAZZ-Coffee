@@ -20,7 +20,7 @@
 <link rel="preload" href="assets/fonts/Manrope-normal-3.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/DMSerifDisplay-normal-1.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/style.css?v=469971">
 </head>
-<body>
+<body style="--bk:#C98A74;--bkd:#2A1714;--tint:#F4E6DF;--acc:#E2B49E">
 <a class="skip" href="#main">Skip to content</a>
 <nav id="nav">
   <a class="brand" href="./"><img src="assets/eagle.webp?v=6" alt="" width="34" height="34">BAZZ</a>
@@ -33,22 +33,17 @@
 </nav>
 
 <main id="main">
-  <header class="hero">
-    <div class="stage3d" id="stage" aria-label="3D ebook." role="button">
-      <div class="fallback"><img src="assets/cover-face-sm.webp?v=5" srcset="assets/cover-face-sm.webp?v=5 700w, assets/cover-face.webp?v=5 1400w" sizes="(max-width:900px) 45vw, 300px" alt="The Skin Reset ebook cover"></div>
+  <header class="hero lux">
+    <div class="lx-l">
+      <h1>Clear skin<br>in 3 steps</h1>
+      <p class="lx-lede">The Skin Reset: a 3-step routine for clear, healthy skin, the way dermatologists recommend.</p>
+      <div class="lx-buy"><span class="lx-price">$99.99</span><a class="btn" href="#buy">Get the ebook <span aria-hidden="true">&rarr;</span></a></div>
+      <p class="lx-note">PDF &middot; instant download &middot; 9 voiced chapter videos</p>
     </div>
-    <div>
-      <p class="kick">Ebook &middot; PDF</p>
-      <h1>The Skin Reset</h1>
-      <p class="lede">A 3-step routine for clear, healthy skin, the way dermatologists recommend. 9 real skin problems, 9 simple fixes, and 30 checklists and routines you can use today.</p>
-      <div class="cta-row">
-        <a class="btn" href="#buy">Get the ebook, $99.99 <span aria-hidden="true">&rarr;</span></a>
-        <a class="btn ghost" href="#details">What's inside</a>
-      </div>
-      <div class="meta">
-        <span><b>PDF</b>Read on any device</span>
-        <span><b>30</b>Checklists</span>
-      </div>
+    <div class="lx-c"><img src="assets/cover-face-sm.webp?v=5" srcset="assets/cover-face-sm.webp?v=5 700w, assets/cover-face.webp?v=5 1400w" sizes="(max-width:900px) 70vw, 420px" alt="The Skin Reset ebook" width="700" height="1050" fetchpriority="high"></div>
+    <div class="lx-r">
+      <a class="lx-card" href="sample-face"><img src="assets/face-page-1-sm.webp?v=6" alt="A real page from the book" width="700" height="990" loading="lazy"><span>Look inside &rarr;</span></a>
+      <p>9 real skin problems. 9 simple fixes. 30 checklists and routines you can start today.</p>
     </div>
   </header>
 
@@ -180,7 +175,7 @@
 <script type="module">
   // no graphics chip: keep the still cover instead of 3D (much lighter)
   const SOFT = (() => { try { const g = document.createElement('canvas').getContext('webgl'); if (!g) return true; const e = g.getExtension('WEBGL_debug_renderer_info'); return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : ''); } catch (e) { return true; } })();
-  if (SOFT) document.getElementById('stage').classList.add('no-webgl');
+  if (!document.getElementById('stage')) {} else if (SOFT) document.getElementById('stage').classList.add('no-webgl');
   else import('./assets/book3d.js?v=12').then(({ mountBook }) => mountBook(document.getElementById('stage'), { color: '#F2A98C', bg: '#1F4F4A', cover: 'assets/cover-face.webp?v=5', title: 'The Skin Reset', back1: 'Clear, healthy skin', back2: 'in 3 simple steps' }));
 </script>
 <script src="assets/site.js?v=497890"></script>

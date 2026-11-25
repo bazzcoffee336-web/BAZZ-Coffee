@@ -20,7 +20,7 @@
 <link rel="preload" href="assets/fonts/Manrope-normal-3.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/DMSerifDisplay-normal-1.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/style.css?v=469971">
 </head>
-<body>
+<body style="--bk:#D2582A;--bkd:#1B0E08;--tint:#F8E8DF;--acc:#FF9A62">
 <a class="skip" href="#main">Skip to content</a>
 <nav id="nav">
   <a class="brand" href="./"><img src="assets/eagle.webp?v=6" alt="" width="34" height="34">BAZZ</a>
@@ -33,22 +33,17 @@
 </nav>
 
 <main id="main">
-  <header class="hero">
-    <div class="stage3d" id="stage" aria-label="3D ebook." role="button">
-      <div class="fallback"><img src="assets/cover-fit-sm.webp?v=5" srcset="assets/cover-fit-sm.webp?v=5 700w, assets/cover-fit.webp?v=5 1400w" sizes="(max-width:900px) 45vw, 300px" alt="The 20-Minute Home Workout ebook cover"></div>
+  <header class="hero lux">
+    <div class="lx-l">
+      <h1>Fit at home<br>in 20 minutes</h1>
+      <p class="lx-lede">The 20-Minute Home Workout: get fit at home without a gym, 20 minutes at a time.</p>
+      <div class="lx-buy"><span class="lx-price">$99.99</span><a class="btn" href="#buy">Get the ebook <span aria-hidden="true">&rarr;</span></a></div>
+      <p class="lx-note">PDF &middot; instant download &middot; 9 voiced chapter videos</p>
     </div>
-    <div>
-      <p class="kick">Ebook &middot; PDF</p>
-      <h1>The 20-Minute Home Workout</h1>
-      <p class="lede">Get fit at home without a gym, 20 minutes at a time. 9 real fitness problems, 9 simple fixes, and 30 workout cards you can start today.</p>
-      <div class="cta-row">
-        <a class="btn" href="#buy">Get the ebook, $99.99 <span aria-hidden="true">&rarr;</span></a>
-        <a class="btn ghost" href="#details">What's inside</a>
-      </div>
-      <div class="meta">
-        <span><b>PDF</b>Read on any device</span>
-        <span><b>30</b>Workout cards</span>
-      </div>
+    <div class="lx-c"><img src="assets/cover-fit-sm.webp?v=5" srcset="assets/cover-fit-sm.webp?v=5 700w, assets/cover-fit.webp?v=5 1400w" sizes="(max-width:900px) 70vw, 420px" alt="The 20-Minute Home Workout ebook" width="700" height="1050" fetchpriority="high"></div>
+    <div class="lx-r">
+      <a class="lx-card" href="sample-fitness"><img src="assets/fit-page-1-sm.webp?v=6" alt="A real page from the book" width="700" height="990" loading="lazy"><span>Look inside &rarr;</span></a>
+      <p>9 real fitness problems. 9 simple fixes. 30 workout cards you can start today.</p>
     </div>
   </header>
 
@@ -180,7 +175,7 @@
 <script type="module">
   // no graphics chip: keep the still cover instead of 3D (much lighter)
   const SOFT = (() => { try { const g = document.createElement('canvas').getContext('webgl'); if (!g) return true; const e = g.getExtension('WEBGL_debug_renderer_info'); return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : ''); } catch (e) { return true; } })();
-  if (SOFT) document.getElementById('stage').classList.add('no-webgl');
+  if (!document.getElementById('stage')) {} else if (SOFT) document.getElementById('stage').classList.add('no-webgl');
   else import('./assets/book3d.js?v=12').then(({ mountBook }) => mountBook(document.getElementById('stage'), { color: '#FF6A2B', bg: '#1E1E20', cover: 'assets/cover-fit.webp?v=5', title: 'The 20-Minute Home Workout', back1: 'Get fit without a gym', back2: '20 minutes at a time' }));
 </script>
 <script src="assets/site.js?v=497890"></script>
