@@ -818,3 +818,4 @@ h1 em,h2 em{font-style:normal}
 .eg-bird{width:min(92vw,980px);-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 55%,transparent 75%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 55%,transparent 75%);mix-blend-mode:multiply}
 .eg-txt{margin-top:-40px}.eg-txt b{color:#111}.eg-txt span{color:#555}.eg-hint{color:#555}
 body:has(.eg) nav:not(.solid) .brand,body:has(.eg) nav:not(.solid) ul a:not(.btn){color:#111}
+.eg{background:#fff}.eg-bird{-webkit-mask-image:none;mask-image:none;width:min(94vw,820px)}
