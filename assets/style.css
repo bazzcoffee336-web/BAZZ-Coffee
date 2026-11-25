@@ -781,3 +781,19 @@ h2{font-family:'Wide',var(--sans);font-weight:900;text-transform:uppercase;lette
 h1 em,h2 em{font-style:normal}
 @media (max-width:900px){.hero h1,.hero.lux h1{font-size:38px}h2{font-size:26px}}
 @media (max-width:900px){main h1:not(.hero h1){font-size:30px}}h1:not(.hero h1){font-size:clamp(30px,4vw,56px)}
+
+/* home: colour tiles, one per book, matching each book page */
+.hero.tiles{display:block;min-height:auto;padding:120px clamp(16px,5vw,80px) 70px}
+.tl-top{max-width:900px;margin:0 auto 44px;text-align:center}.tl-top h1{margin:0 auto 16px}.tl-top .lede{margin:0 auto;max-width:46ch}
+.tl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1240px;margin:0 auto}
+.tl{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:26px 18px 22px;border-radius:20px;text-decoration:none;color:#FFF8F4;overflow:hidden;
+ background:radial-gradient(ellipse 80% 60% at 50% 35%,var(--bk),transparent 75%),var(--bkd);transition:transform .25s}
+.tl:hover{transform:translateY(-6px)}
+.tl img{width:62%;height:auto;border-radius:4px;box-shadow:0 22px 40px rgba(0,0,0,.5);transition:transform .3s}.tl:hover img{transform:translateY(-6px) rotate(-2deg)}
+.tl-h{font:900 17px/1.1 'Wide',var(--sans);text-transform:uppercase;margin-top:8px}.tl-t{font-size:13px;opacity:.8}
+.tl:first-child{grid-column:span 2;grid-row:span 2;justify-content:center}.tl:first-child img{width:46%}.tl:first-child .tl-h{font-size:28px}
+@media (max-width:900px){.hero.tiles{padding-top:100px}.tl-grid{grid-template-columns:1fr 1fr;gap:10px}.tl{padding:18px 10px 16px;border-radius:14px}.tl-h{font-size:13px}.tl-t{font-size:11px}
+ .tl:first-child{grid-column:span 2;grid-row:auto}.tl:first-child img{width:42%}.tl:first-child .tl-h{font-size:20px}}
+@media (min-width:901px){.tl:first-child{grid-column:span 2;grid-row:auto;flex-direction:row;text-align:left;gap:26px;padding:26px 34px}.tl:first-child img{width:34%}.tl:first-child .tl-h{font-size:30px;margin:0 0 8px;display:block}
+ .tl:first-child>span{display:block}.tl:first-child .tl-txt{flex:1}}
+@media (max-width:900px){.hero.tiles h1{font-size:30px}}
