@@ -864,3 +864,12 @@ body:has(.hero.tiles) .label::before{background:#B565E0}
 section{padding-top:clamp(48px,6vw,84px);padding-bottom:clamp(48px,6vw,84px)}
 section.light + section.light{padding-top:0}
 section.eg{padding:0}
+/* footer: tidy on phones (links in a neat grid, no word breaks) */
+footer a{white-space:nowrap}
+footer ul{flex-wrap:wrap;column-gap:22px;row-gap:0}
+@media (max-width:700px){
+ footer{flex-direction:column-reverse;align-items:flex-start;gap:14px;padding:32px 20px 40px;font-size:14px}
+ footer ul{display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:12px;width:100%}
+ footer ul a{padding:0;min-height:40px}
+ footer>span{font-size:12px;line-height:1.5;opacity:.75;border-top:1px solid rgba(255,255,255,.08);padding-top:14px;width:100%}
+}
