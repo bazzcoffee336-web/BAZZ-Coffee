@@ -746,3 +746,19 @@ body:has(.hero.mag) nav:not(.solid) .brand,body:has(.hero.mag) nav:not(.solid) u
 body:has(.hero.sp) nav:not(.solid) ul a:not(.btn){color:#14192E}
 @media (max-width:900px){.hero.sp{grid-template-columns:1fr;min-height:auto}.sp-left{padding:100px 15% 40px}.sp-right{padding:34px 22px 50px}
  body:has(.hero.sp) nav:not(.solid) ul a:not(.btn){color:inherit}}
+
+/* book page, luxury style: colour-to-dark glow, bold caps left, floating book centre, page card right */
+.hero.lux{grid-template-columns:1fr 1.05fr .7fr;gap:clamp(16px,3vw,44px);align-items:center;min-height:100svh;padding:110px clamp(20px,5vw,80px) 60px;
+ background:radial-gradient(ellipse 55% 60% at 50% 50%,color-mix(in srgb,var(--bk) 85%,transparent),transparent 70%),linear-gradient(180deg,var(--bkd) 0%,color-mix(in srgb,var(--bk) 45%,var(--bkd)) 50%,var(--bkd) 100%)}
+.hero.lux h1{font:800 clamp(40px,4.8vw,74px)/.98 var(--sans);text-transform:uppercase;letter-spacing:.04em;margin:0 0 20px;color:#FBF3EE}
+.lx-lede{color:#E8D6CE;max-width:34ch;margin:0 0 26px}
+.lx-buy{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.lx-price{font:400 38px var(--serif);color:#FBF3EE}
+.lx-note{font-size:13px;color:#C9AFA5;margin:14px 0 0}
+.lx-c{justify-self:center;width:min(100%,400px)}
+.lx-c img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 50px 90px rgba(0,0,0,.55);animation:lxFloat 6s ease-in-out infinite}
+@keyframes lxFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-16px) rotate(1deg)}}
+.lx-r{align-self:end;padding-bottom:20px}.lx-r p{color:#E8D6CE;font-size:14px;margin:14px 0 0}
+.lx-card{display:block;background:#fff;border-radius:16px;overflow:hidden;color:#2A1714;text-decoration:none;box-shadow:0 20px 40px rgba(0,0,0,.4);transition:transform .25s}
+.lx-card:hover{transform:translateY(-4px)}.lx-card img{display:block;width:100%;height:auto}.lx-card span{display:block;padding:10px 14px;font-weight:700;font-size:13px}
+@media (prefers-reduced-motion:reduce){.lx-c img{animation:none}}
+@media (max-width:900px){.hero.lux{grid-template-columns:1fr;padding-top:96px;text-align:left}.lx-c{order:-1;width:min(72%,300px)}.lx-r{display:none}.hero.lux h1{font-size:42px}}
