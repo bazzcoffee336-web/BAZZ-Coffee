@@ -762,12 +762,13 @@ body:has(.hero.sp) nav:not(.solid) ul a:not(.btn){color:#14192E}
 .lx-card:hover{transform:translateY(-4px)}.lx-card img{display:block;width:100%;height:auto}.lx-card span{display:block;padding:10px 14px;font-weight:700;font-size:13px}
 @media (prefers-reduced-motion:reduce){.lx-c img{animation:none}}
 @media (max-width:900px){.hero.lux{grid-template-columns:1fr;padding-top:96px;text-align:left}.lx-c{order:-1;width:min(72%,300px)}.lx-r{display:none}.hero.lux h1{font-size:42px}}
-/* book page colour theme follows the top (luxury style) */
-body:has(.hero.lux){--night:#2A1714;--navy:#3A211C;--indigo:#4A2A23;--cream:#F4E6DF;--sand:#EBD5CB;--gold:#E2B49E;--gold-2:#F0CBB8;--ink:#2A1714;
- background:linear-gradient(180deg,#2A1714 0%,#3E241E 50%,#2A1714 100%) fixed,#2A1714}
-body:has(.hero.lux) main>section:not(.light){background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(201,138,116,.28),transparent 70%),#2A1714}
-body:has(.hero.lux) main>section.light,body:has(.hero.lux) .outcome{background:#F4E6DF}
-body:has(.hero.lux) footer{background:#1F110E}
-body:has(.hero.lux) .label::before{background:#B5735C}body:has(.hero.lux) .light .label{color:#A35F49}
-body:has(.hero.lux) main>section.outcome{background:#F4E6DF}
-body:has(.hero.lux) .buy .box,body:has(.hero.lux) .rv-empty{background:linear-gradient(180deg,#4A2A23,#38201B);border-color:rgba(226,180,158,.3)}
+/* book page colour theme follows the top; each book sets --bk (glow) --bkd (dark) --tint (light) --acc on <body> */
+body:has(.hero.lux){--night:var(--bkd);--navy:color-mix(in srgb,var(--bk) 18%,var(--bkd));--indigo:color-mix(in srgb,var(--bk) 28%,var(--bkd));--cream:var(--tint);--sand:color-mix(in srgb,var(--tint) 85%,var(--bk));--gold:var(--acc);--gold-2:var(--acc);--ink:var(--bkd);
+ background:linear-gradient(180deg,var(--bkd) 0%,color-mix(in srgb,var(--bk) 22%,var(--bkd)) 50%,var(--bkd) 100%) fixed,var(--bkd)}
+body:has(.hero.lux) main>section:not(.light){background:radial-gradient(ellipse 60% 50% at 50% 40%,color-mix(in srgb,var(--bk) 30%,transparent),transparent 70%),var(--bkd)}
+body:has(.hero.lux) main>section.light,body:has(.hero.lux) main>section.outcome{background:var(--tint)}
+body:has(.hero.lux) footer{background:color-mix(in srgb,var(--bkd) 80%,#000)}
+body:has(.hero.lux) .label::before{background:color-mix(in srgb,var(--bk) 80%,#000)}body:has(.hero.lux) .light .label,body:has(.hero.lux) .outcome .label{color:color-mix(in srgb,var(--bk) 75%,#000)}
+body:has(.hero.lux) .buy .box,body:has(.hero.lux) .rv-empty{background:linear-gradient(180deg,color-mix(in srgb,var(--bk) 30%,var(--bkd)),color-mix(in srgb,var(--bk) 15%,var(--bkd)));border-color:color-mix(in srgb,var(--acc) 35%,transparent)}
+.hero.lux{background:radial-gradient(ellipse 55% 60% at 50% 50%,color-mix(in srgb,var(--bk) 85%,transparent),transparent 70%),linear-gradient(180deg,var(--bkd) 0%,color-mix(in srgb,var(--bk) 45%,var(--bkd)) 50%,var(--bkd) 100%)}
+.hero.lux h1{color:#FFF8F4}.lx-lede,.lx-r p{color:color-mix(in srgb,var(--tint) 85%,var(--bk))}.lx-note{color:color-mix(in srgb,var(--tint) 60%,var(--bk))}
