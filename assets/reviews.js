@@ -10,9 +10,9 @@
       if (!r.length) return;
       var avg = r.reduce(function (a, x) { return a + x.stars; }, 0) / r.length;
       sum.innerHTML = '<b class="rv-avg">' + avg.toFixed(1) + '</b><span class="rv-stars">' + stars(Math.round(avg)) + '</span><span class="rv-n">' + r.length + ' verified review' + (r.length > 1 ? 's' : '') + '</span>';
-      list.innerHTML = r.map(function (x) {
+      list.insertAdjacentHTML('afterbegin', r.map(function (x) {
         return '<figure class="rv-card"><div class="rv-stars">' + stars(x.stars) + '</div><blockquote>' + esc(x.text) + '</blockquote><figcaption><b>' + esc(x.name) + '</b>' + (x.country ? ' · ' + esc(x.country) : '') + '<span class="rv-badge">✓ Verified buyer</span></figcaption></figure>';
-      }).join('');
+      }).join(''));
       box.classList.add('has');
     }).catch(function () {});
   }
