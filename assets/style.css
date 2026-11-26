@@ -881,3 +881,8 @@ footer ul{flex-wrap:wrap;column-gap:22px;row-gap:0}
 .ct-row{display:flex;flex-wrap:wrap;gap:10px}.ct-note{margin:12px 0 0;font-size:14px;color:#D485FC}
 .contact .btn{border:0;cursor:pointer;font:inherit}
 @media (hover:hover) and (pointer:fine){.ct-app{display:none}}
+/* speed and smoothness: skip work for sections far off screen; GPU-friendly eagle */
+main>section:not(.eg):not(.hero){content-visibility:auto;contain-intrinsic-size:auto 900px}
+.eg-bird,.eg-side{will-change:transform,opacity;backface-visibility:hidden}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
