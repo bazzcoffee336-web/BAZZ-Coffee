@@ -12,7 +12,7 @@ const BOOKS = {
   product: { title: 'AI for Beginners', file: 'AI-for-Beginners.pdf' },
   money: { title: 'Paycheck to Peace', file: 'Paycheck-to-Peace.pdf' },
   calm: { title: 'Quiet Mind, Deep Sleep', file: 'Quiet-Mind-Deep-Sleep.pdf' },
-  career: { title: 'Hired in 30 Days', file: 'Hired-in-30-Days.pdf' },
+  career: { title: 'Hired in 30 Days', file: 'Hired-in-30-Days.pdf', iqd: 26200 }, // about $20
   fitness: { title: 'The 20-Minute Home Workout', file: '20-Minute-Home-Workout.pdf' },
   hair: { title: 'The Hair Rescue', file: 'The-Hair-Rescue.pdf' },
   face: { title: 'The Skin Reset', file: 'The-Skin-Reset.pdf' },
@@ -139,9 +139,9 @@ async function buy(request, env) {
   const r = await wayl(env, '/links', {
     method: 'POST',
     body: JSON.stringify({
-      env: mode, referenceId: ref, total: PRICE_IQD, currency: 'IQD',
+      env: mode, referenceId: ref, total: BOOKS[slug].iqd || PRICE_IQD, currency: 'IQD',
       customParameter: `consent:${consentAt}`,
-      lineItem: [{ label: BOOKS[slug].title + ' (PDF ebook)', amount: PRICE_IQD, type: 'increase' }],
+      lineItem: [{ label: BOOKS[slug].title + ' (PDF ebook)', amount: BOOKS[slug].iqd || PRICE_IQD, type: 'increase' }],
       webhookUrl: SITE + '/api/wayl-webhook', webhookSecret: await webhookSecret(env),
       redirectionUrl: SITE + '/thanks', linkExpiresIn: '1h',
     }),
