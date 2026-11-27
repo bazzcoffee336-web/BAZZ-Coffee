@@ -12,7 +12,7 @@ const BOOKS = {
   product: { title: 'AI for Beginners', file: 'AI-for-Beginners.pdf' },
   money: { title: 'Paycheck to Peace', file: 'Paycheck-to-Peace.pdf' },
   calm: { title: 'Quiet Mind, Deep Sleep', file: 'Quiet-Mind-Deep-Sleep.pdf' },
-  career: { title: 'Hired in 30 Days', file: 'Hired-in-30-Days.pdf', iqd: 30300 }, // about $20
+  career: { title: 'Hired in 30 Days', file: 'Hired-in-30-Days.pdf' },
   fitness: { title: 'The 20-Minute Home Workout', file: '20-Minute-Home-Workout.pdf' },
   hair: { title: 'The Hair Rescue', file: 'The-Hair-Rescue.pdf' },
   face: { title: 'The Skin Reset', file: 'The-Skin-Reset.pdf' },
