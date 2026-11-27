@@ -256,6 +256,35 @@ async function findBook(env, file) {
 const LEARN = {
   fitness: { moves: [['squat','Squat'],['pushup','Push-up'],['bridge','Glute bridge'],['row','Row'],['lunge','Lunge'],['plank','Plank']] },
 };
+// /watch/<book>/<n>: chapter video player opened from the PDF. No timeline or length shown, and no skipping ahead.
+const WATCH = { 'ai-for-beginners': ['AI for Beginners', '#1B8C99', '#061A1F'], 'paycheck-to-peace': ['Paycheck to Peace', '#A84E68', '#230D15'], 'quiet-mind-deep-sleep': ['Quiet Mind, Deep Sleep', '#6A57C4', '#110D29'], 'hired-in-30-days': ['Hired in 30 Days', '#2E7A55', '#0A1F16'], fitness: ['The 20-Minute Home Workout', '#D2582A', '#1B0E08'], 'protect-your-hair': ['The Hair Rescue', '#A27A38', '#1D1409'], 'protect-your-face': ['The Skin Reset', '#C98A74', '#2A1714'] };
+function watch(p) {
+  const m = /^\/watch\/([a-z0-9-]+)\/([1-9])\/?$/.exec(p); const b = m && WATCH[m[1]];
+  if (!b || !(m[1] === 'fitness' ? FITV['ch' + m[2]] : BKV[m[1] + '/ch' + m[2]])) return new Response('Not found', { status: 404 });
+  const [t, bk, bkd] = b, src = `/assets/learn/${m[1]}/ch${m[2]}.mp4`;
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Chapter ${m[2]} · ${t}</title>
+<style>@font-face{font-family:W;src:url(/assets/fonts/ArchivoWide-900.woff2) format('woff2');font-weight:900;font-display:swap}
+*{box-sizing:border-box}html,body{margin:0;height:100%}body{background:radial-gradient(ellipse 70% 55% at 50% 40%,${bk}66,transparent 70%),${bkd};color:#FBF3EE;font:16px/1.5 system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px 16px}
+.k{font:700 12px system-ui;letter-spacing:.28em;opacity:.75;text-transform:uppercase}h1{font:900 clamp(22px,5vw,40px)/1.05 W,system-ui;text-transform:uppercase;margin:0;text-align:center}
+.v{position:relative;width:min(100%,calc(78vh*9/16));aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 30px 80px #0009}
+video{width:100%;height:100%;object-fit:cover;display:block}video::-webkit-media-controls{display:none!important}
+button{position:absolute;inset:0;margin:auto;width:84px;height:84px;border-radius:50%;border:0;background:#FBF3EEee;cursor:pointer;display:grid;place-items:center;transition:opacity .25s}
+button svg{width:30px;height:30px;fill:${bkd}}.on button{opacity:0}.on:hover button{opacity:.9}
+.end{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:${bkd}e6;text-align:center;padding:24px}.done .end{display:flex}
+.end b{font:900 26px W,system-ui;text-transform:uppercase}a{color:#FBF3EE}</style></head><body>
+<div class="k">BAZZ · ${t}</div><h1>Chapter ${m[2]}</h1>
+<div class="v" id="v"><video id="x" playsinline preload="metadata" src="${src}" disablepictureinpicture controlslist="nodownload noplaybackrate noremoteplayback nofullscreen"></video>
+<button id="b" aria-label="Play"><svg viewBox="0 0 24 24"><path id="i" d="M7 4l14 8-14 8z"/></svg></button>
+<div class="end"><b>Lesson done</b><span>Go back to your book and do today's task.</span><a href="#" id="r">Watch again</a></div></div>
+<script>const x=document.getElementById('x'),v=document.getElementById('v'),b=document.getElementById('b'),i=document.getElementById('i');let far=0;
+const ico=()=>{const p=x.paused;i.setAttribute('d',p?'M7 4l14 8-14 8z':'M6 4h4v16H6zM14 4h4v16h-4z');v.classList.toggle('on',!p);b.setAttribute('aria-label',p?'Play':'Pause')};
+b.onclick=()=>x.paused?x.play():x.pause();x.onclick=()=>x.paused?x.play():x.pause();x.onplay=x.onpause=ico;
+x.ontimeupdate=()=>{if(!x.seeking&&x.currentTime>far)far=x.currentTime};x.onseeking=()=>{if(x.currentTime>far+.5)x.currentTime=far};
+x.onratechange=()=>{if(x.playbackRate!==1)x.playbackRate=1};x.onended=()=>{far=0;v.classList.add('done')};
+document.getElementById('r').onclick=e=>{e.preventDefault();v.classList.remove('done');x.currentTime=0;x.play()};x.oncontextmenu=e=>e.preventDefault();</script></body></html>`;
+  return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=3600', 'x-robots-tag': 'noindex' } });
+}
+
 async function learn(request, url, env) {
   const [, , ref, sig] = url.pathname.split('/').map(decodeURIComponent);
   const slug = bookOf(ref);
@@ -326,6 +355,7 @@ export default {
       if (p === '/thanks' || p === '/thanks/') return await thanks(url, env);
       if (p.startsWith('/dl/')) return await download(request, url, env);
       if (p.startsWith('/learn/')) return await learn(request, url, env);
+      if (p.startsWith('/watch/')) return watch(p);
       { const mv = /^\/assets\/learn\/fitness\/([a-z0-9-]+)\.mp4$/.exec(p); if (mv && FITV[mv[1]]) return Response.redirect(FITV[mv[1]], 302); }
       { const bv = /^\/assets\/learn\/([a-z0-9-]+\/ch[1-9])\.mp4$/.exec(p); if (bv && BKV[bv[1]]) return Response.redirect(BKV[bv[1]], 302); }
       // black-and-white eagle photo (public domain, US Fish & Wildlife), kept on the media CDN, served from our own domain
