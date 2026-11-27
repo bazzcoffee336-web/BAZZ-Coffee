@@ -5,14 +5,14 @@ const HOME = 'bazzbooks.store';
 const SITE = 'https://' + HOME;
 const WAYL = 'https://api.thewayl.com/api/v1';
 const MAX_DL = 5; // downloads allowed per paid order (stops a shared link)
-const PRICE_IQD = 131000; // about $99.99 (Wayl takes IQD only)
+const PRICE_IQD = 151500; // about $99.99 at 1,515 IQD per USD (Nov 2026) (Wayl takes IQD only)
 
 // page slug -> PDF file name in the private R2 bucket "bazz-books"
 const BOOKS = {
   product: { title: 'AI for Beginners', file: 'AI-for-Beginners.pdf' },
   money: { title: 'Paycheck to Peace', file: 'Paycheck-to-Peace.pdf' },
   calm: { title: 'Quiet Mind, Deep Sleep', file: 'Quiet-Mind-Deep-Sleep.pdf' },
-  career: { title: 'Hired in 30 Days', file: 'Hired-in-30-Days.pdf', iqd: 26200 }, // about $20
+  career: { title: 'Hired in 30 Days', file: 'Hired-in-30-Days.pdf', iqd: 30300 }, // about $20
   fitness: { title: 'The 20-Minute Home Workout', file: '20-Minute-Home-Workout.pdf' },
   hair: { title: 'The Hair Rescue', file: 'The-Hair-Rescue.pdf' },
   face: { title: 'The Skin Reset', file: 'The-Skin-Reset.pdf' },
